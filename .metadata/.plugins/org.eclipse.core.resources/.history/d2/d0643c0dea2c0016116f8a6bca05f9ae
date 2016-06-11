@@ -1,0 +1,84 @@
+/*
+ * Environment_Tasks.c
+ *
+ *  Created on: 07/06/2016
+ *      Author: Red
+ */
+
+#include "../Modules/KBD.h"
+#include "../Modules/LCD.h"
+
+#include "../../FreeRTOS_Library/include/FreeRTOS.h"
+#include "../../FreeRTOS_Library/include/task.h"
+
+#include "queue.h"
+
+
+/* Main Task*/
+
+
+xTaskHandle mainTask;
+xTaskHandle AdminModeTask;
+xTaskHandle UserModeTask;
+
+xQueueHandle KBD_queue;
+xQueueHandle LCD_queue;
+
+void mainTaskFunc(){
+	int key;
+	while(1){
+		//Get a key
+		if(xQueueReceive(KBD_queue, &key, 100) == pdTRUE){
+			if(key==doubleKey){
+				xTaskNotifyGive(AdminModeTask);
+			}else{
+				xTaskNotifyGive(UserModeTask);
+			}
+			ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+		}else{
+			vTaskDelay(100);
+		}
+	}
+}
+
+void UserModeTaskFunc(){
+
+	while(1){
+
+		//block Thread until there is a notification
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+	}
+}
+
+void AdminModeTaskFunc(){
+
+	while(1){
+
+		//block Thread until there is a notification
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+	}
+}
+
+
+/* Keyboard task*/
+
+void KBD_SetKey(){
+	int key = 0;
+	while(1){
+		if((key = KBD_read_nonBlocking()) != -1){
+			xQueueOverwrite(KBD_queue, key);
+		}
+		vTaskDelay(100);
+	}
+}
+
+/* LCD task*/
+
+void LCD_Display(){
+
+	while(1){
+
+
+
+	}
+}

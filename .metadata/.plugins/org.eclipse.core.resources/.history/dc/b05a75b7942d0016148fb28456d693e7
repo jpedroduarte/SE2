@@ -1,0 +1,87 @@
+/*
+ * Environment_Tasks.c
+ *
+ *  Created on: 07/06/2016
+ *      Author: Red
+ */
+
+#include "Environment_Tasks.h"
+
+
+
+/* Main Task*/
+
+void mainTaskFunc(){
+	int key;
+	while(1){
+		//Get a key
+		if(xQueueReceive(KBD_queue, &key, portMAX_DELAY) == pdTRUE){
+			if(key==doubleKey){
+				xTaskNotifyGive(AdminModeTask);
+			}else{
+				xTaskNotifyGive(UserModeTask);
+			}
+			ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+		}
+	}
+}
+
+void UserModeTaskFunc(){
+
+	uint8_t leave_function=0;
+	while(1){
+//todo
+		//block Thread until there is a notification
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+		puts("User Mode");
+
+		uint8_t keyCode[4];
+		uint8_t i;
+		for(i=0; i<4;++i){
+			if(xQueueReceive(KBD_queue, keyCode+i, portMAX_DELAY) == pdFALSE){
+				//timeout occured
+				LCD_Clear(0xFFF);
+				LCD_BL_State(0);
+				//todo Go to main routine again
+			}
+		}
+
+
+	}
+}
+
+void AdminModeTaskFunc(){
+
+	while(1){
+//todo
+		//block Thread until there is a notification
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+		puts("Admin Mode");
+
+
+	}
+}
+
+
+/* Keyboard task*/
+
+void KBD_SetKeyFunc(){
+	int key = 0;
+	while(1){
+		if((key = KBD_read_nonBlocking()) != -1){
+			xQueueOverwrite(KBD_queue, key);
+		}
+		vTaskDelay(100);
+	}
+}
+
+/* LCD task*/
+
+void LCD_DisplayFunc(){
+
+	while(1){
+
+
+
+	}
+}

@@ -1,0 +1,210 @@
+/*
+ * tests.c
+ *
+ *  Created on: 07/06/2016
+ *      Author: Red
+ */
+
+#include "../../FreeRTOS_Library/include/FreeRTOS.h"
+#include "../../FreeRTOS_Library/include/task.h"
+
+#include <stdio.h>
+#include "LPC17xx.h"
+#include "../Modules/GPIO.h"
+#include "../Modules/KBD.h"
+#include "../Modules/LCD.h"
+#include "../Modules/SPI.h"
+#include "../Modules/I2C.h"
+#include "../Modules/RTC.h"
+
+#include "queue.h"
+#include "semphr.h"
+
+int secs = 00, mins = 00, hours = 00, wdays = 1, days = 13, mons = 01, years = 2016, yday = 13;
+struct tm dateTime;
+
+void GetDatetimeTask(void){
+	while(1){
+		RTC_GetValue(&dateTime);
+		printf("%u:%u:%u",dateTime.tm_hour,dateTime.tm_min,dateTime.tm_sec);
+		vTaskDelay(1000);
+	}
+}
+
+void RTCTest(){
+	dateTime.tm_sec = secs;
+	dateTime.tm_min = mins;
+	dateTime.tm_hour = hours;
+	dateTime.tm_wday = wdays;
+	dateTime.tm_mday = days;
+	dateTime.tm_mon = mons;
+	dateTime.tm_year = years;
+	dateTime.tm_yday = yday;
+
+	RTC_Init(&dateTime);
+	xTaskCreate(GetDatetimeTask, "RTC_GetDateTime", configMINIMAL_STACK_SIZE, NULL, 0 , NULL);
+	vTaskStartScheduler();
+	while(1);
+
+}
+
+
+
+uint32_t varExample[]={1,2,3};
+void varExampleTask(void * pvParameters){
+	int i=0;
+	while(i<3){
+		//uint32_t aux= (uint32_t)
+		printf("var: %u ", *((uint32_t*)pvParameters)+ i++);
+		vTaskDelay(1000);
+	}
+}
+
+void varExampleTaskTest(){
+	xTaskCreate(varExampleTask, "varExample", configMINIMAL_STACK_SIZE, varExample, 0 , NULL);
+	vTaskStartScheduler();
+	while(1);
+}
+
+void blinkLed(void)
+{
+	GPIO_config_bitGeneric(2,0,0x1000,0x1000,0);
+	while(1){
+		GPIO_SetGeneric(2,0x1000);
+		vTaskDelay(500);
+		GPIO_ClearGeneric(2,0x1000);
+		vTaskDelay(500);
+	}
+}
+
+void ledTest(){	//working
+	xTaskCreate(blinkLed, "ledTest", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
+	vTaskStartScheduler();
+	while(1);
+}
+
+void setKey1(void)
+{
+	uint32_t key=0;
+	while(1){
+		if(uxQueueMessagesWaiting(queue)==0){
+			key=KBD_read();
+			if(key!=0){
+				xQueueSend(queue,&key,1000);
+				printf("Put %u in queue.\n",key);
+			}else puts("No key pressed");
+		}else{
+			puts("Key still in queue\n");
+		}
+		vTaskDelay(0);//taskYIELD();
+	}
+
+	//*(uint32_t*)pvParameters=key;
+	//taskYIELD();
+}
+
+void setKey(void)
+{
+	uint32_t key=0;
+	while(1){
+		if(uxQueueMessagesWaiting(queue)==0){
+			if(xSemaphoreTake(keysMutex,1000)){
+				key=KBD_read();
+				xQueueSend(queue,&key,1000);
+				xSemaphoreGive(keysMutex);
+			}
+		}
+		taskYIELD();
+	}
+
+	//*(uint32_t*)pvParameters=key;
+	//taskYIELD();
+}
+
+void getKey1(void){
+	uint32_t currKey=0;
+	while(1){
+		if(xQueueReceive(queue,&currKey,1000)){
+			printf("Get %u from queue.\n",currKey);
+			//printf("Elements in queue: %u\n",uxQueueMessagesWaiting(queue));
+		}else{
+			puts("Could not get Key.\n");
+		}
+		vTaskDelay(0);
+	}
+}
+
+void getKey(void){
+	uint32_t currKey=0;
+	while(1){
+		if(uxQueueMessagesWaiting(queue)!=0){
+			if(xSemaphoreTake(keysMutex,1000)){
+				if(xQueueReceive(queue,&currKey,1000)){
+					GPIO_config_bitGeneric(2,0,0x1000,0x1000,0);
+					while(currKey!=0){
+						GPIO_SetGeneric(2,0x1000);
+						vTaskDelay(500);
+						GPIO_ClearGeneric(2,0x1000);
+						vTaskDelay(500);
+						--currKey;
+					}
+				}
+				xSemaphoreGive(keysMutex);
+			}
+		}
+		taskYIELD();
+	}
+}
+
+void kbdTest(){	//Working
+	uint32_t layout[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+	KBD_init(layout);
+	xTaskCreate(setKey1, "setKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
+	xTaskCreate(getKey1, "getKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
+	vTaskStartScheduler();
+}
+
+void lcdTest(){	//Working
+	//SPI_Init(8,9);
+	//SPI_Init(254,9);
+	SPI_Init(128,9);
+	LCD_Init();
+	LCD_TurnOnDisplay();
+	LCD_BL_State(1);
+	while(1){
+		LCD_WriteChar('a');
+		//LCD_Goto(1,1);
+		LCD_WriteChar('b');
+	}
+}
+
+void eepromTest(){
+	uint32_t freq=0;
+	uint8_t ADDRESS_HIGH=0, ADDRESS_LOW=0;
+	char control_code=0xA, CS_bits=0x0, Write=0, Read=1;
+	char data[3], setAddrRead[2], res[1];
+	data[0]= ADDRESS_HIGH;
+	data[1]= ADDRESS_LOW;
+	data[2]= 0x6;
+
+	setAddrRead[0]= ADDRESS_HIGH;
+	setAddrRead[1]= ADDRESS_LOW;
+
+	res[0]= 0x1;
+
+	/*
+	data[0]= control_code<<4 | CS_bits<<1 | Write;	//SLA+W
+	data[1]= 0;										//Addr high byte
+	data[2]= 0;										//Addr low byte
+	data[3]= 0x5;									//First data byte
+	*/
+	I2C_config(1, freq);
+	//Write 5 in adress 0
+	I2C_Transfer(1, control_code, CS_bits, data, sizeof(data), Write,STOP);
+	//Set random read mode to adress 0
+	I2C_Transfer(1, control_code, CS_bits, setAddrRead, sizeof(setAddrRead), Write, REPEATED_START);
+	//Force a repeated start and read from adress 0
+	I2C_Transfer(1, control_code, CS_bits, res, sizeof(res), Read,STOP);
+
+	printf("Mem[0]=%u",*(res));
+}

@@ -1,0 +1,61 @@
+/*
+ * EEPROM.c
+ *
+ *  Created on: 08/06/2016
+ *      Author: Red
+ */
+
+
+#include "../FreeRTOS-template/Modules/I2C.h"
+
+
+uint8_t addr_buffer[2];
+#define CONTROL_BYTE 0b1010000
+#define I2C_CONTROLLER 1
+#define ADDRESS_SIZE 2
+
+void EEPROM_Init(uint32_t I2C_controller, uint32_t freq){
+	I2C_config(I2C_controller,freq);
+}
+
+void EEPROM_Write(void* buffer, uint32_t size){
+	I2C_Transfer(I2C_CONTROLLER, CONTROL_BYTE, buffer, size, WRITE, STOP);
+}
+
+void EEPROM_Read(void * buffer, uint32_t size){
+	//Load adress
+	I2C_Transfer(I2C_CONTROLLER, CONTROL_BYTE, buffer, ADDRESS_SIZE, WRITE, REPEATED_START);
+	//Start reading
+	I2C_Transfer(I2C_CONTROLLER, CONTROL_BYTE, buffer+2, size, READ, STOP);
+}
+
+void eepromTest(){
+	uint32_t freq=0;
+	uint8_t ADDRESS_HIGH=0, ADDRESS_LOW=0;
+	char control_code=0xA, CS_bits=0x0, Write=0, Read=1;
+	char data[3], setAddrRead[2], res[1];
+	data[0]= ADDRESS_HIGH;
+	data[1]= ADDRESS_LOW;
+	data[2]= 0x6;
+
+	setAddrRead[0]= ADDRESS_HIGH;
+	setAddrRead[1]= ADDRESS_LOW;
+
+	res[0]= 0x1;
+
+	/*
+	data[0]= control_code<<4 | CS_bits<<1 | Write;	//SLA+W
+	data[1]= 0;										//Addr high byte
+	data[2]= 0;										//Addr low byte
+	data[3]= 0x5;									//First data byte
+	*/
+	I2C_config(1, freq);
+	//Write 5 in adress 0
+	I2C_Transfer(1, control_code, CS_bits, data, sizeof(data), Write,STOP);
+	//Set random read mode to adress 0
+	I2C_Transfer(1, control_code, CS_bits, setAddrRead, sizeof(setAddrRead), Write, REPEATED_START);
+	//Force a repeated start and read from adress 0
+	I2C_Transfer(1, control_code, CS_bits, res, sizeof(res), Read,STOP);
+
+	printf("Mem[0]=%u",*(res));
+}

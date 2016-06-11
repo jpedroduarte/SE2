@@ -1,0 +1,20 @@
+16:18:04 **** Build of configuration Debug for project FreeRTOS ****
+make -r all 
+Building target: FreeRTOS.axf
+Invoking: MCU Linker
+arm-none-eabi-gcc -nostdlib -Xlinker -Map="FreeRTOS.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -mcpu=cortex-m3 -mthumb -T "FreeRTOS_Debug.ld" -o "FreeRTOS.axf"  ./src/FreeRTOS.o ./src/cr_startup_lpc175x_6x.o ./src/crp.o   
+Memory region         Used Size  Region Size  %age Used
+       MFlash512:        6440 B       512 KB      1.23%
+        RamLoc32:         340 B        32 KB      1.04%
+        RamAHB32:          0 GB        32 KB      0.00%
+Finished building target: FreeRTOS.axf
+ 
+make --no-print-directory post-build
+Performing post-build steps
+arm-none-eabi-size "FreeRTOS.axf"; # arm-none-eabi-objcopy -v -O binary "FreeRTOS.axf" "FreeRTOS.bin" ; # checksum -p LPC1769 -d "FreeRTOS.bin";
+   text	   data	    bss	    dec	    hex	filename
+   6440	      0	    340	   6780	   1a7c	FreeRTOS.axf
+ 
+
+16:18:05 Build Finished (took 203ms)
+

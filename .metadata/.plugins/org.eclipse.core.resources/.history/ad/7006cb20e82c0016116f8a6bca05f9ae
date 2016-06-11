@@ -1,0 +1,84 @@
+/*
+ * Environment_Tasks.c
+ *
+ *  Created on: 07/06/2016
+ *      Author: Red
+ */
+
+#include "../Modules/KBD.h"
+#include "../Modules/LCD.h"
+
+/* Main Task*/
+
+void mainTask(){
+	int key;
+	while(1){
+		//Get a key
+		if(xQueueReceive(KBD_queue, &key, 100) == pdTRUE){
+			if(key==doubleKey){
+				xTaskNotifyGive(AdminModeTask);
+			}else{
+				xTaskNotifyGive(UserModeTask);
+			}
+			ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+		}
+		vTaskDelay(100);
+	}
+}
+
+void UserModeTask(){
+
+	while(1){
+
+		//block Thread until there is a notification
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+	}
+}
+
+void AdminModeTask(){
+
+	while(1){
+
+		//block Thread until there is a notification
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+	}
+}
+
+
+/* Keyboard task*/
+
+xQueueHandle KBD_queue;
+
+void KBD_GetKey(){
+	int key = 0;
+	while(1){
+
+		if(xQueueReceive(KBD_queue, &key, 100) == pdFALSE){
+
+		}
+
+	}
+}
+
+void KBD_SetKey(){
+	int key = 0;
+	while(1){
+		if((key = KBD_read_nonBlocking()) !=-1){
+			xQueueOverwrite(KBD_queue, key);
+		}
+		vTaskDelay(100);
+	}
+}
+
+/* LCD task*/
+
+xQueueHandle LCD_queue;
+
+void LCD_Display(){
+
+	while(1){
+
+
+
+	}
+}

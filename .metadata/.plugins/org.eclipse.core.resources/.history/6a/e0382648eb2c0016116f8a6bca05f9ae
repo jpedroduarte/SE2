@@ -1,0 +1,46 @@
+/*
+ * Environment_Tasks.h
+ *
+ *  Created on: 07/06/2016
+ *      Author: Red
+ */
+
+#ifndef PROJECT_ENVIRONMENT_TASKS_H_
+#define PROJECT_ENVIRONMENT_TASKS_H_
+
+#include "../Modules/KBD.h"
+#include "../Modules/LCD.h"
+
+#include "../../FreeRTOS_Library/include/FreeRTOS.h"
+#include "../../FreeRTOS_Library/include/task.h"
+
+#include "queue.h"
+
+xTaskHandle mainTask;
+xTaskHandle AdminModeTask;
+xTaskHandle UserModeTask;
+
+xTaskHandle KBD_SetKey;
+xTaskHandle LCD_Display;
+
+xQueueHandle KBD_queue;
+xQueueHandle LCD_queue;
+
+
+void mainTaskFunc();
+
+void UserModeTaskFunc();
+
+void AdminModeTaskFunc();
+
+
+/* Keyboard task*/
+
+void KBD_SetKey();
+
+/* LCD task*/
+
+void LCD_Display();
+
+
+#endif /* PROJECT_ENVIRONMENT_TASKS_H_ */

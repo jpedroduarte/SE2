@@ -1,0 +1,82 @@
+12:50:31 **** Incremental Build of configuration Debug for project FreeRTOS-template ****
+make -r all 
+Building file: ../test/tests.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"test/tests.d" -MT"test/tests.o" -MT"test/tests.d" -o "test/tests.o" "../test/tests.c"
+In file included from ../test/../../FreeRTOS_Library/include/portable.h:320:0,
+                 from ../test/../../FreeRTOS_Library/include/FreeRTOS.h:83,
+                 from ../test/tests.c:8:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+In file included from ../test/tests.c:9:0:
+../test/tests.c: In function 'RTCTest':
+../test/../../FreeRTOS_Library/include/task.h:294:118: warning: passing argument 1 of 'xTaskGenericCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )
+                                                                                                                      ^
+../test/tests.c:62:2: note: in expansion of macro 'xTaskCreate'
+  xTaskCreate(GetDatetimeTask, "RTC_GetDateTime", configMINIMAL_STACK_SIZE, NULL, 0 , NULL);
+  ^
+In file included from ../test/tests.c:9:0:
+../test/../../FreeRTOS_Library/include/task.h:1310:22: note: expected 'pdTASK_CODE {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
+ signed portBASE_TYPE xTaskGenericCreate( pdTASK_CODE pxTaskCode, const signed char * const pcName, unsigned short usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pxCreatedTask, portSTACK_TYPE *puxStackBuffer, const xMemoryRegion * const xRegions ) PRIVILEGED_FUNCTION;
+                      ^
+In file included from ../test/tests.c:9:0:
+../test/tests.c: In function 'ledTest':
+../test/../../FreeRTOS_Library/include/task.h:294:118: warning: passing argument 1 of 'xTaskGenericCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )
+                                                                                                                      ^
+../test/tests.c:122:2: note: in expansion of macro 'xTaskCreate'
+  xTaskCreate(blinkLedLib, "ledTest", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
+  ^
+In file included from ../test/tests.c:9:0:
+../test/../../FreeRTOS_Library/include/task.h:1310:22: note: expected 'pdTASK_CODE {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
+ signed portBASE_TYPE xTaskGenericCreate( pdTASK_CODE pxTaskCode, const signed char * const pcName, unsigned short usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pxCreatedTask, portSTACK_TYPE *puxStackBuffer, const xMemoryRegion * const xRegions ) PRIVILEGED_FUNCTION;
+                      ^
+In file included from ../test/tests.c:9:0:
+../test/tests.c: In function 'kbdTest':
+../test/../../FreeRTOS_Library/include/task.h:294:118: warning: passing argument 1 of 'xTaskGenericCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )
+                                                                                                                      ^
+../test/tests.c:208:2: note: in expansion of macro 'xTaskCreate'
+  xTaskCreate(setKey1, "setKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
+  ^
+In file included from ../test/tests.c:9:0:
+../test/../../FreeRTOS_Library/include/task.h:1310:22: note: expected 'pdTASK_CODE {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
+ signed portBASE_TYPE xTaskGenericCreate( pdTASK_CODE pxTaskCode, const signed char * const pcName, unsigned short usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pxCreatedTask, portSTACK_TYPE *puxStackBuffer, const xMemoryRegion * const xRegions ) PRIVILEGED_FUNCTION;
+                      ^
+In file included from ../test/tests.c:9:0:
+../test/../../FreeRTOS_Library/include/task.h:294:118: warning: passing argument 1 of 'xTaskGenericCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )
+                                                                                                                      ^
+../test/tests.c:209:2: note: in expansion of macro 'xTaskCreate'
+  xTaskCreate(getKey1, "getKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
+  ^
+In file included from ../test/tests.c:9:0:
+../test/../../FreeRTOS_Library/include/task.h:1310:22: note: expected 'pdTASK_CODE {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
+ signed portBASE_TYPE xTaskGenericCreate( pdTASK_CODE pxTaskCode, const signed char * const pcName, unsigned short usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pxCreatedTask, portSTACK_TYPE *puxStackBuffer, const xMemoryRegion * const xRegions ) PRIVILEGED_FUNCTION;
+                      ^
+In file included from ../test/../../FreeRTOS_Library/include/portable.h:320:0,
+                 from ../test/../../FreeRTOS_Library/include/FreeRTOS.h:83,
+                 from ../test/tests.c:8:
+At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+Finished building: ../test/tests.c
+ 
+Building target: SimpleDemo.axf
+Invoking: MCU Linker
+arm-none-eabi-gcc -nostdlib -L"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\Debug" -L"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template\Ethernet_Prof_Test" -L"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\Debug" -Xlinker --gc-sections -Xlinker -Map=SimpleDemo.map -mcpu=cortex-m3 -mthumb -T "FreeRTOS-template_Debug.ld" -o "SimpleDemo.axf"  ./test/tests.o  ./Project/Environment_Tasks.o ./Project/Utils.o ./Project/proj.o  ./Modules/EEPROM.o ./Modules/Ethernet.o ./Modules/GPIO.o ./Modules/I2C.o ./Modules/KBD.o ./Modules/LCD.o ./Modules/LCD_Font.o ./Modules/LED.o ./Modules/RTC.o ./Modules/SPI.o  ./cr_startup_lpc17.o ./main.o   -lCMSIS_CORE_LPC17xx -lFreeRTOS_Library
+Finished building target: SimpleDemo.axf
+ 
+make --no-print-directory post-build
+Performing post-build steps
+arm-none-eabi-size SimpleDemo.axf; # arm-none-eabi-objcopy -O ihex SimpleDemo.axf SimpleDemo.hex ;
+   text	   data	    bss	    dec	    hex	filename
+  10020	     24	   2676	  12720	   31b0	SimpleDemo.axf
+ 
+
+12:50:32 Build Finished (took 424ms)
+
