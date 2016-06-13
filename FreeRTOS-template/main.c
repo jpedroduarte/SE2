@@ -87,6 +87,8 @@
 #include "semphr.h"
 #include "test/tests.h"
 
+#include "Project/Utils.h"
+
 #define ledTest ledTest();
 #define varTest varExampleTaskTest();
 #define RTCTest RTCTest();
@@ -99,28 +101,64 @@
 // Change macro to the current designed test
 //
 
-#define test LCDTest
+#define test EEPROMTest
 
+void projTest(){
+	I2C_config(1, 100);
+	uint8_t addr[2]={0,0};
+	uint8_t buffer[5]={8,9,10,11,12};
+	uint8_t read[20];
+	/*
+	EEPROM_Write(addr, buffer,5);
+
+	EEPROM_Read(addr,read,5);
+	int i;
+	for(i=0; i<5; ++i){
+		printf("Mem[%u]= %X\n",i,read[i]);
+	}
+
+	*/
+
+	resetFlash();
+	EEPROM_Read(addr,read,20);
+	int i=0;
+	while(i<20){
+		printf("Mem[%u]= %X\n",i,read[i]);
+		++i;
+	}
+
+	Settings s;
+	s.adminCode 	= 0x0000;
+	s.doorCOde 		= 0x1010101;// codigo 1 1 1 1
+	s.nRegist 		= 0;
+	s.absRegist		= 0;
+	s.checkBootLoad	= 0x69F02ADB;
+	s.hr 			= 0;
+	s.mm 			= 0;
+	s.s 			= 0;
+	s.year 			= 0;
+	s.month 		= 0;
+	s.day 			= 0;
+	s.dayWeek 		= 0;
+	i=0;
+	uint8_t* pointer= (uint8_t*)&s;
+	i=0;
+	while(i<20){
+		printf("Mem[%u]= %X\n",i,*(pointer+i));
+		++i;
+	}
+
+}
 
 int main(void)
 {
-	test;
-	puts("hello");
-	//lcdTest();
-	//printf("%u",SystemCoreClock);
-	//kbdTest();
-	//eepromTest();
-	//varExampleTaskTest();
-	/*
-	 GPIO_config_bitGeneric(0,0,0x20,0x20,1);
-	 GPIO_SetGeneric(0,0x20);
-	 GPIO_ClearGeneric(0,0x20);
-	*/
-	/*
-	xTaskCreate(setKey, "setKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
-	xTaskCreate(getKey, "getKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
-	vTaskStartScheduler();
-	*/
+	puts("Begin test");
+
+	projTest();
+
+	//test;
+
+	puts("End test");
 	return 0;
 }
 

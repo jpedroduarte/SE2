@@ -60,6 +60,12 @@
 #define EPSRRD2     0x7D
 #define NOP         0x25
 
+
+/* Colors */
+
+#define WHITE 0xFFF
+
+
 /** @brief Configures GPIO ports for correct use.
  *  @return none.
  */

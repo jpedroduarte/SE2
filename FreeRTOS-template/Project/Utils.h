@@ -15,6 +15,13 @@
 #include "../Modules/RTC.h"
 #include "../Modules/KBD.h"
 #include "../Modules/LED.h"
+#include "../Modules/I2C.h"
+#include "../Modules/EEPROM.h"
+
+/* Macros */
+
+#define BootLoadCode 0x69F02ADB
+
 
 
 /* Data Structures */
@@ -53,11 +60,18 @@ typedef struct{
 
 /* Functions */
 
+void merge(void* dst, void* src1, uint32_t size1, void* src2, uint32_t size2);
+
 void itod(char* dst, uint8_t dd, uint8_t mm, uint16_t yyyy);
 
 void itot(char* dst, uint8_t hh, uint8_t mm);
 
 void turnOnLcdAndWriteTime(int count);
 
+uint8_t verifyFlash();
+
+void resetFlash();
+
+uint8_t VerifyCode(int code);
 
 #endif /* PROJECT_UTILS_H_ */

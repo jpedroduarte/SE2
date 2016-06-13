@@ -226,9 +226,9 @@ void lcdTest(){	//Working
 	LCD_BL_State(0);
 	LCD_BL_State(1);
 
-	uint8_t i =1;
+	uint8_t i =0;
 	while(1){
-		LCD_Goto(0,0);
+		LCD_Goto(0,i++);
 		LCD_WriteString("Hello World");
 	}
 	/*
@@ -275,7 +275,7 @@ void eepromTest(){	//Working
 	res[7]= 0x1;
 
 	I2C_config(1, freq);
-	EEPROM_Write(data,10);
+	EEPROM_Write(setAddrRead, data,10);
 	EEPROM_Read(setAddrRead, res, 8);
 	/*
 	//Write 5 in adress 0
