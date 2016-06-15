@@ -1,0 +1,16 @@
+15:42:51 **** Build of configuration Debug for project uIPAux ****
+make -r all 
+Building file: ../src/tapdev.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__CODE_RED -DCORE_M3 -D__LPC17XX__ -D__REDLIB__ -O0 -fno-common -g3 -Wall -c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -mcpu=cortex-m3 -mthumb -specs=redlib.specs -MMD -MP -MF"src/tapdev.d" -MT"src/tapdev.o" -MT"src/tapdev.d" -o "src/tapdev.o" "../src/tapdev.c"
+In file included from ../src/../../FreeRTOS-template/Modules/../../CMSIS_CORE_LPC17xx/inc/LPC17xx.h:99:0,
+                 from ../src/../../FreeRTOS-template/Modules/GPIO.h:19,
+                 from ../src/../../FreeRTOS-template/Modules/Ethernet.h:11,
+                 from ../src/tapdev.h:41,
+                 from ../src/tapdev.c:9:
+../src/../../FreeRTOS-template/Modules/../../CMSIS_CORE_LPC17xx/inc/core_cm3.h:136:95: fatal error: core_cmInstr.h: No such file or directory
+compilation terminated.
+make: *** [src/tapdev.o] Error 1
+
+15:42:51 Build Finished (took 141ms)
+

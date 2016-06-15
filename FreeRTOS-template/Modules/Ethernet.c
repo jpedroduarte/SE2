@@ -25,7 +25,7 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	LPC_EMAC->MAC1= LPC_EMAC->MAC1 & ~MAC_SOFT_RESET;
 
 	//configure read cycle mode
-	//LPC_EMAC->MCMD= (LPC_EMAC->MCMD & ~0x3) | readCycleMode;
+	LPC_EMAC->MCMD= (LPC_EMAC->MCMD & ~0x3) | readCycleMode;
 
 	//Set Station Address
 	LPC_EMAC->SA0= mac_address[0]<<8 | mac_address[1];
@@ -56,13 +56,16 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 
 
 */
-/*
+
+#define PHY_DEF_ADR 0b00001	// perguntar
+#define MII_WR_TOUT 0		// perguntar
+#define MIND_BUSY 0x1
 
 void WriteToPHY (int reg, int writeval){
 
 	unsigned int loop;
 	// Set up address to access in MII Mgmt Address Register
-	LPC_EMAC->MADR=PHY_DEF_ADR|reg;
+	LPC_EMAC->MADR= PHY_DEF_ADR<<12 | reg;
 	// Write value into MII Mgmt Write Data Register
 	LPC_EMAC->MWTD = writeval;
 	// Loop write to PHY completes
@@ -71,6 +74,8 @@ void WriteToPHY (int reg, int writeval){
 			break;
 }
 
+#define MCMD_READ 0x1
+#define MII_RD_TOUT 0	// perguntar
 
 unsigned short ReadFromPHY (unsigned char reg){
 
@@ -88,5 +93,5 @@ unsigned short ReadFromPHY (unsigned char reg){
 	return (LPC_EMAC->MRDD);
 }
 
-*/
+
 

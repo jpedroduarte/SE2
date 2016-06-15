@@ -40,7 +40,7 @@
 						<entry kind="macro" name="__REDLIB__" value=""/>
 						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
 					</resource>
-					<resource project-relative-path="Project/main.c">
+					<resource project-relative-path="Modules/LED.c">
 						<entry kind="includePath" name="/${ProjName}/">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
@@ -58,7 +58,151 @@
 						<entry kind="macro" name="__REDLIB__" value=""/>
 						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
 					</resource>
-					<resource project-relative-path="Modules/LED.c">
+					<resource project-relative-path="Modules/LCD_Font.c">
+						<entry kind="includePath" name="/${ProjName}/">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/include">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/portable">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="macro" name="DEBUG" value=""/>
+						<entry kind="macro" name="__CODE_RED" value=""/>
+						<entry kind="macro" name="__REDLIB__" value=""/>
+						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
+					</resource>
+					<resource project-relative-path="LCD_Font.c">
+						<entry kind="includePath" name="/${ProjName}/">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/include">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/portable">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="macro" name="DEBUG" value=""/>
+						<entry kind="macro" name="__CODE_RED" value=""/>
+						<entry kind="macro" name="__REDLIB__" value=""/>
+						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
+					</resource>
+					<resource project-relative-path="Ethernet.c">
+						<entry kind="includePath" name="/${ProjName}/">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/include">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/portable">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="macro" name="DEBUG" value=""/>
+						<entry kind="macro" name="__CODE_RED" value=""/>
+						<entry kind="macro" name="__REDLIB__" value=""/>
+						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
+					</resource>
+					<resource project-relative-path="test/tests.c">
+						<entry kind="includePath" name="/${ProjName}/">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/include">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/portable">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="macro" name="DEBUG" value=""/>
+						<entry kind="macro" name="__CODE_RED" value=""/>
+						<entry kind="macro" name="__REDLIB__" value=""/>
+						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
+					</resource>
+					<resource project-relative-path="I2C.c">
+						<entry kind="includePath" name="/${ProjName}/">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/include">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/portable">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="macro" name="DEBUG" value=""/>
+						<entry kind="macro" name="__CODE_RED" value=""/>
+						<entry kind="macro" name="__REDLIB__" value=""/>
+						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
+					</resource>
+					<resource project-relative-path="cr_startup_lpc17.c">
+						<entry kind="includePath" name="/${ProjName}/">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/include">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/portable">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="macro" name="DEBUG" value=""/>
+						<entry kind="macro" name="__CODE_RED" value=""/>
+						<entry kind="macro" name="__REDLIB__" value=""/>
+						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
+					</resource>
+					<resource project-relative-path="Modules/RTC.c">
+						<entry kind="includePath" name="/${ProjName}/">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/include">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/portable">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="macro" name="DEBUG" value=""/>
+						<entry kind="macro" name="__CODE_RED" value=""/>
+						<entry kind="macro" name="__REDLIB__" value=""/>
+						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
+					</resource>
+					<resource project-relative-path="Project/proj.c">
+						<entry kind="includePath" name="/${ProjName}/">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/include">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/FreeRTOS_Library/portable">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="macro" name="DEBUG" value=""/>
+						<entry kind="macro" name="__CODE_RED" value=""/>
+						<entry kind="macro" name="__REDLIB__" value=""/>
+						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
+					</resource>
+					<resource project-relative-path="Project/main.c">
 						<entry kind="includePath" name="/${ProjName}/">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
@@ -148,60 +292,6 @@
 						<entry kind="macro" name="__REDLIB__" value=""/>
 						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
 					</resource>
-					<resource project-relative-path="Modules/LCD_Font.c">
-						<entry kind="includePath" name="/${ProjName}/">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/include">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/portable">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="macro" name="DEBUG" value=""/>
-						<entry kind="macro" name="__CODE_RED" value=""/>
-						<entry kind="macro" name="__REDLIB__" value=""/>
-						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
-					</resource>
-					<resource project-relative-path="LCD_Font.c">
-						<entry kind="includePath" name="/${ProjName}/">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/include">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/portable">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="macro" name="DEBUG" value=""/>
-						<entry kind="macro" name="__CODE_RED" value=""/>
-						<entry kind="macro" name="__REDLIB__" value=""/>
-						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
-					</resource>
-					<resource project-relative-path="Ethernet.c">
-						<entry kind="includePath" name="/${ProjName}/">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/include">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/portable">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="macro" name="DEBUG" value=""/>
-						<entry kind="macro" name="__CODE_RED" value=""/>
-						<entry kind="macro" name="__REDLIB__" value=""/>
-						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
-					</resource>
 					<resource project-relative-path="Modules/I2C.c">
 						<entry kind="includePath" name="/${ProjName}/">
 							<flag value="VALUE_WORKSPACE_PATH"/>
@@ -238,43 +328,7 @@
 						<entry kind="macro" name="__REDLIB__" value=""/>
 						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
 					</resource>
-					<resource project-relative-path="test/tests.c">
-						<entry kind="includePath" name="/${ProjName}/">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/include">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/portable">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="macro" name="DEBUG" value=""/>
-						<entry kind="macro" name="__CODE_RED" value=""/>
-						<entry kind="macro" name="__REDLIB__" value=""/>
-						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
-					</resource>
-					<resource project-relative-path="I2C.c">
-						<entry kind="includePath" name="/${ProjName}/">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/include">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/portable">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="macro" name="DEBUG" value=""/>
-						<entry kind="macro" name="__CODE_RED" value=""/>
-						<entry kind="macro" name="__REDLIB__" value=""/>
-						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
-					</resource>
-					<resource project-relative-path="cr_startup_lpc17.c">
+					<resource project-relative-path="Ethernet_Prof_Test/tapdev.c">
 						<entry kind="includePath" name="/${ProjName}/">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
@@ -346,7 +400,7 @@
 						<entry kind="macro" name="__REDLIB__" value=""/>
 						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
 					</resource>
-					<resource project-relative-path="Modules/RTC.c">
+					<resource project-relative-path="Modules/tapdev.c">
 						<entry kind="includePath" name="/${ProjName}/">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
@@ -401,24 +455,6 @@
 						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
 					</resource>
 					<resource project-relative-path="KBD.c">
-						<entry kind="includePath" name="/${ProjName}/">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/CMSIS_CORE_LPC17xx/inc">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/include">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="includePath" name="/FreeRTOS_Library/portable">
-							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
-						</entry>
-						<entry kind="macro" name="DEBUG" value=""/>
-						<entry kind="macro" name="__CODE_RED" value=""/>
-						<entry kind="macro" name="__REDLIB__" value=""/>
-						<entry kind="macro" name="__USE_CMSIS" value="CMSISv1p30_LPC17xx"/>
-					</resource>
-					<resource project-relative-path="Project/proj.c">
 						<entry kind="includePath" name="/${ProjName}/">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>

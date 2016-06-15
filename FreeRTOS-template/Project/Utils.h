@@ -24,11 +24,7 @@
 
 
 
-/* Data Structures */
 
-uint32_t layout[16];
-
-struct tm dateTime;
 
 typedef struct{
   unsigned int  adminCode;
@@ -62,16 +58,31 @@ typedef struct{
 
 void merge(void* dst, void* src1, uint32_t size1, void* src2, uint32_t size2);
 
+uint16_t getFormatedAddress(uint16_t src);
+
 void itod(char* dst, uint8_t dd, uint8_t mm, uint16_t yyyy);
 
 void itot(char* dst, uint8_t hh, uint8_t mm);
 
 void turnOnLcdAndWriteTime(int count);
 
-uint8_t verifyFlash();
+uint8_t verifyBootLoad();
 
-void resetFlash();
+void resetBootLoad();
 
-uint8_t VerifyCode(int code);
+uint8_t VerifyCode(uint32_t code);
+
+uint32_t getKeyFromArray(uint8_t src[4]);
+
+/* Data Structures */
+
+uint32_t layout[16];
+
+struct tm dateTime;
+
+Settings s;
+
+Regist r;
+
 
 #endif /* PROJECT_UTILS_H_ */

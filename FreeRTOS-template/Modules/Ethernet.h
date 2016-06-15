@@ -10,6 +10,7 @@
 
 #include "GPIO.h"
 
+
 /* EMAC Memory Buffer configuration for 16K Ethernet RAM. */
 #define NUM_RX_FRAG 4 /* Num.of RX Fragments 4*1536= 6.0kB */
 #define NUM_TX_FRAG 2 /* Num.of TX Fragments 3*1536= 4.6kB */
@@ -27,22 +28,28 @@
 #define TX_BUF_BASE (RX_BUF_BASE + NUM_RX_FRAG*ETH_FRAG_SIZE)
 
 /* Masks */
+
 #define PCONP_PCENET_MASK 40000000
 
 
 /*Modes*/
-
 
 #define EMAC_NO_READ_NO_SCAN_MODE 0
 #define EMAC_READ_MODE 1
 #define EMAC_SCAN_MODE 2
 
 //Datapaths
+
 #define EMAC_DATA_DISABLED 0
 #define EMAC_TX_ENABLE 2
 #define EMAC_RX_ENABLE 1
 
+/* Functions */
 
+void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapath);
 
+void Ethernet_WriteToPHY (int reg, int writeval);
+
+unsigned short Ethernet_ReadFromPHY (unsigned char reg);
 
 #endif /* ETHERNET_H_ */

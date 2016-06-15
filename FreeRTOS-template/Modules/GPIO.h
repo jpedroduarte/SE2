@@ -16,7 +16,7 @@
  * @{
  */
 
-#include "LPC17xx.h"
+#include "../../CMSIS_CORE_LPC17xx/inc/LPC17xx.h"
 
 /** @brief Configures the GPIO ports.
  *

@@ -89,9 +89,14 @@
 
 #include "Project/Utils.h"
 
+/* Ethernet */
+//#include "../uIPAux/src/tapdev.h"
+
+
 #define ledTest ledTest();
 #define varTest varExampleTaskTest();
 #define RTCTest RTCTest();
+#define KBDTest kbdTest();
 #define LCDTest lcdTest();
 #define EEPROMTest eepromTest();
 #define EthernetTest EthernetTest();
@@ -101,63 +106,85 @@
 // Change macro to the current designed test
 //
 
-#define test EEPROMTest
+#define test EthernetTest
 
 void projTest(){
 	I2C_config(1, 100);
-	uint8_t addr[2]={0,0};
-	uint8_t buffer[5]={8,9,10,11,12};
-	uint8_t read[20];
-	/*
-	EEPROM_Write(addr, buffer,5);
-
-	EEPROM_Read(addr,read,5);
+	if(!verifyBootLoad()){
+		resetBootLoad();
+	}
+	uint16_t addr= 0;
+	uint8_t read[48];
+	EEPROM_Read(&addr,read,48);
 	int i;
-	for(i=0; i<5; ++i){
-		printf("Mem[%u]= %X\n",i,read[i]);
+	for(i=0; i<48; ++i){
+		printf("Mem[%u]= %X\n",i,*(read+i));
 	}
 
+}
+
+void auxEEPROMTest(){
+	I2C_config(1, 100);
+
+	uint8_t addr[2]={0x100,0};
+	uint8_t buffer[5]={8,9,10,11,12};
+	uint8_t read[5];
+	EEPROM_Write(addr, buffer,5);
+	EEPROM_Read(addr,read,5);
+	uint16_t addr1=8;
+	uint32_t wbuf=0x04030201;
+	uint32_t rbuf=0xFFFFFFFF;
+	//EEPROM_Write(&addr1, &wbuf,4);
+	//EEPROM_Read(&addr1,&rbuf,4);
+	uint8_t* bla=(uint8_t*)&rbuf;
+	int i;
+	for(i=0; i<48; ++i){
+		printf("Mem[%u]= %X\n",i,*(bla+i));
+	}
+
+
+}
+
+void getBootLoadCode(){
+
+	I2C_config(1, 100);
+	//resetFlash();
+	uint16_t addr= getFormatedAddress(16);
+	uint32_t read= 0x0;
+	/*
+	uint8_t* aux=(uint8_t*) &addr;
+	puts("var:\n");
+	printf("mem[0]=0x%X\n",*aux);
+	printf("mem[1]=0x%X\n",*(aux+1));
+	puts("array\n");
+	printf("mem[0]=0x%X\n",addr1[0]);
+	printf("mem[1]=0x%X\n",addr1[1]);
 	*/
+	EEPROM_Read(&addr, &read,4);
+	printf("BootLoadCode= 0x%X\n",read);
+}
 
-	resetFlash();
-	EEPROM_Read(addr,read,20);
-	int i=0;
-	while(i<20){
-		printf("Mem[%u]= %X\n",i,read[i]);
-		++i;
+void getKeyCode(){
+	uint8_t src[4]={4,3,2,1};
+	uint32_t key = getKeyFromArray(src);
+	uint32_t count;//= keyCode[0]
+	for(count=0; count<4;++count){
+		key+=src[count]<<(8*count);
 	}
-
-	Settings s;
-	s.adminCode 	= 0x0000;
-	s.doorCOde 		= 0x1010101;// codigo 1 1 1 1
-	s.nRegist 		= 0;
-	s.absRegist		= 0;
-	s.checkBootLoad	= 0x69F02ADB;
-	s.hr 			= 0;
-	s.mm 			= 0;
-	s.s 			= 0;
-	s.year 			= 0;
-	s.month 		= 0;
-	s.day 			= 0;
-	s.dayWeek 		= 0;
-	i=0;
-	uint8_t* pointer= (uint8_t*)&s;
-	i=0;
-	while(i<20){
-		printf("Mem[%u]= %X\n",i,*(pointer+i));
-		++i;
-	}
-
+	printf("Key: 0x%X\n",key);
 }
 
 int main(void)
 {
 	puts("Begin test");
 
-	projTest();
 
-	//test;
+	//projTest();
+	//auxEEPROMTest();
+	//getBootLoadCode();
+	test;
 
+	//getKeyCode();
 	puts("End test");
 	return 0;
 }

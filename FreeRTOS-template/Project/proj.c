@@ -42,8 +42,8 @@ int pmain(){
 
 	LCD_TurnOffDisplay();
 
-	if(verifyFlash())
-		resetFlash();
+	if(verifyBootLoad())
+		resetBootLoad();
 	//
 	//Create tasks
 	//

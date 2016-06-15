@@ -1,4 +1,4 @@
-16:18:04 **** Build of configuration Debug for project FreeRTOS ****
+15:42:46 **** Build of configuration Debug for project FreeRTOS ****
 make -r all 
 Building target: FreeRTOS.axf
 Invoking: MCU Linker
@@ -16,5 +16,5 @@ arm-none-eabi-size "FreeRTOS.axf"; # arm-none-eabi-objcopy -v -O binary "FreeRTO
    6440	      0	    340	   6780	   1a7c	FreeRTOS.axf
  
 
-16:18:05 Build Finished (took 203ms)
+15:42:47 Build Finished (took 198ms)
 

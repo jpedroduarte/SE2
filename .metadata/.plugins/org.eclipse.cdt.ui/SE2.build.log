@@ -1,4 +1,4 @@
-16:18:06 **** Build of configuration Debug for project SE2 ****
+15:42:50 **** Build of configuration Debug for project SE2 ****
 make -r all 
 Building target: SE2.axf
 Invoking: MCU Linker
@@ -16,5 +16,5 @@ arm-none-eabi-size "SE2.axf"; # arm-none-eabi-objcopy -v -O binary "SE2.axf" "SE
    2844	      0	    336	   3180	    c6c	SE2.axf
  
 
-16:18:06 Build Finished (took 265ms)
+15:42:51 Build Finished (took 321ms)
 

@@ -60,7 +60,10 @@ void UserModeTaskFunc(){
 
 
 		//todo process and validate key
-
+		uint32_t key;//= keyCode[0]
+		for(count=0; count<4;++count){
+			key+=keyCode[count]<<(8*count);
+		}
 
 		xTaskNotifyGive(mainTask);
 	}

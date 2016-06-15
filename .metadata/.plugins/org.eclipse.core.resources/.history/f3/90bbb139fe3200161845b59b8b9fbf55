@@ -1,0 +1,22 @@
+/*
+ * tapdev.c
+ *
+ *  Created on: 14/06/2016
+ *      Author: Red
+ */
+
+
+#include "tapdev.h"
+#include "Modules/Ethernet.h"
+
+void tapdev_init(void){
+	Ethernet_init(EMAC_READ_MODE | EMAC_SCAN_MODE, uint8_t mac_address[6], uint8_t datapath);
+}
+
+unsigned int tapdev_read(void){
+
+}
+
+void tapdev_send(void){
+
+}

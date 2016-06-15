@@ -18,6 +18,9 @@
 #include "../Modules/RTC.h"
 #include "../Modules/LED.h"
 
+/* Professor static library uIP */
+#include "../Modules/tapdev.h"
+
 #include "queue.h"
 #include "semphr.h"
 
@@ -26,11 +29,10 @@
 //
 //Ethernet
 //
-#include "../FreeRTOS-template/Ethernet_Prof_Test/tapdev.h"
 
 
 void EthernetTest(){
-	//uIPmain();
+	uIPmain();
 }
 
 
@@ -135,14 +137,15 @@ void setKey1(void)
 	while(1){
 		if(uxQueueMessagesWaiting(queue)==0){
 			key=KBD_read();
-			if(key!=0){
+			if(key!=-1){
 				xQueueSend(queue,&key,1000);
 				printf("Put %u in queue.\n",key);
 			}else puts("No key pressed");
 		}else{
 			puts("Key still in queue\n");
 		}
-		vTaskDelay(0);//taskYIELD();
+		vTaskDelay(100);
+		//vTaskDelay(0);//taskYIELD();
 	}
 
 	//*(uint32_t*)pvParameters=key;
@@ -160,6 +163,7 @@ void setKey(void)
 				xSemaphoreGive(keysMutex);
 			}
 		}
+		//vTaskDelay(100);
 		taskYIELD();
 	}
 
@@ -169,12 +173,34 @@ void setKey(void)
 
 void getKey1(void){
 	uint32_t currKey=0;
+	uint8_t i =0, l=0;
 	while(1){
 		if(xQueueReceive(queue,&currKey,1000)){
 			printf("Get %u from queue.\n",currKey);
 			//printf("Elements in queue: %u\n",uxQueueMessagesWaiting(queue));
 		}else{
-			puts("Could not get Key.\n");
+			puts("No Key found.\n");
+		}
+		vTaskDelay(0);
+	}
+}
+
+void getKey1LCD(void){
+	uint32_t currKey=0;
+	uint8_t i =0, l=0;
+	while(1){
+		if(xQueueReceive(queue,&currKey,1000)){
+			printf("Get %u from queue.\n",currKey);
+			if(i>15*7){
+				i=0;
+				LCD_Goto(l,i);
+			}
+			++i;
+			LCD_WriteChar('0'+currKey);
+
+			//printf("Elements in queue: %u\n",uxQueueMessagesWaiting(queue));
+		}else{
+			puts("No Key found.\n");
 		}
 		vTaskDelay(0);
 	}
@@ -205,6 +231,10 @@ void getKey(void){
 void kbdTest(){	//Working
 	uint32_t layout[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 	KBD_init(layout);
+	SPI_Init(128,9);
+	LCD_Init();
+	LCD_TurnOnDisplay();
+	LCD_BL_State(1);
 	xTaskCreate(setKey1, "setKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
 	xTaskCreate(getKey1, "getKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
 	vTaskStartScheduler();

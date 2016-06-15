@@ -1,0 +1,22 @@
+/*
+ * tapdev.c
+ *
+ *  Created on: 14/06/2016
+ *      Author: Red
+ */
+
+
+#include "tapdev.h"
+
+
+void tapdev_init(void){
+	//todo Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapath);
+}
+
+unsigned int tapdev_read(void){
+
+}
+
+void tapdev_send(void){
+
+}
