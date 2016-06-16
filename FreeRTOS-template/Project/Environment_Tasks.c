@@ -15,12 +15,11 @@ void mainTaskFunc(){
 		//Get a key
 		if(xQueueReceive(KBD_queue, &key, portMAX_DELAY) == pdTRUE){
 			if(key==DOUBLE_KEY){
-				//todo double key
-
-				xTaskNotifyGive(AdminModeTask);
+				xTimerStart(Timer_waitDoubleKey,200);
 			}else{
 				xTaskNotifyGive(UserModeTask);
 			}
+			//block main task until notified
 			ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
 		}
 	}
@@ -30,7 +29,6 @@ void UserModeTaskFunc(){
 
 	uint8_t leave_function=0;
 	while(1){
-//todo
 		//block Thread until there is a notification
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		puts("User Mode");
@@ -41,7 +39,7 @@ void UserModeTaskFunc(){
 		uint8_t count;
 		for(count=0; count<4;++count){
 			//Get a key
-			if(xQueueReceive(KBD_queue, &aux, portMAX_DELAY) == pdFALSE){
+			if(xQueueReceive(KBD_queue, &aux, 5000) == pdFALSE){
 				//timeout occured
 				leave_function=1;
 				LCD_Clear(WHITE);
@@ -62,7 +60,12 @@ void UserModeTaskFunc(){
 
 		//todo validate key
 		uint8_t validate= VerifyCode(keyCode);
+
 		saveEntry(validate);
+
+		LCD_BL_State(0);
+		LCD_Clear(0xFFF);
+		LCD_TurnOffDisplay();
 
 		xTaskNotifyGive(mainTask);
 	}
@@ -85,8 +88,8 @@ void AdminModeTaskFunc(){
 
 
 /* Keyboard task*/
-int key;
 void KBD_SetKeyFunc(){
+	int key;
 	while(1){
 		if((key = KBD_read_nonBlocking()) != INVALID_KEY){
 			xQueueSend(KBD_queue, &key,100);
@@ -105,5 +108,17 @@ void LCD_DisplayFunc(){
 	//todo
 
 
+	}
+}
+
+/* LED task */
+
+void LED_OpenDoorFunc(){
+	while(1){
+		//block task until it is notified
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+		LED_SetState(1);
+		vTaskDelay(5000);
+		LED_SetState(0);
 	}
 }

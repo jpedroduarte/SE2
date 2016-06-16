@@ -10,14 +10,14 @@
 
 void tapdev_init(void){
 	/* MAC ADDRESS */
-	uint8_t mac_addr[6]={0,0,0,0,0,0};	//perguntar
+	uint8_t mac_addr[6]={6,5,4,3,2,1};
 	Ethernet_init(EMAC_NO_READ_NO_SCAN_MODE, mac_addr, EMAC_RX_ENABLE | EMAC_TX_ENABLE);
 }
 
 unsigned int tapdev_read(void){
-	Ethernet_ReadFromPHY(0x0); // perguntar
+
 }
 
 void tapdev_send(void){
-	Ethernet_WriteToPHY(0x0,0x0); // perguntar
+
 }

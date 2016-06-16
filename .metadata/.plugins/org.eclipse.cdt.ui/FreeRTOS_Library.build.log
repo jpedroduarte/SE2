@@ -1,6 +1,128 @@
-16:58:08 **** Incremental Build of configuration Debug for project FreeRTOS_Library ****
+22:25:13 **** Incremental Build of configuration Debug for project FreeRTOS_Library ****
 make -r all 
-make: Nothing to be done for `all'.
+Building file: ../portable/heap_4.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O1 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"portable/heap_4.d" -MT"portable/heap_4.o" -MT"portable/heap_4.d" -o "portable/heap_4.o" "../portable/heap_4.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../portable/heap_4.c:82:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+../portable/heap_4.c: At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: 'ucPortCountLeadingZeros' defined but not used [-Wunused-function]
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../portable/heap_4.c
+ 
+Building file: ../portable/port.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O1 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"portable/port.d" -MT"portable/port.o" -MT"portable/port.d" -o "portable/port.o" "../portable/port.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../portable/port.c:72:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+../portable/port.c: At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: 'ucPortCountLeadingZeros' defined but not used [-Wunused-function]
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../portable/port.c
+ 
+Building file: ../demo_code/basic_io.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O1 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"demo_code/basic_io.d" -MT"demo_code/basic_io.o" -MT"demo_code/basic_io.d" -o "demo_code/basic_io.o" "../demo_code/basic_io.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../demo_code/basic_io.c:35:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+../demo_code/basic_io.c: At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: 'ucPortCountLeadingZeros' defined but not used [-Wunused-function]
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../demo_code/basic_io.c
+ 
+Building file: ../list.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O1 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"list.d" -MT"list.o" -MT"list.d" -o "list.o" "../list.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../list.c:69:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+../list.c: At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: 'ucPortCountLeadingZeros' defined but not used [-Wunused-function]
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../list.c
+ 
+Building file: ../queue.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O1 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"queue.d" -MT"queue.o" -MT"queue.d" -o "queue.o" "../queue.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../queue.c:75:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+../queue.c: At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: 'ucPortCountLeadingZeros' defined but not used [-Wunused-function]
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../queue.c
+ 
+Building file: ../tasks.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O1 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"tasks.d" -MT"tasks.o" -MT"tasks.d" -o "tasks.o" "../tasks.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../tasks.c:77:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../tasks.c
+ 
+Building file: ../timers.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O1 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"timers.d" -MT"timers.o" -MT"timers.d" -o "timers.o" "../timers.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../timers.c:72:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+../timers.c: At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: 'ucPortCountLeadingZeros' defined but not used [-Wunused-function]
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../timers.c
+ 
+Building target: libFreeRTOS_Library.a
+Invoking: MCU Archiver
+arm-none-eabi-ar -r  "libFreeRTOS_Library.a"  ./portable/heap_4.o ./portable/port.o  ./demo_code/basic_io.o ./demo_code/consoleprint.o  ./list.o ./queue.o ./tasks.o ./timers.o   
+c:\nxp\LPCXpresso_8.1.4_606\lpcxpresso\tools\bin\arm-none-eabi-ar.exe: creating libFreeRTOS_Library.a
+Finished building target: libFreeRTOS_Library.a
+ 
+make --no-print-directory post-build
+Performing post-build steps
+arm-none-eabi-size libFreeRTOS_Library.a ; # arm-none-eabi-objdump -h -S libFreeRTOS_Library.a >libFreeRTOS_Library.lss
+   text	   data	    bss	    dec	    hex	filename
+    320	      4	   2064	   2388	    954	heap_4.o (ex libFreeRTOS_Library.a)
+    332	      4	      0	    336	    150	port.o (ex libFreeRTOS_Library.a)
+     88	      0	     50	    138	     8a	basic_io.o (ex libFreeRTOS_Library.a)
+     20	      0	      0	     20	     14	consoleprint.o (ex libFreeRTOS_Library.a)
+    156	      0	      0	    156	     9c	list.o (ex libFreeRTOS_Library.a)
+   1320	      0	      0	   1320	    528	queue.o (ex libFreeRTOS_Library.a)
+   3013	      4	    256	   3273	    cc9	tasks.o (ex libFreeRTOS_Library.a)
+    792	      0	     56	    848	    350	timers.o (ex libFreeRTOS_Library.a)
+ 
 
-16:58:08 Build Finished (took 78ms)
+22:25:14 Build Finished (took 1s.374ms)
 

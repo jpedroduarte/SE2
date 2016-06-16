@@ -7,8 +7,44 @@
 
 #include "Environment_Tasks.h"
 
+/* Software Timer Functions */
 
-int pmain(){
+void TimerCallback(TimerHandle_t xTimer){
+	const uint32_t ulMaxExpiryCountBeforeStopping = 10;
+	uint32_t ulCount;
+
+	/* The number of times this timer has expired is saved as the
+	timer's ID.  Obtain the count. */
+	ulCount = ( uint32_t ) pvTimerGetTimerID( xTimer );
+
+	/* Increment the count, then test to see if the timer has expired
+	ulMaxExpiryCountBeforeStopping yet. */
+	ulCount++;
+	if(KBD_read_nonBlocking()!= DOUBLE_KEY){
+		xTaskNotifyGive(mainTask);
+		xTimerStop( pxTimer, 0 );
+	}
+	/* If the timer has expired 10 times then stop it from running. */
+	if( ulCount >= ulMaxExpiryCountBeforeStopping )
+	{
+		/* Do not use a block time if calling a timer API function
+		from a timer callback function, as doing so could cause a
+		deadlock! */
+		xTaskNotifyGive(AdminModeTask);
+		xTimerStop( pxTimer, 0 );
+
+	}
+	else
+	{
+	   /* Store the incremented count back into the timer's ID field
+	   so it can be read back again the next time this software timer
+	   expires. */
+	   vTimerSetTimerID( xTimer, ( void * ) ulCount );
+	}
+}
+
+
+int main(){
 
 	//
 	//Init
@@ -52,6 +88,8 @@ int pmain(){
 	xTaskCreate(UserModeTaskFunc, "UserModeTask", configMINIMAL_STACK_SIZE, NULL, 0 , UserModeTask );
 	xTaskCreate(AdminModeTaskFunc, "AdminModeTask", configMINIMAL_STACK_SIZE, NULL, 0 , AdminModeTask );
 
+	/* Utility tasks */
+	xTaskCreate(LED_OpenDoorFunc,"Led_OpenDoorTask",configMINIMAL_STACK_SIZE, NULL, 0 , LED_OpenDoor);
 	xTaskCreate(KBD_SetKeyFunc, "KBD_Task", configMINIMAL_STACK_SIZE, NULL, 0 , KBD_SetKey );
 #define KBD_queue_size 4
 	KBD_queue= xQueueCreate(KBD_queue_size,sizeof(uint32_t)*KBD_queue_size);
@@ -60,6 +98,22 @@ int pmain(){
 	xTaskCreate(LCD_DisplayFunc, "LCD_Task", configMINIMAL_STACK_SIZE, NULL, 0 , LCD_Display );
 	LCD_queue= xQueueCreate(LCD_queue_size,sizeof(char)*LCD_queue_size);
 */
+	/* Create Timers */
+	Timer_waitDoubleKey= xTimerCreate(
+		 "Timer",
+		 200,
+		 pdTRUE,
+		 ( void * ) 0,
+		 TimerCallback
+	 );
+
+	if(Timer_waitDoubleKey == NULL)
+	{
+		puts("Failed to create FREERTOS Timer");
+		return 0;
+	}
+
+	/* Start Scheduler */
 	vTaskStartScheduler();
 
 	return 0;

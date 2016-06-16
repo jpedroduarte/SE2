@@ -129,7 +129,6 @@ uint8_t VerifyCode(uint32_t code){
 }
 
 void saveEntry(uint8_t validated){
-	//todo
 
 	//Get nRegist from EEPROM
 	uint32_t nRegist;
@@ -137,8 +136,10 @@ void saveEntry(uint8_t validated){
 	EEPROM_Read(&addr,&nRegist,sizeof(uint32_t));
 	if(nRegist >= MAX_ENTRY_VALUE){	// EEPROM memory is full
 		/* Reset EEPROM entry pointer */
+		nRegist=0;
+		EEPROM_Write(&addr, &nRegist,sizeof(uint32_t));
 	}
-	//Get absReg from EEPROM
+	//Get absReg from EEPROM recheck
 	uint32_t absReg;
 	addr= getFormatedAddress(ABSREGIST_ADDR);
 	EEPROM_Read(&addr,&absReg,sizeof(uint32_t));
@@ -146,7 +147,7 @@ void saveEntry(uint8_t validated){
 	// Get DateTime
 	RTC_GetValue(&dateTime);
 
-	Regist  regist;
+	Regist regist;
 	regist.hr = dateTime.tm_hour;
 	regist.mm = dateTime.tm_min;
 	regist.s = dateTime.tm_sec;
@@ -159,6 +160,7 @@ void saveEntry(uint8_t validated){
 	//Get Address to write entry
 	uint16_t entry_addr= getFormatedAddress(nRegist*sizeof(regist)+sizeof(Settings));
 	//write in EEPROM
+	EEPROM_Write(&entry_addr,&regist,sizeof(Regist));
 }
 
 uint32_t getKeyFromArray(uint8_t src[4]){

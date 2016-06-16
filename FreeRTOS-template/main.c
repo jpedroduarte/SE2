@@ -176,7 +176,7 @@ void getKeyCode(){
 	printf("Key: 0x%X\n",key);
 }
 
-int main(void)
+int pmain(void)
 {
 	puts("Begin test");
 

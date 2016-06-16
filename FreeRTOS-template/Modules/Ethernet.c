@@ -50,6 +50,16 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	//__IO uint32_t TxDescriptorNumber;
 	LPC_EMAC->TxProduceIndex=0;
 	//LPC_EMAC->TxConsumeIndex=0;
+
+	/* restart */
+	WriteToPHY (0, 1<<15);
+
+	/* enable auto-negotiation */
+	WriteToPHY(0,1<<12);
+
+	/* Set 100BASE-TX Half-Duplex */
+	WriteToPHY(1,1<<13);
+
 }
 
 /*Notas:
@@ -57,19 +67,17 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 
 */
 
-#define PHY_DEF_ADR 0b00001	// perguntar
+#define PHY_DEF_ADR 0b00001
 #define MII_WR_TOUT 0		// perguntar
 #define MIND_BUSY 0x1
+#define MCMD_WRITE 0
 
 void WriteToPHY (int reg, int writeval){
 
 	unsigned int loop;
-	// Set up address to access in MII Mgmt Address Register
-	LPC_EMAC->MADR= PHY_DEF_ADR<<12 | reg;
-	// Write value into MII Mgmt Write Data Register
+	LPC_EMAC->MADR= PHY_DEF_ADR<<8 | reg;
 	LPC_EMAC->MWTD = writeval;
-	// Loop write to PHY completes
-	for (loop = 0; loop < MII_WR_TOUT; loop++)
+	for (loop = 0; loop < MII_WR_TOUT; loop++)//why not forever
 		if ((LPC_EMAC->MIND & MIND_BUSY) == 0)
 			break;
 }
@@ -80,11 +88,8 @@ void WriteToPHY (int reg, int writeval){
 unsigned short ReadFromPHY (unsigned char reg){
 
 	unsigned int loop;
-	// Set up address to access in MII Mgmt Address Register
 	LPC_EMAC->MADR=PHY_DEF_ADR|reg;
-	// Trigger a PHY read via MII Mgmt Command Register
 	LPC_EMAC->MCMD = MCMD_READ;
-	// Loop read from PHY completes
 	for (loop = 0; loop < MII_RD_TOUT; loop++)
 		if ((LPC_EMAC->MIND & MIND_BUSY) == 0)
 			break;
