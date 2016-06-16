@@ -76,7 +76,7 @@ void turnOnLcdAndWriteTime(int count){//done
     LCD_Goto(3,1); LCD_WriteString(date);
     LCD_Goto(5,2); LCD_WriteString(time);
 	LCD_Goto(5+count,3);
-	//LCD_WriteChar('*');
+	LCD_WriteChar('*');
 }
 
 uint8_t verifyBootLoad(){
@@ -126,6 +126,39 @@ uint8_t VerifyCode(uint32_t code){
 	if(buffer != code)
 		return 0;
 	return 1;
+}
+
+void saveEntry(uint8_t validated){
+	//todo
+
+	//Get nRegist from EEPROM
+	uint32_t nRegist;
+	uint16_t addr= getFormatedAddress(NREGIST_ADDR);
+	EEPROM_Read(&addr,&nRegist,sizeof(uint32_t));
+	if(nRegist >= MAX_ENTRY_VALUE){	// EEPROM memory is full
+		/* Reset EEPROM entry pointer */
+	}
+	//Get absReg from EEPROM
+	uint32_t absReg;
+	addr= getFormatedAddress(ABSREGIST_ADDR);
+	EEPROM_Read(&addr,&absReg,sizeof(uint32_t));
+
+	// Get DateTime
+	RTC_GetValue(&dateTime);
+
+	Regist  regist;
+	regist.hr = dateTime.tm_hour;
+	regist.mm = dateTime.tm_min;
+	regist.s = dateTime.tm_sec;
+	regist.year = dateTime.tm_year;
+	regist.month = dateTime.tm_mon;
+	regist.day = dateTime.tm_mday;
+	regist.dayWeek = dateTime.tm_wday;
+	regist.validation = validated;
+
+	//Get Address to write entry
+	uint16_t entry_addr= getFormatedAddress(nRegist*sizeof(regist)+sizeof(Settings));
+	//write in EEPROM
 }
 
 uint32_t getKeyFromArray(uint8_t src[4]){

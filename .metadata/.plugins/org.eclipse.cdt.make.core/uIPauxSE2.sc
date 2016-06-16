@@ -2,8 +2,11 @@
 <?scdStore version="2"?><scannerInfo id="org.eclipse.cdt.make.core.discoveredScannerInfo">
 <instance id="com.crt.advproject.config.lib.debug.1596708927;com.crt.advproject.config.lib.debug.1596708927.;com.crt.advproject.gcc.lib.debug.971010664;com.crt.advproject.compiler.input.1822700569">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
-<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/redlib/include"/>
-<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/features/include"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/lib/gcc/arm-none-eabi/5.2.1/include"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/lib/gcc/arm-none-eabi/5.2.1/include-fixed"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/arm-none-eabi/include"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/redlib/include" removed="true"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/features/include" removed="true"/>
 <definedSymbol symbol="__STDC__=1"/>
 <definedSymbol symbol="__STDC_VERSION__=201112L"/>
 <definedSymbol symbol="__STDC_UTF_16__=1"/>
@@ -351,8 +354,11 @@
 </instance>
 <instance id="com.crt.advproject.config.lib.debug.1596708927;com.crt.advproject.config.lib.debug.1596708927.;com.crt.advproject.gas.lib.debug.1216933229;com.crt.advproject.assembler.input.1063859235">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
-<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/redlib/include"/>
-<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/features/include"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/lib/gcc/arm-none-eabi/5.2.1/include"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/lib/gcc/arm-none-eabi/5.2.1/include-fixed"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/arm-none-eabi/include"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/redlib/include" removed="true"/>
+<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/features/include" removed="true"/>
 <definedSymbol symbol="__STDC__=1"/>
 <definedSymbol symbol="__STDC_VERSION__=201112L"/>
 <definedSymbol symbol="__STDC_UTF_16__=1"/>

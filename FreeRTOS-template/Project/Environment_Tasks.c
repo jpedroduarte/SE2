@@ -36,12 +36,12 @@ void UserModeTaskFunc(){
 		puts("User Mode");
 
 		//LCD Autentication State todo
-
-		uint8_t keyCode[4];
+		uint32_t keyCode=0, aux;
+		//uint8_t keyCode[4];
 		uint8_t count;
 		for(count=0; count<4;++count){
 			//Get a key
-			if(xQueueReceive(KBD_queue, keyCode+count, portMAX_DELAY) == pdFALSE){
+			if(xQueueReceive(KBD_queue, &aux, portMAX_DELAY) == pdFALSE){
 				//timeout occured
 				leave_function=1;
 				LCD_Clear(WHITE);
@@ -49,6 +49,7 @@ void UserModeTaskFunc(){
 				LCD_TurnOffDisplay();
 				break;
 			}else{
+				keyCode |= aux<<(count*8);
 				turnOnLcdAndWriteTime(count);
 			}
 		}
@@ -59,11 +60,9 @@ void UserModeTaskFunc(){
 		}
 
 
-		//todo process and validate key
-		uint32_t key;//= keyCode[0]
-		for(count=0; count<4;++count){
-			key+=keyCode[count]<<(8*count);
-		}
+		//todo validate key
+		uint8_t validate= VerifyCode(keyCode);
+		saveEntry(validate);
 
 		xTaskNotifyGive(mainTask);
 	}

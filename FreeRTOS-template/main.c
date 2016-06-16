@@ -93,6 +93,8 @@
 //#include "../uIPAux/src/tapdev.h"
 
 
+
+#define KeyAppTest KeyTest();
 #define ledTest ledTest();
 #define varTest varExampleTaskTest();
 #define RTCTest RTCTest();
@@ -106,7 +108,7 @@
 // Change macro to the current designed test
 //
 
-#define test EthernetTest
+#define test kbdTest
 
 void projTest(){
 	I2C_config(1, 100);
@@ -126,7 +128,7 @@ void projTest(){
 void auxEEPROMTest(){
 	I2C_config(1, 100);
 
-	uint8_t addr[2]={0x100,0};
+	uint8_t addr[2]={0x1,0};
 	uint8_t buffer[5]={8,9,10,11,12};
 	uint8_t read[5];
 	EEPROM_Write(addr, buffer,5);
@@ -178,11 +180,11 @@ int main(void)
 {
 	puts("Begin test");
 
-
+	kbdTest();
 	//projTest();
 	//auxEEPROMTest();
 	//getBootLoadCode();
-	test;
+	//test;
 
 	//getKeyCode();
 	puts("End test");

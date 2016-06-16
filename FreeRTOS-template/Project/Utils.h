@@ -21,10 +21,13 @@
 /* Macros */
 
 #define BootLoadCode 0x69F02ADB
+#define ADMINCODE_ADDR 0
+#define DOORCODE_ADDR 4
+#define NREGIST_ADDR 8
+#define ABSREGIST_ADDR 12
+#define CHECK_BOOT_LOAD_ADDR 16
 
-
-
-
+#define MAX_ENTRY_VALUE 3350
 
 typedef struct{
   unsigned int  adminCode;
@@ -57,7 +60,6 @@ typedef struct{
 /* Functions */
 
 void merge(void* dst, void* src1, uint32_t size1, void* src2, uint32_t size2);
-
 uint16_t getFormatedAddress(uint16_t src);
 
 void itod(char* dst, uint8_t dd, uint8_t mm, uint16_t yyyy);
@@ -73,6 +75,8 @@ void resetBootLoad();
 uint8_t VerifyCode(uint32_t code);
 
 uint32_t getKeyFromArray(uint8_t src[4]);
+
+void saveEntry(uint8_t validated);
 
 /* Data Structures */
 

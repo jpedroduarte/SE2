@@ -1,2 +1,7 @@
 #Ignore metadata
 .metadata
+
+#ignore produced files
+SE2
+FreeRTOS/Debug
+FreeRTOS_Library/Debug

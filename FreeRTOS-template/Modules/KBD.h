@@ -70,7 +70,7 @@ uint32_t KBD_read();
  *	This function can also read 2 simultaneous keys pressed. They must be the 2 last columns and last line.
  *  @return the code of the key, according to the layout established.
  */
-uint32_t KBD_read_nonBlocking();
+int KBD_read_nonBlocking();
 
 /**
  * @}

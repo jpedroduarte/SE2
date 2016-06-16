@@ -36,6 +36,20 @@ void EthernetTest(){
 }
 
 
+/* App */
+void KeyTest(){	//Working
+	uint32_t layout[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+	KBD_init(layout);
+	uint32_t keyCode=0, aux;
+	uint8_t count;
+	for(count=0; count<4;++count){
+		//Get a key
+		aux= KBD_read();
+		keyCode |= aux<<(count*8);
+		printf("Key= 0x%X\n",keyCode);
+	}
+}
+
 //
 //RTC
 //
@@ -229,14 +243,14 @@ void getKey(void){
 }
 
 void kbdTest(){	//Working
-	uint32_t layout[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+	uint32_t layout[]={0,1,2,3,4,5,6,7,8,9,17,18,19,20,21,22};
 	KBD_init(layout);
 	SPI_Init(128,9);
 	LCD_Init();
 	LCD_TurnOnDisplay();
 	LCD_BL_State(1);
 	xTaskCreate(setKey1, "setKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
-	xTaskCreate(getKey1, "getKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
+	xTaskCreate(getKey1LCD, "getKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
 	vTaskStartScheduler();
 }
 

@@ -69,7 +69,9 @@ uint32_t KBD_read(){
 		col>>=1;
 		++column_value;
 	}
-			
+	while(KBD_hit() ){
+		//Waiting for release
+	}
 	return kbd_layout[4*line_value + column_value];
 }
 
@@ -79,7 +81,7 @@ returns value
 */
 
 
-uint32_t KBD_read_nonBlocking(){
+int KBD_read_nonBlocking(){
 	if( !KBD_hit() ){
 		return -1;
 	}

@@ -1,14 +1,88 @@
-16:54:51 **** Incremental Build of configuration Debug for project FreeRTOS-template ****
+16:58:08 **** Incremental Build of configuration Debug for project FreeRTOS-template ****
 make -r all 
-Building file: ../Modules/Ethernet.c
+Building file: ../Project/Environment_Tasks.c
 Invoking: MCU C Compiler
-arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/Ethernet.d" -MT"Modules/Ethernet.o" -MT"Modules/Ethernet.d" -o "Modules/Ethernet.o" "../Modules/Ethernet.c"
-Finished building: ../Modules/Ethernet.c
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Project/Environment_Tasks.d" -MT"Project/Environment_Tasks.o" -MT"Project/Environment_Tasks.d" -o "Project/Environment_Tasks.o" "../Project/Environment_Tasks.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../Project/../Modules/KBD.h:19,
+                 from ../Project/Utils.h:16,
+                 from ../Project/Environment_Tasks.h:11,
+                 from ../Project/Environment_Tasks.c:8:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+../Project/Environment_Tasks.c: In function 'mainTaskFunc':
+../Project/Environment_Tasks.c:20:5: warning: implicit declaration of function 'xTaskNotifyGive' [-Wimplicit-function-declaration]
+     xTaskNotifyGive(AdminModeTask);
+     ^
+../Project/Environment_Tasks.c:24:4: warning: implicit declaration of function 'ulTaskNotifyTake' [-Wimplicit-function-declaration]
+    ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+    ^
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../Project/../Modules/KBD.h:19,
+                 from ../Project/Utils.h:16,
+                 from ../Project/Environment_Tasks.h:11,
+                 from ../Project/Environment_Tasks.c:8:
+At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+Finished building: ../Project/Environment_Tasks.c
+ 
+Building file: ../Project/Utils.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Project/Utils.d" -MT"Project/Utils.o" -MT"Project/Utils.d" -o "Project/Utils.o" "../Project/Utils.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../Project/../Modules/KBD.h:19,
+                 from ../Project/Utils.h:16,
+                 from ../Project/Utils.c:9:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../Project/Utils.c
+ 
+Building file: ../Project/proj.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Project/proj.d" -MT"Project/proj.o" -MT"Project/proj.d" -o "Project/proj.o" "../Project/proj.c"
+In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
+                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
+                 from ../Project/../Modules/KBD.h:19,
+                 from ../Project/Utils.h:16,
+                 from ../Project/Environment_Tasks.h:11,
+                 from ../Project/proj.c:8:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../Project/proj.c
  
 Building file: ../Modules/tapdev.c
 Invoking: MCU C Compiler
 arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/tapdev.d" -MT"Modules/tapdev.o" -MT"Modules/tapdev.d" -o "Modules/tapdev.o" "../Modules/tapdev.c"
 Finished building: ../Modules/tapdev.c
+ 
+Building file: ../main.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"main.d" -MT"main.o" -MT"main.d" -o "main.o" "../main.c"
+In file included from c:\users\red\documents\lpcxpresso_8.1.4_606\testspace\freertos_library\include\portable.h:320:0,
+                 from c:\users\red\documents\lpcxpresso_8.1.4_606\testspace\freertos_library\include\freertos.h:83,
+                 from ../main.c:78:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
+  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
+                                                          ^
+At top level:
+C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
+Finished building: ../main.c
  
 Building target: SimpleDemo.axf
 Invoking: MCU Linker
@@ -19,8 +93,8 @@ make --no-print-directory post-build
 Performing post-build steps
 arm-none-eabi-size SimpleDemo.axf; # arm-none-eabi-objcopy -O ihex SimpleDemo.axf SimpleDemo.hex ;
    text	   data	    bss	    dec	    hex	filename
-  36616	     68	  12648	  49332	   c0b4	SimpleDemo.axf
+  21032	     24	   2784	  23840	   5d20	SimpleDemo.axf
  
 
-16:54:52 Build Finished (took 517ms)
+16:58:09 Build Finished (took 977ms)
 
