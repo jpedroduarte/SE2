@@ -1,4 +1,5 @@
 #include "Ethernet.h"
+#include <stdio.h>
 
 void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapath){
 
@@ -27,10 +28,7 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	//configure read cycle mode
 	LPC_EMAC->MCMD= (LPC_EMAC->MCMD & ~0x3) | readCycleMode;
 
-	//Set Station Address
-	LPC_EMAC->SA0= mac_address[0]<<8 | mac_address[1];
-	LPC_EMAC->SA1= mac_address[2]<<8 | mac_address[3];
-	LPC_EMAC->SA2= mac_address[4]<<8 | mac_address[5];
+
 
 	//Select RMII
 #define RMII_MASK 0x20
@@ -52,13 +50,36 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	//LPC_EMAC->TxConsumeIndex=0;
 
 	/* restart */
-	WriteToPHY (0, 1<<15);
+	Ethernet_WriteToPHY (0, 1<<15);
+
+	/* wait for restart to complete */
+	while(1)
+		if( (Ethernet_ReadFromPHY(0) && 1<<15) == 0)
+			break;
 
 	/* enable auto-negotiation */
-	WriteToPHY(0,1<<12);
+	Ethernet_WriteToPHY(0,1<<12);
 
-	/* Set 100BASE-TX Half-Duplex */
-	WriteToPHY(1,1<<13);
+	/* wait for auto-negotiation to complete */
+	while(1)
+		if( (Ethernet_ReadFromPHY(1) && 1<<5) == 0)
+			break;
+	/* check link status */
+	if( (Ethernet_ReadFromPHY(1) && 1<<2) == 0)
+		puts("PHY Link Status down");
+
+	/* Half-Duplex */
+	LPC_EMAC->MAC2= LPC_EMAC->MAC2 & ~0x1;	//set bit 0 to 0
+
+	/* 100 Mbps */
+	LPC_EMAC->SUPP= 1<<8;
+
+	/* Set Station Address */
+	LPC_EMAC->SA0= mac_address[0]<<8 | mac_address[1];
+	LPC_EMAC->SA1= mac_address[2]<<8 | mac_address[3];
+	LPC_EMAC->SA2= mac_address[4]<<8 | mac_address[5];
+
+
 
 }
 
@@ -72,8 +93,7 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 #define MIND_BUSY 0x1
 #define MCMD_WRITE 0
 
-void WriteToPHY (int reg, int writeval){
-
+void Ethernet_WriteToPHY (int reg, int writeval){
 	unsigned int loop;
 	LPC_EMAC->MADR= PHY_DEF_ADR<<8 | reg;
 	LPC_EMAC->MWTD = writeval;
@@ -85,8 +105,7 @@ void WriteToPHY (int reg, int writeval){
 #define MCMD_READ 0x1
 #define MII_RD_TOUT 0	// perguntar
 
-unsigned short ReadFromPHY (unsigned char reg){
-
+unsigned short Ethernet_ReadFromPHY (unsigned char reg){
 	unsigned int loop;
 	LPC_EMAC->MADR=PHY_DEF_ADR|reg;
 	LPC_EMAC->MCMD = MCMD_READ;

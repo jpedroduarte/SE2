@@ -1,20 +1,16 @@
-18:12:30 **** Build of configuration Debug for project SE2 ****
+22:52:51 **** Build of configuration Debug for project SE2 ****
 make -r all 
+Building file: ../Tests/FreeRTOS_Tests.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__CODE_RED -DCORE_M3 -D__USE_CMSIS=CMSIS_CORE_LPC17xx -DCR_INTEGER_PRINTF -DCR_PRINTF_CHAR -D__LPC17XX__ -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\SE2\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -fno-common -g3 -Wall -c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -mcpu=cortex-m3 -mthumb -specs=redlib.specs -MMD -MP -MF"Tests/FreeRTOS_Tests.d" -MT"Tests/FreeRTOS_Tests.o" -MT"Tests/FreeRTOS_Tests.d" -o "Tests/FreeRTOS_Tests.o" "../Tests/FreeRTOS_Tests.c"
+Finished building: ../Tests/FreeRTOS_Tests.c
+ 
 Building target: SE2.axf
 Invoking: MCU Linker
 arm-none-eabi-gcc -nostdlib -L"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\Debug" -L"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\Debug" -Xlinker -Map="SE2.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -mcpu=cortex-m3 -mthumb -T "SE2_Debug.ld" -o "SE2.axf"  ./src/cr_startup_lpc175x_6x.o ./src/crp.o ./src/main.o  ./inc/LCD_Font.o  ./Tests/FreeRTOS_Tests.o ./Tests/GPIO_Tests.o ./Tests/KBD_Tests.o  ./Modules/GPIO.o ./Modules/I2C.o ./Modules/KBD.o ./Modules/LCD.o ./Modules/SPI.o   -lFreeRTOS_Library -lCMSIS_CORE_LPC17xx
-Memory region         Used Size  Region Size  %age Used
-       MFlash512:        2844 B       512 KB      0.54%
-        RamLoc32:         336 B        32 KB      1.03%
-        RamAHB32:          0 GB        32 KB      0.00%
-Finished building target: SE2.axf
- 
-make --no-print-directory post-build
-Performing post-build steps
-arm-none-eabi-size "SE2.axf"; # arm-none-eabi-objcopy -v -O binary "SE2.axf" "SE2.bin" ; # checksum -p LPC1769 -d "SE2.bin";
-   text	   data	    bss	    dec	    hex	filename
-   2844	      0	    336	   3180	    c6c	SE2.axf
- 
+c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/5.2.1/../../../../arm-none-eabi/bin/ld.exe: cannot find -lFreeRTOS_Library
+collect2.exe: error: ld returned 1 exit status
+make: *** [SE2.axf] Error 1
 
-18:12:30 Build Finished (took 219ms)
+22:52:51 Build Finished (took 316ms)
 

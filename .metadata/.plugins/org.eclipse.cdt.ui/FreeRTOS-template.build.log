@@ -1,110 +1,136 @@
-22:25:15 **** Incremental Build of configuration Debug for project FreeRTOS-template ****
+02:57:10 **** Build of configuration Debug for project FreeRTOS-template ****
 make -r all 
 Building file: ../test/tests.c
 Invoking: MCU C Compiler
 arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"test/tests.d" -MT"test/tests.o" -MT"test/tests.d" -o "test/tests.o" "../test/tests.c"
-In file included from ../test/../../FreeRTOS_Library/include/portable.h:320:0,
-                 from ../test/../../FreeRTOS_Library/include/FreeRTOS.h:83,
-                 from ../test/tests.c:8:
-C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
-C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
-  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
-                                                          ^
-In file included from ../test/tests.c:9:0:
 ../test/tests.c: In function 'RTCTest':
-../test/../../FreeRTOS_Library/include/task.h:294:118: warning: passing argument 1 of 'xTaskGenericCreate' from incompatible pointer type [-Wincompatible-pointer-types]
- #define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )
-                                                                                                                      ^
-../test/tests.c:78:2: note: in expansion of macro 'xTaskCreate'
+../test/tests.c:78:14: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
   xTaskCreate(GetDatetimeTask, "RTC_GetDateTime", configMINIMAL_STACK_SIZE, NULL, 0 , NULL);
-  ^
+              ^
 In file included from ../test/tests.c:9:0:
-../test/../../FreeRTOS_Library/include/task.h:1310:22: note: expected 'pdTASK_CODE {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
- signed portBASE_TYPE xTaskGenericCreate( pdTASK_CODE pxTaskCode, const signed char * const pcName, unsigned short usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pxCreatedTask, portSTACK_TYPE *puxStackBuffer, const xMemoryRegion * const xRegions ) PRIVILEGED_FUNCTION;
-                      ^
-In file included from ../test/tests.c:9:0:
+../test/../../FreeRTOS_Library/include/task.h:360:13: note: expected 'TaskFunction_t {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
+  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+             ^
 ../test/tests.c: In function 'ledTest':
-../test/../../FreeRTOS_Library/include/task.h:294:118: warning: passing argument 1 of 'xTaskGenericCreate' from incompatible pointer type [-Wincompatible-pointer-types]
- #define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )
-                                                                                                                      ^
-../test/tests.c:138:2: note: in expansion of macro 'xTaskCreate'
+../test/tests.c:138:14: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
   xTaskCreate(blinkLedLib, "ledTest", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
-  ^
+              ^
 In file included from ../test/tests.c:9:0:
-../test/../../FreeRTOS_Library/include/task.h:1310:22: note: expected 'pdTASK_CODE {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
- signed portBASE_TYPE xTaskGenericCreate( pdTASK_CODE pxTaskCode, const signed char * const pcName, unsigned short usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pxCreatedTask, portSTACK_TYPE *puxStackBuffer, const xMemoryRegion * const xRegions ) PRIVILEGED_FUNCTION;
-                      ^
-In file included from ../test/tests.c:9:0:
+../test/../../FreeRTOS_Library/include/task.h:360:13: note: expected 'TaskFunction_t {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
+  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+             ^
 ../test/tests.c: In function 'kbdTest':
-../test/../../FreeRTOS_Library/include/task.h:294:118: warning: passing argument 1 of 'xTaskGenericCreate' from incompatible pointer type [-Wincompatible-pointer-types]
- #define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )
-                                                                                                                      ^
-../test/tests.c:252:2: note: in expansion of macro 'xTaskCreate'
+../test/tests.c:252:14: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
   xTaskCreate(setKey1, "setKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
-  ^
+              ^
 In file included from ../test/tests.c:9:0:
-../test/../../FreeRTOS_Library/include/task.h:1310:22: note: expected 'pdTASK_CODE {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
- signed portBASE_TYPE xTaskGenericCreate( pdTASK_CODE pxTaskCode, const signed char * const pcName, unsigned short usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pxCreatedTask, portSTACK_TYPE *puxStackBuffer, const xMemoryRegion * const xRegions ) PRIVILEGED_FUNCTION;
-                      ^
-In file included from ../test/tests.c:9:0:
-../test/../../FreeRTOS_Library/include/task.h:294:118: warning: passing argument 1 of 'xTaskGenericCreate' from incompatible pointer type [-Wincompatible-pointer-types]
- #define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )
-                                                                                                                      ^
-../test/tests.c:253:2: note: in expansion of macro 'xTaskCreate'
+../test/../../FreeRTOS_Library/include/task.h:360:13: note: expected 'TaskFunction_t {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
+  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+             ^
+../test/tests.c:253:14: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
   xTaskCreate(getKey1LCD, "getKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
-  ^
+              ^
 In file included from ../test/tests.c:9:0:
-../test/../../FreeRTOS_Library/include/task.h:1310:22: note: expected 'pdTASK_CODE {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
- signed portBASE_TYPE xTaskGenericCreate( pdTASK_CODE pxTaskCode, const signed char * const pcName, unsigned short usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pxCreatedTask, portSTACK_TYPE *puxStackBuffer, const xMemoryRegion * const xRegions ) PRIVILEGED_FUNCTION;
-                      ^
-In file included from ../test/../../FreeRTOS_Library/include/portable.h:320:0,
-                 from ../test/../../FreeRTOS_Library/include/FreeRTOS.h:83,
-                 from ../test/tests.c:8:
-At top level:
-C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
-  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
-                                                          ^
+../test/../../FreeRTOS_Library/include/task.h:360:13: note: expected 'TaskFunction_t {aka void (*)(void *)}' but argument is of type 'void (*)(void)'
+  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+             ^
 Finished building: ../test/tests.c
  
 Building file: ../Project/Environment_Tasks.c
 Invoking: MCU C Compiler
 arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Project/Environment_Tasks.d" -MT"Project/Environment_Tasks.o" -MT"Project/Environment_Tasks.d" -o "Project/Environment_Tasks.o" "../Project/Environment_Tasks.c"
-In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
-                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
-                 from ../Project/../Modules/KBD.h:19,
-                 from ../Project/Utils.h:16,
-                 from ../Project/Environment_Tasks.h:11,
-                 from ../Project/Environment_Tasks.c:8:
-C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h: In function 'ucPortCountLeadingZeros':
-C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: type of 'ulBitmap' defaults to 'int' [-Wimplicit-int]
-  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
-                                                          ^
-In file included from ../Project/Environment_Tasks.c:8:0:
-../Project/Environment_Tasks.h: At top level:
-../Project/Environment_Tasks.h:58:6: error: 'LED_OpenDoor' redeclared as different kind of symbol
- void LED_OpenDoor();
-      ^
-../Project/Environment_Tasks.h:28:13: note: previous declaration of 'LED_OpenDoor' was here
- xTaskHandle LED_OpenDoor;
-             ^
-../Project/Environment_Tasks.c: In function 'mainTaskFunc':
-../Project/Environment_Tasks.c:20:5: warning: implicit declaration of function 'xTaskNotifyGive' [-Wimplicit-function-declaration]
-     xTaskNotifyGive(UserModeTask);
-     ^
-../Project/Environment_Tasks.c:23:4: warning: implicit declaration of function 'ulTaskNotifyTake' [-Wimplicit-function-declaration]
-    ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    ^
-In file included from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/portable.h:320:0,
-                 from C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include/FreeRTOS.h:83,
-                 from ../Project/../Modules/KBD.h:19,
-                 from ../Project/Utils.h:16,
-                 from ../Project/Environment_Tasks.h:11,
-                 from ../Project/Environment_Tasks.c:8:
-At top level:
-C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable/portmacro.h:171:58: warning: always_inline function might not be inlinable [-Wattributes]
-  __attribute__( ( always_inline ) ) static unsigned char ucPortCountLeadingZeros( ulBitmap )
-                                                          ^
-make: *** [Project/Environment_Tasks.o] Error 1
+Finished building: ../Project/Environment_Tasks.c
+ 
+Building file: ../Project/Utils.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Project/Utils.d" -MT"Project/Utils.o" -MT"Project/Utils.d" -o "Project/Utils.o" "../Project/Utils.c"
+Finished building: ../Project/Utils.c
+ 
+Building file: ../Project/proj.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Project/proj.d" -MT"Project/proj.o" -MT"Project/proj.d" -o "Project/proj.o" "../Project/proj.c"
+Finished building: ../Project/proj.c
+ 
+Building file: ../Modules/EEPROM.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/EEPROM.d" -MT"Modules/EEPROM.o" -MT"Modules/EEPROM.d" -o "Modules/EEPROM.o" "../Modules/EEPROM.c"
+../Modules/EEPROM.c: In function 'EEPROM_Write':
+../Modules/EEPROM.c:18:2: warning: implicit declaration of function 'merge' [-Wimplicit-function-declaration]
+  merge(aux, addr_buffer, ADDRESS_SIZE, buffer, size);
+  ^
+Finished building: ../Modules/EEPROM.c
+ 
+Building file: ../Modules/Ethernet.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/Ethernet.d" -MT"Modules/Ethernet.o" -MT"Modules/Ethernet.d" -o "Modules/Ethernet.o" "../Modules/Ethernet.c"
+Finished building: ../Modules/Ethernet.c
+ 
+Building file: ../Modules/GPIO.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/GPIO.d" -MT"Modules/GPIO.o" -MT"Modules/GPIO.d" -o "Modules/GPIO.o" "../Modules/GPIO.c"
+Finished building: ../Modules/GPIO.c
+ 
+Building file: ../Modules/I2C.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/I2C.d" -MT"Modules/I2C.o" -MT"Modules/I2C.d" -o "Modules/I2C.o" "../Modules/I2C.c"
+Finished building: ../Modules/I2C.c
+ 
+Building file: ../Modules/KBD.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/KBD.d" -MT"Modules/KBD.o" -MT"Modules/KBD.d" -o "Modules/KBD.o" "../Modules/KBD.c"
+Finished building: ../Modules/KBD.c
+ 
+Building file: ../Modules/LCD.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/LCD.d" -MT"Modules/LCD.o" -MT"Modules/LCD.d" -o "Modules/LCD.o" "../Modules/LCD.c"
+Finished building: ../Modules/LCD.c
+ 
+Building file: ../Modules/LCD_Font.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/LCD_Font.d" -MT"Modules/LCD_Font.o" -MT"Modules/LCD_Font.d" -o "Modules/LCD_Font.o" "../Modules/LCD_Font.c"
+Finished building: ../Modules/LCD_Font.c
+ 
+Building file: ../Modules/LED.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/LED.d" -MT"Modules/LED.o" -MT"Modules/LED.d" -o "Modules/LED.o" "../Modules/LED.c"
+Finished building: ../Modules/LED.c
+ 
+Building file: ../Modules/RTC.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/RTC.d" -MT"Modules/RTC.o" -MT"Modules/RTC.d" -o "Modules/RTC.o" "../Modules/RTC.c"
+Finished building: ../Modules/RTC.c
+ 
+Building file: ../Modules/SPI.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/SPI.d" -MT"Modules/SPI.o" -MT"Modules/SPI.d" -o "Modules/SPI.o" "../Modules/SPI.c"
+Finished building: ../Modules/SPI.c
+ 
+Building file: ../Modules/tapdev.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"Modules/tapdev.d" -MT"Modules/tapdev.o" -MT"Modules/tapdev.d" -o "Modules/tapdev.o" "../Modules/tapdev.c"
+Finished building: ../Modules/tapdev.c
+ 
+Building file: ../cr_startup_lpc17.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"cr_startup_lpc17.d" -MT"cr_startup_lpc17.o" -MT"cr_startup_lpc17.d" -o "cr_startup_lpc17.o" "../cr_startup_lpc17.c"
+Finished building: ../cr_startup_lpc17.c
+ 
+Building file: ../main.c
+Invoking: MCU C Compiler
+arm-none-eabi-gcc -DDEBUG -D__USE_CMSIS=CMSISv1p30_LPC17xx -D__CODE_RED -D__REDLIB__ -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS-template" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\inc" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\include" -I"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\portable" -O0 -g3 -fsigned-char -c -fmessage-length=0 -fno-builtin -ffunction-sections -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"main.d" -MT"main.o" -MT"main.d" -o "main.o" "../main.c"
+Finished building: ../main.c
+ 
+Building target: SimpleDemo.axf
+Invoking: MCU Linker
+arm-none-eabi-gcc -nostdlib -L"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\CMSIS_CORE_LPC17xx\Debug" -L"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\uIPauxSE2" -L"C:\Users\Red\Documents\LPCXpresso_8.1.4_606\testSpace\FreeRTOS_Library\Debug" -Xlinker --gc-sections -Xlinker -Map=SimpleDemo.map -mcpu=cortex-m3 -mthumb -T "FreeRTOS-template_Debug.ld" -o "SimpleDemo.axf"  ./test/tests.o  ./Project/Environment_Tasks.o ./Project/Utils.o ./Project/proj.o  ./Modules/EEPROM.o ./Modules/Ethernet.o ./Modules/GPIO.o ./Modules/I2C.o ./Modules/KBD.o ./Modules/LCD.o ./Modules/LCD_Font.o ./Modules/LED.o ./Modules/RTC.o ./Modules/SPI.o ./Modules/tapdev.o  ./cr_startup_lpc17.o ./main.o   -lCMSIS_CORE_LPC17xx -luIPauxSE2 -lFreeRTOS_Library
+Finished building target: SimpleDemo.axf
+ 
+make --no-print-directory post-build
+Performing post-build steps
+arm-none-eabi-size SimpleDemo.axf; # arm-none-eabi-objcopy -O ihex SimpleDemo.axf SimpleDemo.hex ;
+   text	   data	    bss	    dec	    hex	filename
+  28448	     96	  20452	  48996	   bf64	SimpleDemo.axf
+ 
 
-22:25:15 Build Finished (took 328ms)
+02:57:12 Build Finished (took 2s.623ms)
 

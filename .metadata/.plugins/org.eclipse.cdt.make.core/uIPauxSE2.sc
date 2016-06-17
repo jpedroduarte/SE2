@@ -5,8 +5,6 @@
 <includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/lib/gcc/arm-none-eabi/5.2.1/include"/>
 <includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/lib/gcc/arm-none-eabi/5.2.1/include-fixed"/>
 <includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/arm-none-eabi/include"/>
-<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/redlib/include" removed="true"/>
-<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/features/include" removed="true"/>
 <definedSymbol symbol="__STDC__=1"/>
 <definedSymbol symbol="__STDC_VERSION__=201112L"/>
 <definedSymbol symbol="__STDC_UTF_16__=1"/>
@@ -357,8 +355,6 @@
 <includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/lib/gcc/arm-none-eabi/5.2.1/include"/>
 <includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/lib/gcc/arm-none-eabi/5.2.1/include-fixed"/>
 <includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/arm-none-eabi/include"/>
-<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/redlib/include" removed="true"/>
-<includePath path="c:/nxp/lpcxpresso_8.1.4_606/lpcxpresso/tools/features/include" removed="true"/>
 <definedSymbol symbol="__STDC__=1"/>
 <definedSymbol symbol="__STDC_VERSION__=201112L"/>
 <definedSymbol symbol="__STDC_UTF_16__=1"/>

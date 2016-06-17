@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="dateTime" key="selection"/>
+		<item value="EMAC" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="dateTime"/>
-			<item value="BootLoadCode"/>
-			<item value="LCD_Clear"/>
-			<item value="timeAux"/>
+			<item value="EMAC"/>
+			<item value="portCONFIGURE_TIMER_FOR_RUN_TIME_STATS"/>
+			<item value="hook"/>
+			<item value="tick"/>
 			<item value="xTaskNotifyGive"/>
-			<item value="Notify"/>
+			<item value="ulTaskNotifyTake"/>
 			<item value="notify"/>
-			<item value="READ"/>
+			<item value="configUSE_TIMERS"/>
 		</list>
 		<list key="replacehistory">
 		</list>

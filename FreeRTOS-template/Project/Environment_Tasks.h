@@ -11,10 +11,10 @@
 #include "Utils.h"
 
 /* Kernel includes. */
-#include "../FreeRTOS_Library/include/FreeRTOS.h"
-#include "../FreeRTOS_Library/include/queue.h"
-#include "../FreeRTOS_Library/include/task.h"
-#include "../FreeRTOS_Library/include/timers.h"
+#include "../../FreeRTOS_Library/include/FreeRTOS.h"
+#include "../../FreeRTOS_Library/include/queue.h"
+#include "../../FreeRTOS_Library/include/task.h"
+#include "../../FreeRTOS_Library/include/timers.h"
 
 #define DEBUGF(x,y) printf(x,y);
 
@@ -55,7 +55,7 @@ void KBD_SetKeyFunc();
 void LCD_DisplayFunc();
 
 /* LED task */
-void LED_OpenDoor();
+void LED_OpenDoorFunc();
 
 
 #endif /* PROJECT_ENVIRONMENT_TASKS_H_ */

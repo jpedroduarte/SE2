@@ -9,7 +9,7 @@
 
 /* Software Timer Functions */
 
-void TimerCallback(TimerHandle_t xTimer){
+void TimerCallback(xTimerHandle xTimer){
 	const uint32_t ulMaxExpiryCountBeforeStopping = 10;
 	uint32_t ulCount;
 
@@ -22,7 +22,7 @@ void TimerCallback(TimerHandle_t xTimer){
 	ulCount++;
 	if(KBD_read_nonBlocking()!= DOUBLE_KEY){
 		xTaskNotifyGive(mainTask);
-		xTimerStop( pxTimer, 0 );
+		xTimerStop( Timer_waitDoubleKey, 0 );
 	}
 	/* If the timer has expired 10 times then stop it from running. */
 	if( ulCount >= ulMaxExpiryCountBeforeStopping )
@@ -31,7 +31,7 @@ void TimerCallback(TimerHandle_t xTimer){
 		from a timer callback function, as doing so could cause a
 		deadlock! */
 		xTaskNotifyGive(AdminModeTask);
-		xTimerStop( pxTimer, 0 );
+		xTimerStop( Timer_waitDoubleKey, 0 );
 
 	}
 	else
