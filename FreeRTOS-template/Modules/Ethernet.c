@@ -31,12 +31,9 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 
 
 	//Select RMII
-#define RMII_MASK 0x20
+#define Command_RMII_MASK 0x20
 
-	LPC_EMAC->Command= (LPC_EMAC->Command & ~RMII_MASK) | RMII_MASK;
-	//configure datapaths
-#define TX_RX_MASK 0x3
-	LPC_EMAC->Command= (LPC_EMAC->Command & ~TX_RX_MASK) | datapath;
+	LPC_EMAC->Command= (LPC_EMAC->Command & ~Command_RMII_MASK) | RMII_MASK;
 
 	LPC_EMAC->RxDescriptor= RX_DESC_BASE;
 	LPC_EMAC->RxStatus= RX_STAT_BASE;
@@ -64,6 +61,7 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	while(1)
 		if( (Ethernet_ReadFromPHY(1) && 1<<5) == 0)
 			break;
+
 	/* check link status */
 	if( (Ethernet_ReadFromPHY(1) && 1<<2) == 0)
 		puts("PHY Link Status down");
@@ -79,7 +77,19 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	LPC_EMAC->SA1= mac_address[2]<<8 | mac_address[3];
 	LPC_EMAC->SA2= mac_address[4]<<8 | mac_address[5];
 
+	/* Receive Broadcast and Perfect Match Packets */
 
+	// ???
+
+	/* Enable interrupts MAC Module Control Interrupt Enable Register */
+	LPC_EMAC->IntEnable= 0xFFFFFFFF;
+
+	/* Reset all ethernet interrupts in MAC module */
+	LPC_EMAC->IntClear= 0xFFFFFFFF;
+
+	/* Enable receive and transmit mode in ethernet core */
+	#define TX_RX_MASK 0x3
+	LPC_EMAC->Command |= TX_RX_MASK;
 
 }
 
@@ -89,7 +99,7 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 */
 
 #define PHY_DEF_ADR 0b00001
-#define MII_WR_TOUT 0		// perguntar
+#define MII_WR_TOUT -1
 #define MIND_BUSY 0x1
 #define MCMD_WRITE 0
 
@@ -97,13 +107,13 @@ void Ethernet_WriteToPHY (int reg, int writeval){
 	unsigned int loop;
 	LPC_EMAC->MADR= PHY_DEF_ADR<<8 | reg;
 	LPC_EMAC->MWTD = writeval;
-	for (loop = 0; loop < MII_WR_TOUT; loop++)//why not forever
+	for (loop = 0; loop < MII_WR_TOUT; loop++)
 		if ((LPC_EMAC->MIND & MIND_BUSY) == 0)
 			break;
 }
 
 #define MCMD_READ 0x1
-#define MII_RD_TOUT 0	// perguntar
+#define MII_RD_TOUT -1
 
 unsigned short Ethernet_ReadFromPHY (unsigned char reg){
 	unsigned int loop;
