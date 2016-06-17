@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;FreeRTOS-template/Ethernet&apos; to &apos;Ethernet.c&apos;" description="Rename resource &apos;Ethernet&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Ethernet" name="Ethernet.c" stamp="1464115910764" updateReferences="true"/>
-</session>
