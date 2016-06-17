@@ -33,7 +33,7 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	//Select RMII
 #define Command_RMII_MASK 0x20
 
-	LPC_EMAC->Command= (LPC_EMAC->Command & ~Command_RMII_MASK) | RMII_MASK;
+	LPC_EMAC->Command |= Command_RMII_MASK;
 
 	LPC_EMAC->RxDescriptor= RX_DESC_BASE;
 	LPC_EMAC->RxStatus= RX_STAT_BASE;
