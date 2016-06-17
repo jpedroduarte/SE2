@@ -109,6 +109,7 @@
 //
 
 #define test kbdTest
+#define test123 0
 
 void projTest(){
 	I2C_config(1, 100);
