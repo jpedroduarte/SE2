@@ -31,6 +31,21 @@
 
 QueueHandle_t queue;
 
+typedef struct{
+  unsigned int  adminCode;
+  unsigned int  doorCOde;
+  unsigned int  nRegist;
+  unsigned int  absRegist;
+  unsigned int  checkBootLoad;	//Reserved
+  unsigned int  hr;
+  unsigned int  mm;
+  unsigned int  s;
+  unsigned int  year;
+  unsigned int  month;
+  unsigned int  day;
+  unsigned int  dayWeek;
+} Settings1;
+
 void GetDatetimeTask();
 void RTCTest();
 
@@ -58,6 +73,8 @@ void auxEEPROMTest();
 void getBootLoadCode();
 
 void getKeyCode();
+
+void getSettings();
 
 
 #endif /* TEST_TESTS_H_ */

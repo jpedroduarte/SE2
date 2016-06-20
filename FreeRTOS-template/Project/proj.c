@@ -91,8 +91,8 @@ int main(){
 	//
 
 	xTaskCreate(mainTaskFunc, "mainTask", configMINIMAL_STACK_SIZE, NULL, 0 , &mainTask );
-	xTaskCreate(UserModeTaskFunc, "UserModeTask", configMINIMAL_STACK_SIZE, NULL, 1 , &UserModeTask );
-	xTaskCreate(AdminModeTaskFunc, "AdminModeTask", configMINIMAL_STACK_SIZE, NULL, 1 , &AdminModeTask );
+	xTaskCreate(UserModeTaskFunc, "UserModeTask", configMINIMAL_STACK_SIZE, NULL, 0 , &UserModeTask );
+	xTaskCreate(AdminModeTaskFunc, "AdminModeTask", configMINIMAL_STACK_SIZE, NULL, 0 , &AdminModeTask );
 
 	/* Utility tasks */
 	xTaskCreate(LED_OpenDoorFunc,"Led_OpenDoorTask",configMINIMAL_STACK_SIZE, NULL, 0 , &LED_OpenDoor);

@@ -102,6 +102,7 @@
 #define LCDTest lcdTest();
 #define KBDLCDTest kbdLCDTest();
 #define EEPROMTest eepromTest();
+#define EEPROMReadTest projTest();
 #define EthernetTest EthernetTest();
 
 
@@ -109,7 +110,7 @@
 // Change macro to the current designed test
 //
 
-#define test KBDLCDTest
+#define test EEPROMReadTest
 
 
 int pmain(void)
@@ -119,8 +120,9 @@ int pmain(void)
 	//projTest();
 	//auxEEPROMTest();
 	//getBootLoadCode();
-	test;
+	//test;
 
+	//getSettings();
 	//getKeyCode();
 	puts("End test");
 	return 0;

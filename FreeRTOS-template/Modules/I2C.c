@@ -38,7 +38,8 @@ uint32_t I2C_Transfer(uint32_t controller,uint8_t control_byte, char *data_src, 
 	char *initialAddr= data_src;
 	char *currAddr = data_src;
 	char *finalAddr = ((char*)data_src + size * sizeof(char));
-	I2C->I2CONSET = STA;
+	I2C->I2CONCLR= 1<<2 | 1<<3 | 1<<5 | 1<<6;
+	I2C->I2CONSET = STA | I2EN;
 	//I2C->I2CONCLR = SIC;
 	while(1){
 		if(I2C->I2CONSET & SI){

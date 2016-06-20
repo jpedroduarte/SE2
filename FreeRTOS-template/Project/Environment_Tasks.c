@@ -7,6 +7,10 @@
 
 #include "Environment_Tasks.h"
 
+/* Notas
+	todo-usar software timer para controlar o estado do LCD (ligado/desligado)
+*/
+
 /* Main Task*/
 
 void mainTaskFunc(){
@@ -30,16 +34,7 @@ void mainTaskFunc(){
 		//block main task until notified
 		puts("Block Main Task\n");
 		ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-
-		/*
-		if(uxQueueMessagesWaiting(KBD_queue)>0){
-			xTimerStart(Timer_waitDoubleKey,200);
-			//block main task until notified
-			puts("Block Main Task\n");
-			ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-		}
-		*/
-		vTaskDelay(100);
+		puts("main Task is back");
 	}
 }
 
@@ -53,8 +48,6 @@ void UserModeTaskFunc(){
 		puts("------Block User Mode.\n");
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		puts("------User Mode. \n");
-
-		//LCD Autentication State todo
 
 		puts("\nUser Mode Task key:");
 		for(keyNum=0; keyNum<4;++keyNum){
@@ -81,21 +74,31 @@ void UserModeTaskFunc(){
 		}
 
 
-		printf("!!!Key Code: %X\n",keyCode);
-		//todo validate key
+		printf("Key Code: %X\n",keyCode);
 		uint8_t validate= VerifyCode(keyCode);
 		if(validate){
 			/*Wake up OpenDoor Task */
+			puts("Entry valid!\n");
 			xTaskNotifyGive(LED_OpenDoor);
+
+		}else{
+			puts("Entry Invalid! \n");
+			LCD_BL_State(0);
+			LCD_Clear(0xFFF);
+			LCD_TurnOffDisplay();
 		}
 		saveEntry(validate);
+
 		/*
 		LCD_BL_State(0);
 		LCD_Clear(0xFFF);
 		LCD_TurnOffDisplay();
-		*/
+		 */
+
+		puts("WakeUp MainTask.\n");
 		/* Wake up Main Task */
 		xTaskNotifyGive(mainTask);
+
 	}
 }
 
@@ -175,10 +178,16 @@ void LCD_DisplayFunc(){
 
 void LED_OpenDoorFunc(){
 	while(1){
+
 		//block task until it is notified
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+		puts("DOOR OPEN\n");
 		LED_SetState(1);
 		vTaskDelay(5000);
 		LED_SetState(0);
+		LCD_BL_State(0);
+		LCD_Clear(0xFFF);
+		LCD_TurnOffDisplay();
+		puts("DOOR CLOSED\n");
 	}
 }

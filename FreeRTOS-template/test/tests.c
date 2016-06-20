@@ -319,15 +319,17 @@ void eepromTest(){	//Working
 
 void projTest(){
 	I2C_config(1, 100);
-	if(!verifyBootLoad()){
+	if(verifyBootLoad()==0){
+		puts("Not correct.");
 		resetBootLoad();
-	}
+	}else puts("Correct.");
 	uint16_t addr= 0;
 	uint8_t read[48];
 	EEPROM_Read(&addr,read,48);
 	int i;
+	uint8_t* bla=(uint8_t*)read;
 	for(i=0; i<48; ++i){
-		printf("Mem[%u]= %X\n",i,*(read+i));
+		printf("Mem[%u]= %X\n",i,*(bla+i));
 	}
 
 }
@@ -350,8 +352,6 @@ void auxEEPROMTest(){
 	for(i=0; i<48; ++i){
 		printf("Mem[%u]= %X\n",i,*(bla+i));
 	}
-
-
 }
 
 void getBootLoadCode(){
@@ -382,3 +382,19 @@ void getKeyCode(){
 	}
 	printf("Key: 0x%X\n",key);
 }
+
+
+void getSettings(){
+	I2C_config(1, 100);
+	uint16_t addr= 0;
+	Settings1 s;
+
+	EEPROM_Read(&addr, &s,sizeof(Settings1));
+
+	uint8_t * bla= (uint8_t*)&s;
+	int i=0;
+	for(i=0; i<48; ++i){
+		printf("Mem[%u]= %X\n",i,*(bla+i));
+	}
+}
+

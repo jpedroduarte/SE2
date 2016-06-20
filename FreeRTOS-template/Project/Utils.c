@@ -25,7 +25,7 @@ int time5sAux = 0;
 const uint8_t time_len=6, date_len=11;
 
 void * sectorSettings =(void *) 0;
-void * sectorRegister =(void *) sizeof(Settings)+1;
+void * sectorRegister =(void *) sizeof(Settings);
 /*
 void addressBuffer[2]={0,0};
 uint32_t SettingsBufferSize= sizeof(Settings);
@@ -98,7 +98,7 @@ void resetBootLoad(){
 	uint16_t addr= getFormatedAddress(0x0);
 	Settings s;
 	s.adminCode 	= 0x0000;
-	s.doorCOde 		= 0x1010101;// codigo 1 1 1 1
+	s.doorCOde 		= 0x01010101;// codigo 1 1 1 1
 	s.nRegist 		= 0;
 	s.absRegist		= 0;
 	s.checkBootLoad	= 0x69F02ADB;
