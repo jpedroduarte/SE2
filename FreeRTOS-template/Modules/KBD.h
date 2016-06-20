@@ -37,9 +37,6 @@
  *  @return none.
  */
 
-xSemaphoreHandle keysMutex;
-xQueueHandle queue;
-
 /* KEY VALUES */
 
 #define ASTERISK_KEY 10

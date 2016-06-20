@@ -15,9 +15,9 @@ void tapdev_init(void){
 }
 
 unsigned int tapdev_read(void){
-
+//todo
 }
 
 void tapdev_send(void){
-
+//todo
 }

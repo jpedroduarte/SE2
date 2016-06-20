@@ -19,23 +19,24 @@
 #define DEBUGF(x,y) printf(x,y);
 
 /* Tasks */
-xTaskHandle mainTask;
-xTaskHandle AdminModeTask;
-xTaskHandle UserModeTask;
 
-xTaskHandle KBD_SetKey;
-xTaskHandle LCD_Display;
-xTaskHandle LED_OpenDoor;
+TaskHandle_t mainTask;
+TaskHandle_t AdminModeTask;
+TaskHandle_t UserModeTask;
+
+TaskHandle_t KBD_SetKey;
+TaskHandle_t LCD_Display;
+TaskHandle_t LED_OpenDoor;
 
 
 /* Queues */
-xQueueHandle KBD_queue;
-xQueueHandle LCD_queue;
+QueueHandle_t  KBD_queue;
+QueueHandle_t  LCD_queue;
 
 
 /* Timers */
 
-xTimerHandle Timer_waitDoubleKey;
+TimerHandle_t  Timer_waitDoubleKey;
 
 /* Primary Tasks */
 

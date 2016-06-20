@@ -11,44 +11,67 @@
 
 void mainTaskFunc(){
 	int key;
+	int keyAux;
 	while(1){
 		//Get a key
+		puts("Main Task- GetKey\n");
 		if(xQueueReceive(KBD_queue, &key, portMAX_DELAY) == pdTRUE){
-			if(key==DOUBLE_KEY){
-				xTimerStart(Timer_waitDoubleKey,200);
+			printf("Main Task key: %X\n",key);
+			if(key== DOUBLE_KEY){
+				/* Double Key */
+				printf("-DOUBLE_KEY-\n");
+				xTaskNotifyGive(AdminModeTask);
 			}else{
+				/* Normal key */
+				puts("-NORMAL_KEY-");
 				xTaskNotifyGive(UserModeTask);
 			}
+		}
+		//block main task until notified
+		puts("Block Main Task\n");
+		ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+
+		/*
+		if(uxQueueMessagesWaiting(KBD_queue)>0){
+			xTimerStart(Timer_waitDoubleKey,200);
 			//block main task until notified
+			puts("Block Main Task\n");
 			ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
 		}
+		*/
+		vTaskDelay(100);
 	}
 }
 
+uint32_t keyNum, keyCode=0;
+int aux;
+uint8_t leave_function=0;
 void UserModeTaskFunc(){
 
-	uint8_t leave_function=0;
 	while(1){
 		//block Thread until there is a notification
+		puts("------Block User Mode.\n");
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		puts("User Mode");
+		puts("------User Mode. \n");
 
 		//LCD Autentication State todo
-		uint32_t keyCode=0, aux;
-		//uint8_t keyCode[4];
-		uint8_t count;
-		for(count=0; count<4;++count){
+
+		puts("\nUser Mode Task key:");
+		for(keyNum=0; keyNum<4;++keyNum){
 			//Get a key
 			if(xQueueReceive(KBD_queue, &aux, 5000) == pdFALSE){
 				//timeout occured
+				puts("User Mode Key Timeout");
 				leave_function=1;
 				LCD_Clear(WHITE);
 				LCD_BL_State(0);
 				LCD_TurnOffDisplay();
 				break;
 			}else{
-				keyCode |= aux<<(count*8);
-				turnOnLcdAndWriteTime(count);
+				/* Get valid key */
+				printf("count:%u | %X \n",keyNum,aux);
+				keyCode |= aux<<(keyNum*8);
+				turnOnLcdAndWriteTime(keyNum);
 			}
 		}
 
@@ -58,15 +81,20 @@ void UserModeTaskFunc(){
 		}
 
 
+		printf("!!!Key Code: %X\n",keyCode);
 		//todo validate key
 		uint8_t validate= VerifyCode(keyCode);
-
+		if(validate){
+			/*Wake up OpenDoor Task */
+			xTaskNotifyGive(LED_OpenDoor);
+		}
 		saveEntry(validate);
-
+		/*
 		LCD_BL_State(0);
 		LCD_Clear(0xFFF);
 		LCD_TurnOffDisplay();
-
+		*/
+		/* Wake up Main Task */
 		xTaskNotifyGive(mainTask);
 	}
 }
@@ -76,28 +104,60 @@ void AdminModeTaskFunc(){
 	while(1){
 //todo
 		//block Thread until there is a notification
+		puts("Block Admin Mode. \n");
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		puts("Admin Mode");
+		puts("---------Admin Mode\n");
 
 		//Authentication LCD mode todo
 
 
 		//Admin login todo
+
+		/* Wake up Main Task */
+		xTaskNotifyGive(mainTask);
 	}
 }
 
 
-/* Keyboard task*/
+/* Keyboard Set task*/
 void KBD_SetKeyFunc(){
 	int key;
+	uint32_t count;
 	while(1){
 		if((key = KBD_read_nonBlocking()) != INVALID_KEY){
-			xQueueSend(KBD_queue, &key,100);
-			DEBUGF("key inserted in Queue: %u\n",key);
+
 		}
-		vTaskDelay(100);
+		//puts("\ncount:");
+		for(count=0; count<10; ++count){
+			if((key = KBD_read_nonBlocking()) != INVALID_KEY){
+				if(key == DOUBLE_KEY){
+					//printf("%u ",count);
+					vTaskDelay(200);
+					continue;
+				}else{
+					/* Normal Key */
+					xQueueSend(KBD_queue, &key,300);
+					break;
+				}
+
+			}else{
+				//puts("KBD Task- No key\n");
+				break;
+			}
+			//puts("\n");
+
+		}
+
+		if(key == DOUBLE_KEY){
+			/* Double Key */
+			xQueueSend(KBD_queue, &key,300);
+			printf("DOUBLE_KEY! -- %u ",key);
+		}
+		vTaskDelay(200);
 	}
 }
+
+
 
 /* LCD task*/
 

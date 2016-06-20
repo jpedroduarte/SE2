@@ -5,25 +5,8 @@
  *      Author: Red
  */
 
-#include "../../FreeRTOS_Library/include/FreeRTOS.h"
-#include "../../FreeRTOS_Library/include/task.h"
 
-#include <stdio.h>
-#include "LPC17xx.h"
-#include "../Modules/GPIO.h"
-#include "../Modules/KBD.h"
-#include "../Modules/LCD.h"
-#include "../Modules/SPI.h"
-#include "../Modules/EEPROM.h"
-#include "../Modules/RTC.h"
-#include "../Modules/LED.h"
-
-/* Professor static library uIP */
-#include "../Modules/tapdev.h"
-
-#include "queue.h"
-#include "semphr.h"
-
+#include "tests.h"
 
 
 //
@@ -149,53 +132,33 @@ void setKey1(void)
 {
 	uint32_t key=0;
 	while(1){
-		if(uxQueueMessagesWaiting(queue)==0){
-			key=KBD_read();
+		if(uxQueueSpacesAvailable(queue) > 0){
+			key=KBD_read_nonBlocking();
 			if(key!=-1){
 				xQueueSend(queue,&key,1000);
 				printf("Put %u in queue.\n",key);
 			}else puts("No key pressed");
 		}else{
-			puts("Key still in queue\n");
+			puts("Queue is full.\n");
 		}
-		vTaskDelay(100);
+		vTaskDelay(0);
 		//vTaskDelay(0);//taskYIELD();
 	}
 
 	//*(uint32_t*)pvParameters=key;
 	//taskYIELD();
 }
-
-void setKey(void)
-{
-	uint32_t key=0;
-	while(1){
-		if(uxQueueMessagesWaiting(queue)==0){
-			if(xSemaphoreTake(keysMutex,1000)){
-				key=KBD_read();
-				xQueueSend(queue,&key,1000);
-				xSemaphoreGive(keysMutex);
-			}
-		}
-		//vTaskDelay(100);
-		taskYIELD();
-	}
-
-	//*(uint32_t*)pvParameters=key;
-	//taskYIELD();
-}
-
 void getKey1(void){
 	uint32_t currKey=0;
 	uint8_t i =0, l=0;
 	while(1){
 		if(xQueueReceive(queue,&currKey,1000)){
-			printf("Get %u from queue.\n",currKey);
+			printf("Got %u from queue.\n",currKey);
 			//printf("Elements in queue: %u\n",uxQueueMessagesWaiting(queue));
 		}else{
-			puts("No Key found.\n");
+			puts("No Keys in queue.\n");
 		}
-		vTaskDelay(0);
+		vTaskDelay(1000);
 	}
 }
 
@@ -220,27 +183,6 @@ void getKey1LCD(void){
 	}
 }
 
-void getKey(void){
-	uint32_t currKey=0;
-	while(1){
-		if(uxQueueMessagesWaiting(queue)!=0){
-			if(xSemaphoreTake(keysMutex,1000)){
-				if(xQueueReceive(queue,&currKey,1000)){
-					GPIO_config_bitGeneric(2,0,0x1000,0x1000,0);
-					while(currKey!=0){
-						GPIO_SetGeneric(2,0x1000);
-						vTaskDelay(500);
-						GPIO_ClearGeneric(2,0x1000);
-						vTaskDelay(500);
-						--currKey;
-					}
-				}
-				xSemaphoreGive(keysMutex);
-			}
-		}
-		taskYIELD();
-	}
-}
 
 void kbdTest(){	//Working
 	uint32_t layout[]={0,1,2,3,4,5,6,7,8,9,17,18,19,20,21,22};
@@ -249,9 +191,50 @@ void kbdTest(){	//Working
 	LCD_Init();
 	LCD_TurnOnDisplay();
 	LCD_BL_State(1);
+
+	puts("start");
+	while(1){
+		//int key= KBD_read_nonBlocking();
+		int key= KBD_read_nonBlocking();
+		if(key != -1){
+			printf("Get %u from queue.\n",key);
+		}else{
+			//puts("No key");
+		}
+	}
+
+	/*
+	queue = xQueueCreate(4,sizeof(uint32_t));
+	if(queue==NULL){
+		puts("queue init error\n");
+	}
+
+	xTaskCreate(setKey1, "setKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
+	xTaskCreate(getKey1, "getKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
+	vTaskStartScheduler();
+	*/
+}
+
+void kbdLCDTest(){	//Working
+	uint32_t layout[]={0,1,2,3,4,5,6,7,8,9,17,18,19,20,21,22};
+	KBD_init(layout);
+	SPI_Init(128,9);
+	LCD_Init();
+	LCD_TurnOnDisplay();
+	LCD_BL_State(1);
+
+	puts("start");
+
+
+	queue = xQueueCreate(4,sizeof(uint32_t));
+	if(queue==NULL){
+		puts("queue init error\n");
+	}
+
 	xTaskCreate(setKey1, "setKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
 	xTaskCreate(getKey1LCD, "getKey", configMINIMAL_STACK_SIZE, NULL, 0 , NULL );
 	vTaskStartScheduler();
+
 }
 
 
@@ -267,7 +250,7 @@ void lcdTest(){	//Working
 	SPI_Init(128,9);
 	LCD_Init();
 	LCD_TurnOnDisplay();
-	LCD_BL_State(0);
+	//LCD_BL_State(0);
 	LCD_BL_State(1);
 
 	uint8_t i =0;
@@ -332,4 +315,70 @@ void eepromTest(){	//Working
 	int i;
 	for(i=0; i<8; ++i)
 		printf("Mem[%u]=%u\n", i, res[i]);
+}
+
+void projTest(){
+	I2C_config(1, 100);
+	if(!verifyBootLoad()){
+		resetBootLoad();
+	}
+	uint16_t addr= 0;
+	uint8_t read[48];
+	EEPROM_Read(&addr,read,48);
+	int i;
+	for(i=0; i<48; ++i){
+		printf("Mem[%u]= %X\n",i,*(read+i));
+	}
+
+}
+
+void auxEEPROMTest(){
+	I2C_config(1, 100);
+
+	uint8_t addr[2]={0x1,0};
+	uint8_t buffer[5]={8,9,10,11,12};
+	uint8_t read[5];
+	EEPROM_Write(addr, buffer,5);
+	EEPROM_Read(addr,read,5);
+	uint16_t addr1=8;
+	uint32_t wbuf=0x04030201;
+	uint32_t rbuf=0xFFFFFFFF;
+	//EEPROM_Write(&addr1, &wbuf,4);
+	//EEPROM_Read(&addr1,&rbuf,4);
+	uint8_t* bla=(uint8_t*)&rbuf;
+	int i;
+	for(i=0; i<48; ++i){
+		printf("Mem[%u]= %X\n",i,*(bla+i));
+	}
+
+
+}
+
+void getBootLoadCode(){
+
+	I2C_config(1, 100);
+	//resetFlash();
+	uint16_t addr= getFormatedAddress(16);
+	uint32_t read= 0x0;
+	/*
+	uint8_t* aux=(uint8_t*) &addr;
+	puts("var:\n");
+	printf("mem[0]=0x%X\n",*aux);
+	printf("mem[1]=0x%X\n",*(aux+1));
+	puts("array\n");
+	printf("mem[0]=0x%X\n",addr1[0]);
+	printf("mem[1]=0x%X\n",addr1[1]);
+	*/
+	EEPROM_Read(&addr, &read,4);
+	printf("BootLoadCode= 0x%X\n",read);
+}
+
+void getKeyCode(){
+	uint8_t src[4]={4,3,2,1};
+	uint32_t key = getKeyFromArray(src);
+	uint32_t count;//= keyCode[0]
+	for(count=0; count<4;++count){
+		key+=src[count]<<(8*count);
+	}
+	printf("Key: 0x%X\n",key);
 }

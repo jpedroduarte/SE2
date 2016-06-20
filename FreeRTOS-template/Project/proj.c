@@ -20,10 +20,19 @@ void TimerCallback(xTimerHandle xTimer){
 	/* Increment the count, then test to see if the timer has expired
 	ulMaxExpiryCountBeforeStopping yet. */
 	ulCount++;
-	if(KBD_read_nonBlocking()!= DOUBLE_KEY){
-		xTaskNotifyGive(mainTask);
+	int key;
+	if(xQueueReceive(KBD_queue, &key, portMAX_DELAY) == pdFALSE){
+		puts("Could not aquire KBD_queue");
 		xTimerStop( Timer_waitDoubleKey, 0 );
 	}
+	printf("Main Task key: %X | Timer: %u\n",key,ulCount);
+	if(ulCount > 1 && key!= DOUBLE_KEY){
+		/* Normal key */
+		//printf("Main Task key: %X\n",key);
+		xTaskNotifyGive(UserModeTask);
+		xTimerStop( Timer_waitDoubleKey, 0 );
+	}
+
 	/* If the timer has expired 10 times then stop it from running. */
 	if( ulCount >= ulMaxExpiryCountBeforeStopping )
 	{
@@ -53,7 +62,7 @@ int main(){
 	KBD_init(layout);
 	LED_init(2, 12, 0);
 	//TMR0_Init(1000);
-	SPI_Init(8,9);
+	SPI_Init(128,9);
 	LCD_Init();
 	//char time[time_len], date[date_len];
 	//itot(time, 13, 50);
@@ -71,26 +80,23 @@ int main(){
 	RTC_Init(&dateTime);
 	LCD_BL_State(0); //Apagar LCD light
 
-	//uint32_t ptr[4]={10,11,12,13};
-
-	//FLASH_EraseSectors(13,13);
-	//FLASH_WriteBlock(sectorRegister, &ptr ,4*1024);
-
 	LCD_TurnOffDisplay();
 
-	if(verifyBootLoad())
+	if(!verifyBootLoad()){
 		resetBootLoad();
+	}
+
 	//
 	//Create tasks
 	//
 
-	xTaskCreate(mainTaskFunc, "mainTask", configMINIMAL_STACK_SIZE, NULL, 0 , mainTask );
-	xTaskCreate(UserModeTaskFunc, "UserModeTask", configMINIMAL_STACK_SIZE, NULL, 0 , UserModeTask );
-	xTaskCreate(AdminModeTaskFunc, "AdminModeTask", configMINIMAL_STACK_SIZE, NULL, 0 , AdminModeTask );
+	xTaskCreate(mainTaskFunc, "mainTask", configMINIMAL_STACK_SIZE, NULL, 0 , &mainTask );
+	xTaskCreate(UserModeTaskFunc, "UserModeTask", configMINIMAL_STACK_SIZE, NULL, 1 , &UserModeTask );
+	xTaskCreate(AdminModeTaskFunc, "AdminModeTask", configMINIMAL_STACK_SIZE, NULL, 1 , &AdminModeTask );
 
 	/* Utility tasks */
-	xTaskCreate(LED_OpenDoorFunc,"Led_OpenDoorTask",configMINIMAL_STACK_SIZE, NULL, 0 , LED_OpenDoor);
-	xTaskCreate(KBD_SetKeyFunc, "KBD_Task", configMINIMAL_STACK_SIZE, NULL, 0 , KBD_SetKey );
+	xTaskCreate(LED_OpenDoorFunc,"Led_OpenDoorTask",configMINIMAL_STACK_SIZE, NULL, 0 , &LED_OpenDoor);
+	xTaskCreate(KBD_SetKeyFunc, "KBD_Task", configMINIMAL_STACK_SIZE, NULL, 0 , &KBD_SetKey );
 #define KBD_queue_size 4
 	KBD_queue= xQueueCreate(KBD_queue_size,sizeof(uint32_t)*KBD_queue_size);
 /*
@@ -98,7 +104,9 @@ int main(){
 	xTaskCreate(LCD_DisplayFunc, "LCD_Task", configMINIMAL_STACK_SIZE, NULL, 0 , LCD_Display );
 	LCD_queue= xQueueCreate(LCD_queue_size,sizeof(char)*LCD_queue_size);
 */
+
 	/* Create Timers */
+	/*
 	Timer_waitDoubleKey= xTimerCreate(
 		 "Timer",
 		 200,
@@ -112,7 +120,8 @@ int main(){
 		puts("Failed to create FREERTOS Timer");
 		return 0;
 	}
-
+	*/
+	puts("Init completed.");
 	/* Start Scheduler */
 	vTaskStartScheduler();
 

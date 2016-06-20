@@ -3,6 +3,8 @@
 
 void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapath){
 
+	int timeout;
+	uint32_t reg;
 	//set PCENET in PCONP
 	LPC_SC->PCONP |=PCONP_PCENET_MASK;
 
@@ -63,14 +65,36 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 			break;
 
 	/* check link status */
-	if( (Ethernet_ReadFromPHY(1) && 1<<2) == 0)
-		puts("PHY Link Status down");
+	for(timeout=0; timeout< 0x100000; timeout++){
+		reg=Ethernet_ReadFromPHY(1);
+		if(reg & 1<<2)
+			break;
+	}
 
-	/* Half-Duplex */
-	LPC_EMAC->MAC2= LPC_EMAC->MAC2 & ~0x1;	//set bit 0 to 0
+	if (timeout >= 0x100000){
+		puts("Link status off. Shutting down Ethernet_init.");
+		return;
+	}
 
-	/* 100 Mbps */
-	LPC_EMAC->SUPP= 1<<8;
+	/* Configure Full/Half Duplex mode. */
+	if(reg & 0x4){
+		/* Full Duplex */
+		LPC_EMAC->MAC2 		|= 1<<0;
+		LPC_EMAC->Command 	|= 1<<10;
+		LPC_EMAC->IPGT 		 = 0x15;
+	}else{
+		/* Half Duplex */
+		LPC_EMAC->IPGT = 0x12;
+	}
+
+	/* Configure 100MBit or 10MBit mode. */
+	if(reg & 0x2){
+		/* 10MBit mode*/
+		LPC_EMAC->SUPP= 0;
+	}else{
+		/* 100MBit mode*/
+		LPC_EMAC->SUPP= 1<<8;
+	}
 
 	/* Set Station Address */
 	LPC_EMAC->SA0= mac_address[0]<<8 | mac_address[1];
@@ -78,11 +102,12 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	LPC_EMAC->SA2= mac_address[4]<<8 | mac_address[5];
 
 	/* Receive Broadcast and Perfect Match Packets */
-
-	// ???
+#define ACCEPT_BROADCAST_EN 1<<0
+#define ACCEPT_PERFECT_EN 1<<5
+	LPC_EMAC->RxFilterCtrl= ACCEPT_PERFECT_EN | ACCEPT_BROADCAST_EN;
 
 	/* Enable interrupts MAC Module Control Interrupt Enable Register */
-	LPC_EMAC->IntEnable= 0xFFFFFFFF;
+	LPC_EMAC->IntEnable= 1<<7 | 1<<3;
 
 	/* Reset all ethernet interrupts in MAC module */
 	LPC_EMAC->IntClear= 0xFFFFFFFF;
@@ -90,7 +115,8 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	/* Enable receive and transmit mode in ethernet core */
 	#define TX_RX_MASK 0x3
 	LPC_EMAC->Command |= TX_RX_MASK;
-
+	#define RECEIVE_ENABLE 0x1
+	LPC_EMAC->MAC1 |= RECEIVE_ENABLE;
 }
 
 /*Notas:

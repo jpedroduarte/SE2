@@ -100,6 +100,7 @@
 #define RTCTest RTCTest();
 #define KBDTest kbdTest();
 #define LCDTest lcdTest();
+#define KBDLCDTest kbdLCDTest();
 #define EEPROMTest eepromTest();
 #define EthernetTest EthernetTest();
 
@@ -108,84 +109,17 @@
 // Change macro to the current designed test
 //
 
-#define test kbdTest
-#define test123 0
+#define test KBDLCDTest
 
-void projTest(){
-	I2C_config(1, 100);
-	if(!verifyBootLoad()){
-		resetBootLoad();
-	}
-	uint16_t addr= 0;
-	uint8_t read[48];
-	EEPROM_Read(&addr,read,48);
-	int i;
-	for(i=0; i<48; ++i){
-		printf("Mem[%u]= %X\n",i,*(read+i));
-	}
-
-}
-
-void auxEEPROMTest(){
-	I2C_config(1, 100);
-
-	uint8_t addr[2]={0x1,0};
-	uint8_t buffer[5]={8,9,10,11,12};
-	uint8_t read[5];
-	EEPROM_Write(addr, buffer,5);
-	EEPROM_Read(addr,read,5);
-	uint16_t addr1=8;
-	uint32_t wbuf=0x04030201;
-	uint32_t rbuf=0xFFFFFFFF;
-	//EEPROM_Write(&addr1, &wbuf,4);
-	//EEPROM_Read(&addr1,&rbuf,4);
-	uint8_t* bla=(uint8_t*)&rbuf;
-	int i;
-	for(i=0; i<48; ++i){
-		printf("Mem[%u]= %X\n",i,*(bla+i));
-	}
-
-
-}
-
-void getBootLoadCode(){
-
-	I2C_config(1, 100);
-	//resetFlash();
-	uint16_t addr= getFormatedAddress(16);
-	uint32_t read= 0x0;
-	/*
-	uint8_t* aux=(uint8_t*) &addr;
-	puts("var:\n");
-	printf("mem[0]=0x%X\n",*aux);
-	printf("mem[1]=0x%X\n",*(aux+1));
-	puts("array\n");
-	printf("mem[0]=0x%X\n",addr1[0]);
-	printf("mem[1]=0x%X\n",addr1[1]);
-	*/
-	EEPROM_Read(&addr, &read,4);
-	printf("BootLoadCode= 0x%X\n",read);
-}
-
-void getKeyCode(){
-	uint8_t src[4]={4,3,2,1};
-	uint32_t key = getKeyFromArray(src);
-	uint32_t count;//= keyCode[0]
-	for(count=0; count<4;++count){
-		key+=src[count]<<(8*count);
-	}
-	printf("Key: 0x%X\n",key);
-}
 
 int pmain(void)
 {
 	puts("Begin test");
 
-	kbdTest();
 	//projTest();
 	//auxEEPROMTest();
 	//getBootLoadCode();
-	//test;
+	test;
 
 	//getKeyCode();
 	puts("End test");

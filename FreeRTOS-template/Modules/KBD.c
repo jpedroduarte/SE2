@@ -11,9 +11,6 @@
 //
 //void _delay(int millis);// !!!!!DANGER!!!!! CHANGE TO TIMER0 SOME OTHER TIME
 
-xSemaphoreHandle keysMutex=0;
-xQueueHandle queue=0;
-
 void KBD_init(uint32_t layout[16]){
 	//GPIO_config(lineMask,lineMask|columnMask, lineMask);
 	GPIO_configDigitalGeneric(2, 0, lineMask,lineMask|columnMask, lineMask);
@@ -24,12 +21,6 @@ void KBD_init(uint32_t layout[16]){
 	int i;
 	for(i=0;i<16;++i)
 		kbd_layout[i]=layout[i];
-	//Mutex
-	keysMutex = xSemaphoreCreateMutex();
-	queue= xQueueCreate(1,sizeof(uint32_t));
-	if(keysMutex==NULL || queue==NULL){
-		// exception
-	}
 }
 
 uint32_t KBD_hit(){
@@ -88,16 +79,16 @@ int KBD_read_nonBlocking(){
 	//Key was hit  
 	//TMR0_Delay(100);
 	unsigned i,col;
-	unsigned outputPosition = 0x2000;
+	unsigned outputPosition = 0x2;
 	for(i=0;i<4;++i, outputPosition<<=1){
-		if(i==1) continue;
+		//if(i==1) continue;
 		GPIO_output(2,~outputPosition, lineMask);
 		col= GPIO_input(2) & columnMask;
 		if((col^columnMask)!= 0)
-			break;	 
+			break;
 	}
-	unsigned line_value= i>=1? i-1 : i;
-	col= (col & columnMask) >> 9;
+	unsigned line_value= i;//i>=1? i-1 : i;
+	col= (col & columnMask) >> 5;
 
 	//Get column value
 	
@@ -108,6 +99,7 @@ int KBD_read_nonBlocking(){
 			++zeroes;
 		}
 	}
+	//printf("line_value= %u | column_value= %u\n", line_value, column_value );
 	if(col_aux ==3 && line_value==2)
 		return kbd_layout[12];
 	if(zeroes==1) return kbd_layout[4*line_value + column_value];
