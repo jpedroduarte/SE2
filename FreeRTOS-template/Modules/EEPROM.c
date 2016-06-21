@@ -26,3 +26,8 @@ void EEPROM_Read(void* addr_buffer, void * data_buffer, uint32_t size){
 	I2C_Transfer(I2C_CONTROLLER, CONTROL_BYTE, data_buffer, size, READ, STOP);
 }
 
+void merge(void* dst, void* src1, uint32_t size1, void* src2, uint32_t size2){
+	memcpy(dst,src1,size1);
+	memcpy(dst+size1,src2,size2);
+}
+

@@ -106,16 +106,26 @@ void LCD_WriteChar(char ch);
 void LCD_WriteString(char *str);
 
 /** @brief Positions the cursor on the given location by the parameters
+ *  @param x indicates the column to go to.
+ *  @param y indicates the row to go to.
  *  @return none.
  */
 void LCD_Goto(int x, int y);
 
 /** @brief Cleans lcd with the specified color.
+ *  @param color of the background.
  *  @return none.
  */
 void LCD_Clear(int color);
 
+/** @brief Cleans a line from the LCD.
+ *  @param Number of the row to clear starting in 0.
+ *  @return none.
+ */
+void LCD_ClearLine(uint8_t line);
+
 /** @brief Turns off display.
+ *  @param line to clear.
  *  @return none.
  */
 void LCD_TurnOffDisplay();

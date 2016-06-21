@@ -38,9 +38,9 @@ void mainTaskFunc(){
 	}
 }
 
-uint32_t keyNum, keyCode=0;
+uint32_t keyNum, keyCode;
 int aux;
-uint8_t leave_function=0;
+uint8_t leave_function;
 void UserModeTaskFunc(){
 
 	while(1){
@@ -49,6 +49,8 @@ void UserModeTaskFunc(){
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		puts("------User Mode. \n");
 
+		keyCode=0;
+		leave_function=0;
 		puts("\nUser Mode Task key:");
 		for(keyNum=0; keyNum<4;++keyNum){
 			//Get a key
@@ -56,15 +58,64 @@ void UserModeTaskFunc(){
 				//timeout occured
 				puts("User Mode Key Timeout");
 				leave_function=1;
-				LCD_Clear(WHITE);
-				LCD_BL_State(0);
-				LCD_TurnOffDisplay();
+				//todo LCD_Off();
 				break;
 			}else{
 				/* Get valid key */
 				printf("count:%u | %X \n",keyNum,aux);
 				keyCode |= aux<<(keyNum*8);
-				turnOnLcdAndWriteTime(keyNum);
+				//todo turnOnLcdAndWriteTime(keyNum);
+			}
+		}
+
+		if(leave_function){
+			//todo xTaskNotifyGive(mainTask);
+			continue;
+		}
+
+		printf("Key Code: %X\n",keyCode);
+		uint8_t validate= VerifyCode(keyCode);
+		if(validate){
+			/*Wake up OpenDoor Task */
+			puts("Entry valid!\n");
+			//todo xTaskNotifyGive(LED_OpenDoor);
+
+		}else{
+			puts("Entry Invalid! \n");
+			//todo LCD_Off();
+		}
+		//todo
+		//saveEntry(validate);
+
+
+		/* Try Wake up Main Task */
+		xTaskNotifyGive(mainTask);
+		puts("WakeUp MainTask.\n");
+	}
+}
+
+void AdminModeTaskFunc(){
+
+	while(1){
+		//block Thread until there is a notification
+		puts("Block Admin Mode. \n");
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+		puts("---------Admin Mode\n");
+		keyCode=0;
+		leave_function=0;
+		for(keyNum=0; keyNum<4;++keyNum){
+			//Get a key
+			if(xQueueReceive(KBD_queue, &aux, 5000) == pdFALSE){
+				//timeout occured
+				puts("User Mode Key Timeout");
+				leave_function=1;
+				LCD_Off();
+				break;
+			}else{
+				/* Get valid key */
+				printf("count:%u | %X \n",keyNum,aux);
+				keyCode |= aux<<(keyNum*8);
+				turnOnLcdAndWriteTimeAdmin(keyNum);
 			}
 		}
 
@@ -73,50 +124,24 @@ void UserModeTaskFunc(){
 			continue;
 		}
 
-
 		printf("Key Code: %X\n",keyCode);
-		uint8_t validate= VerifyCode(keyCode);
-		if(validate){
-			/*Wake up OpenDoor Task */
-			puts("Entry valid!\n");
-			xTaskNotifyGive(LED_OpenDoor);
-
-		}else{
+		uint8_t validate= VerifyAdminCode(keyCode);
+		if(!validate){
 			puts("Entry Invalid! \n");
-			LCD_BL_State(0);
-			LCD_Clear(0xFFF);
-			LCD_TurnOffDisplay();
+			LCD_Off();
+		}else{
+			/* Enter Admin Mode */
+			puts("Entry valid!\n");
+			printLCDMaintenanceMenu();
+			/* Stay in Maintenance Mode until # is pressed */
+			while(1){
+				if(gotoAdminOption()) //Returns 1 in case of exit key
+					break;
+			}
 		}
-		saveEntry(validate);
-
-		/*
-		LCD_BL_State(0);
-		LCD_Clear(0xFFF);
-		LCD_TurnOffDisplay();
-		 */
-
+		LCD_Off();
 		puts("WakeUp MainTask.\n");
-		/* Wake up Main Task */
-		xTaskNotifyGive(mainTask);
-
-	}
-}
-
-void AdminModeTaskFunc(){
-
-	while(1){
-//todo
-		//block Thread until there is a notification
-		puts("Block Admin Mode. \n");
-		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		puts("---------Admin Mode\n");
-
-		//Authentication LCD mode todo
-
-
-		//Admin login todo
-
-		/* Wake up Main Task */
+		/* Try Wake up Main Task */
 		xTaskNotifyGive(mainTask);
 	}
 }
@@ -127,8 +152,9 @@ void KBD_SetKeyFunc(){
 	int key;
 	uint32_t count;
 	while(1){
-		if((key = KBD_read_nonBlocking()) != INVALID_KEY){
-
+		if((key = KBD_read_nonBlocking()) == INVALID_KEY){
+			vTaskDelay(200);
+			continue;
 		}
 		//puts("\ncount:");
 		for(count=0; count<10; ++count){
@@ -142,13 +168,11 @@ void KBD_SetKeyFunc(){
 					xQueueSend(KBD_queue, &key,300);
 					break;
 				}
-
 			}else{
 				//puts("KBD Task- No key\n");
 				break;
 			}
 			//puts("\n");
-
 		}
 
 		if(key == DOUBLE_KEY){
@@ -178,16 +202,13 @@ void LCD_DisplayFunc(){
 
 void LED_OpenDoorFunc(){
 	while(1){
-
 		//block task until it is notified
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		puts("DOOR OPEN\n");
 		LED_SetState(1);
 		vTaskDelay(5000);
 		LED_SetState(0);
-		LCD_BL_State(0);
-		LCD_Clear(0xFFF);
-		LCD_TurnOffDisplay();
+		LCD_Off();
 		puts("DOOR CLOSED\n");
 	}
 }

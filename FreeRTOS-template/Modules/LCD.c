@@ -216,6 +216,11 @@ void LCD_Clear(int color){
 		
 }
 
+void LCD_ClearLine(uint8_t line){
+	LCD_Goto(0,line);
+	LCD_WriteString("               ");
+}
+
 void LCD_Command(unsigned short command){
 	 unsigned short *rxBuffer=(unsigned short*)&buffer;
 	 SPI_Transfer( &command, (unsigned short*)rxBuffer, 1);

@@ -9,7 +9,6 @@
 #define PROJECT_UTILS_H_
 
 #include <stdio.h>
-#include <string.h>
 #include <time.h>
 #include "../Modules/LCD.h"
 #include "../Modules/RTC.h"
@@ -26,6 +25,13 @@
 #define NREGIST_ADDR 8
 #define ABSREGIST_ADDR 12
 #define CHECK_BOOT_LOAD_ADDR 16
+#define entryAddr(x) sizeof(Settings)+x*sizeof(Regist)
+
+#define time_len 6
+#define date_len 11
+
+#define ASTERISK 10
+#define CARDINAL 11
 
 #define MAX_ENTRY_VALUE 3350
 
@@ -59,7 +65,6 @@ typedef struct{
 
 /* Functions */
 
-void merge(void* dst, void* src1, uint32_t size1, void* src2, uint32_t size2);
 uint16_t getFormatedAddress(uint16_t src);
 
 void itod(char* dst, uint8_t dd, uint8_t mm, uint16_t yyyy);
@@ -68,15 +73,36 @@ void itot(char* dst, uint8_t hh, uint8_t mm);
 
 void turnOnLcdAndWriteTime(int count);
 
+void turnOnLcdAndWriteTimeAdmin(int count);
+
+void printLCDMaintenanceMenu();
+
 uint8_t verifyBootLoad();
 
 void resetBootLoad();
 
 uint8_t VerifyCode(uint32_t code);
 
+uint8_t VerifyAdminCode(uint32_t code);
+
 uint32_t getKeyFromArray(uint8_t src[4]);
 
 void saveEntry(uint8_t validated);
+
+void LCD_Off();
+
+uint8_t gotoAdminOption();
+
+/* Admin Options */
+uint8_t changeDoorCOde();
+
+uint8_t changeAdminCOde();
+
+uint8_t setClock();
+
+uint8_t changeCalendar();
+
+uint8_t printHistoric();
 
 /* Data Structures */
 

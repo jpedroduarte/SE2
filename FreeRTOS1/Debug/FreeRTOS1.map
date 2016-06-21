@@ -616,13 +616,13 @@ OUTPUT(FreeRTOS1.axf elf32-littlearm)
  .debug_line    0x0000015e       0xd4 ./src/cr_startup_lpc175x_6x.o
  .debug_line    0x00000232       0x78 ./src/crp.o
 
-.debug_str      0x00000000     0x3419
- .debug_str     0x00000000     0x3165 ./src/FreeRTOS.o
-                               0x31a2 (size before relaxing)
- .debug_str     0x00003165      0x1cb ./src/cr_startup_lpc175x_6x.o
-                               0x26c0 (size before relaxing)
- .debug_str     0x00003330       0xe9 ./src/crp.o
-                               0x25d8 (size before relaxing)
+.debug_str      0x00000000     0x341a
+ .debug_str     0x00000000     0x3166 ./src/FreeRTOS.o
+                               0x31a3 (size before relaxing)
+ .debug_str     0x00003166      0x1cb ./src/cr_startup_lpc175x_6x.o
+                               0x26c1 (size before relaxing)
+ .debug_str     0x00003331       0xe9 ./src/crp.o
+                               0x25d9 (size before relaxing)
 
 .comment        0x00000000       0x6e
  .comment       0x00000000       0x6e ./src/FreeRTOS.o
