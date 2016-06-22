@@ -33,7 +33,8 @@ void mainTaskFunc(){
 		}
 		//block main task until notified
 		puts("Block Main Task\n");
-		ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+		int aux= ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+		printf("main Task is back : 0x%X\n", aux);
 		puts("main Task is back");
 	}
 }
@@ -88,9 +89,9 @@ void UserModeTaskFunc(){
 		//saveEntry(validate);
 
 
+		puts("WakeUp MainTask.\n");
 		/* Try Wake up Main Task */
 		xTaskNotifyGive(mainTask);
-		puts("WakeUp MainTask.\n");
 	}
 }
 
@@ -152,6 +153,7 @@ void KBD_SetKeyFunc(){
 	int key;
 	uint32_t count;
 	while(1){
+
 		if((key = KBD_read_nonBlocking()) == INVALID_KEY){
 			vTaskDelay(200);
 			continue;
@@ -181,6 +183,7 @@ void KBD_SetKeyFunc(){
 			printf("DOUBLE_KEY! -- %u ",key);
 		}
 		vTaskDelay(200);
+		puts("*");
 	}
 }
 

@@ -49,8 +49,8 @@ int main(){
 	xTaskCreate(AdminModeTaskFunc, "AdminModeTask", configMINIMAL_STACK_SIZE, NULL, 0 , &AdminModeTask );
 
 	/* Utility tasks */
-	xTaskCreate(LED_OpenDoorFunc,"Led_OpenDoorTask",configMINIMAL_STACK_SIZE, NULL, 0 , &LED_OpenDoor);
-	xTaskCreate(KBD_SetKeyFunc, "KBD_Task", configMINIMAL_STACK_SIZE, NULL, 0 , &KBD_SetKey );
+	xTaskCreate(LED_OpenDoorFunc,"Led_OpenDoorTask",configMINIMAL_STACK_SIZE, NULL, 2 , &LED_OpenDoor);
+	xTaskCreate(KBD_SetKeyFunc, "KBD_Task", configMINIMAL_STACK_SIZE, NULL, 2 , &KBD_SetKey );
 #define KBD_queue_size 4
 	KBD_queue= xQueueCreate(KBD_queue_size,sizeof(uint32_t)*KBD_queue_size);
 /*
