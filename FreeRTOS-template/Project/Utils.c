@@ -20,10 +20,10 @@ uint32_t layout[16]=	{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 uint8_t lcdDataTimeOn = 0;
 
 void itos(char* dst, uint32_t n){
-	dst[0]= n%10 + '0'; n/=10;
-	dst[1]= n%10 + '0'; n/=10;
+	dst[3]= n%10 + '0'; n/=10;
 	dst[2]= n%10 + '0'; n/=10;
-	dst[3]= n%10 + '0';
+	dst[1]= n%10 + '0'; n/=10;
+	dst[0]= n%10 + '0';
 	dst[4]=0;
 }
 
@@ -176,7 +176,7 @@ uint8_t VerifyAdminCode(uint32_t code){
 	//uint8_t AdminCodebuffer[4];
 	AdminCodeAddress= getFormatedAddress(ADMINCODE_ADDR);
 	//printf("***ADDRESS: 0x%X\n",AdminCodeAddress);
-	EEPROM_Read(&AdminCodeAddress, (uint8_t*)&AdminCodebuffer, sizeof(int));
+	EEPROM_Read(&AdminCodeAddress, &AdminCodebuffer, sizeof(int));
 	printf("***Admin Code: 0x%X\n", AdminCodebuffer);
 	if(AdminCodebuffer != code)
 		return 0;
@@ -185,10 +185,11 @@ uint8_t VerifyAdminCode(uint32_t code){
 
 /*-------------------------------------------------------------------------------*/
 
-uint16_t entryAddr;
-uint32_t entry;
-uint32_t nRegist;
+
 void saveEntry(uint8_t validated){
+	uint16_t entryAddr;
+	uint32_t entry;
+	uint32_t nRegist;
 	/* Get nRegist from EEPROM */
 	entryAddr= getFormatedAddress(NREGIST_ADDR);
 	EEPROM_Read(&entryAddr,&entry,sizeof(uint32_t));
@@ -222,7 +223,7 @@ void saveEntry(uint8_t validated){
 		entryAddr= getFormatedAddress(NREGIST_ADDR);
 		EEPROM_Write(&entryAddr,&entry,sizeof(uint32_t));
 
-
+		uint32_t aux_adminCode= getAdminCode();
 		//VerifyAdminCode(0);
 		/* Write new Entry */
 		printf("sizeof: %u\n",sizeof(Regist));
@@ -230,6 +231,7 @@ void saveEntry(uint8_t validated){
 		entryAddr= getFormatedAddress((entry-1)*sizeof(Regist)+sizeof(Settings));
 		EEPROM_Write(&entryAddr,&r,sizeof(Regist));
 
+		BringTheHammer(aux_adminCode);
 //		entry_Addr=0;
 //		uint8_t test[100];
 //		EEPROM_Read(&entryAddr,&test,100);
@@ -416,6 +418,15 @@ uint8_t changeCalendar(){
 	LCD_Goto(0,1);
 	LCD_WriteString("Insert year: ");
 	/* Year */
+	LCD_Goto(4,2);
+	xQueueReceive(KBD_queue, &adminOptionKey, portMAX_DELAY);
+	LCD_WriteChar('0'+adminOptionKey);
+	yyyy= adminOptionKey * 1000;
+
+	xQueueReceive(KBD_queue, &adminOptionKey, portMAX_DELAY);
+	LCD_WriteChar('0'+adminOptionKey);
+	yyyy= adminOptionKey * 100;
+
 	xQueueReceive(KBD_queue, &adminOptionKey, portMAX_DELAY);
 	LCD_WriteChar('0'+adminOptionKey);
 	yyyy= adminOptionKey * 10;
@@ -496,9 +507,16 @@ uint8_t printHistoric(){
 				currEntry= MAX_ENTRY_VALUE-1;
 			else currEntry= nRegMaxValue;
 		printf("entry2: %u\n",currEntry);
+
+		/* Get a Regist */
+		AdminFieldAddr= sizeof(Settings)+currEntry*sizeof(Regist);
+		printf("Entry addr: %u | entry: %u\n",AdminFieldAddr,currEntry);
+		AdminFieldAddr= getFormatedAddress(AdminFieldAddr);
+		EEPROM_Read(&AdminFieldAddr, &r, sizeof(Regist));
+
 		char time[time_len], date[date_len], entryNumber[entry_string_len];
-		itot(time, dateTime.tm_hour, dateTime.tm_min);
-		itod(date, dateTime.tm_mday, dateTime.tm_mon, dateTime.tm_year);
+		itot(time, r.hr, r.mm);
+		itod(date, r.day, r.month, r.year);
 		LCD_ClearLine(1);LCD_Goto(3,1); LCD_WriteString(date);
 		LCD_ClearLine(2);LCD_Goto(5,2); LCD_WriteString(time);
 		LCD_ClearLine(4);LCD_Goto(3,4); LCD_WriteString("Code: ");
@@ -506,12 +524,7 @@ uint8_t printHistoric(){
 
 		/* Validation */
 
-		AdminFieldAddr= sizeof(Settings)+currEntry*sizeof(Regist);
-		printf("Entry addr: %u | entry: %u\n",AdminFieldAddr,currEntry);
-		AdminFieldAddr= getFormatedAddress(AdminFieldAddr);
-		EEPROM_Read(&AdminFieldAddr, &validate, sizeof(int));
-
-		if(validate) LCD_WriteString("Valid!");
+		if(r.validation) LCD_WriteString("Valid!");
 		else LCD_WriteString("Invalid!");
 		printf("entry3: %u\n",currEntry);
 		itos(entryNumber,currEntry);
@@ -531,6 +544,16 @@ uint8_t printHistoric(){
 
 /*-------------------------------------------------------------------------------*/
 
+void BringTheHammer(uint32_t pw){
+	uint16_t admin_address= 0;
+	EEPROM_Write(&admin_address, &pw, sizeof(int));
+}
+
+uint32_t getAdminCode(){
+	uint16_t admin_address= 0;
+	uint32_t admin;
+	EEPROM_Read(&admin_address, &admin, sizeof(int));
+}
 
 
 
