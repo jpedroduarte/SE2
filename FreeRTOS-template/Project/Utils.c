@@ -135,16 +135,16 @@ void resetBootLoad(){
 	printf("reset adminCode: 0x%X\n",s.adminCode);
 	EEPROM_Write(&addr, &s,sizeof(Settings));
 	//test
-	uint16_t addr1= 0;
-	Settings s;
-
-	EEPROM_Read(&addr1, &s,sizeof(Settings));
-
-	uint8_t * bla= (uint8_t*)&s;
-	int i=0;
-	for(i=0; i<48; ++i){
-		printf("Mem[%u]= %X\n",i,*(bla+i));
-	}
+//	uint16_t addr1= 0;
+//	Settings s;
+//
+//	EEPROM_Read(&addr1, &s,sizeof(Settings));
+//
+//	uint8_t * bla= (uint8_t*)&s;
+//	int i=0;
+//	for(i=0; i<48; ++i){
+//		printf("Mem[%u]= %X\n",i,*(bla+i));
+//	}
 }
 
 /*-------------------------------------------------------------------------------*/
@@ -494,7 +494,9 @@ uint8_t printHistoric(){
 	EEPROM_Read(&AdminFieldAddr, &nRegMaxValue, sizeof(int));
 	if(nRegMaxValue==0)
 		return 0;
+
 	currEntry= nRegMaxValue;
+
 	/* Get absReg */
 	AdminFieldAddr= getFormatedAddress(ABSREGIST_ADDR);
 	EEPROM_Read(&AdminFieldAddr, &absReg, sizeof(int));
@@ -502,14 +504,14 @@ uint8_t printHistoric(){
 	while(!exit){
 
 		printf("entry1: %u\n",currEntry);
-		if(currEntry<0)
+		if(currEntry<1)
 			if(absReg)
 				currEntry= MAX_ENTRY_VALUE-1;
 			else currEntry= nRegMaxValue;
 		printf("entry2: %u\n",currEntry);
 
 		/* Get a Regist */
-		AdminFieldAddr= sizeof(Settings)+currEntry*sizeof(Regist);
+		AdminFieldAddr= sizeof(Settings)+(currEntry-1)*sizeof(Regist);
 		printf("Entry addr: %u | entry: %u\n",AdminFieldAddr,currEntry);
 		AdminFieldAddr= getFormatedAddress(AdminFieldAddr);
 		EEPROM_Read(&AdminFieldAddr, &r, sizeof(Regist));
@@ -549,12 +551,15 @@ void BringTheHammer(uint32_t pw){
 	EEPROM_Write(&admin_address, &pw, sizeof(int));
 }
 
+/*-------------------------------------------------------------------------------*/
+
 uint32_t getAdminCode(){
 	uint16_t admin_address= 0;
-	uint32_t admin;
+	uint32_t admin=0;
 	EEPROM_Read(&admin_address, &admin, sizeof(int));
+	return admin;
 }
 
-
+/*-------------------------------------------------------------------------------*/
 
 /* End of file */

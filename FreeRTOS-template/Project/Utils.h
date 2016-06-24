@@ -108,6 +108,10 @@ uint8_t changeCalendar();
 
 uint8_t printHistoric();
 
+uint32_t getAdminCode();
+
+void BringTheHammer(uint32_t pw);
+
 /* Data Structures */
 
 uint32_t layout[16];

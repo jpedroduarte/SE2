@@ -37,7 +37,7 @@ int main(){
 
 	LCD_TurnOffDisplay();
 	//todo
-	resetBootLoad();
+	//resetBootLoad();
 	//printf("Reset EEPROM!");
 	//resetBootLoad();
 	if(!verifyBootLoad()){
