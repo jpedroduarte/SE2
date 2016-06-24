@@ -164,7 +164,7 @@ uint8_t VerifyCode(uint32_t code){
 	EEPROM_Read(&DoorCodeAddress, &buffer, sizeof(int));
 	if(buffer != code)
 		return 0;
-	return 1;
+	return 9;
 }
 
 /*-------------------------------------------------------------------------------*/
@@ -175,7 +175,7 @@ uint8_t VerifyAdminCode(uint32_t code){
 	uint32_t AdminCodebuffer=0x02020202;
 	//uint8_t AdminCodebuffer[4];
 	AdminCodeAddress= getFormatedAddress(ADMINCODE_ADDR);
-	printf("***ADDRESS: 0x%X\n",AdminCodeAddress);
+	//printf("***ADDRESS: 0x%X\n",AdminCodeAddress);
 	EEPROM_Read(&AdminCodeAddress, (uint8_t*)&AdminCodebuffer, sizeof(int));
 	printf("***Admin Code: 0x%X\n", AdminCodebuffer);
 	if(AdminCodebuffer != code)
@@ -192,38 +192,53 @@ void saveEntry(uint8_t validated){
 	/* Get nRegist from EEPROM */
 	entryAddr= getFormatedAddress(NREGIST_ADDR);
 	EEPROM_Read(&entryAddr,&entry,sizeof(uint32_t));
+	VerifyAdminCode(0);
 	//printf("***Entry Number: %u\n",entry);
 	++entry;
 	if(entry >= MAX_ENTRY_VALUE){	// EEPROM memory is full
 		/* Reset EEPROM entry pointer */
 		entry=0;
 		EEPROM_Write(&entryAddr, &entry,sizeof(uint32_t));
+		VerifyAdminCode(0);
 		/*Put AbsReg to 1 to indicate EEPROM is full of entries */
 		entry=1;
 		entryAddr= getFormatedAddress(ABSREGIST_ADDR);
 		EEPROM_Write(&entryAddr, &entry, sizeof(int));
+		VerifyAdminCode(0);
 	}else{
 		// Get DateTime
 		RTC_GetValue(&dateTime);
-		Regist regist;
-		regist.hr = dateTime.tm_hour;
-		regist.mm = dateTime.tm_min;
-		regist.s = dateTime.tm_sec;
-		regist.year = dateTime.tm_year;
-		regist.month = dateTime.tm_mon;
-		regist.day = dateTime.tm_mday;
-		regist.dayWeek = dateTime.tm_wday;
+		r.hr = dateTime.tm_hour;
+		r.mm = dateTime.tm_min;
+		r.s = dateTime.tm_sec;
+		r.year = dateTime.tm_year;
+		r.month = dateTime.tm_mon;
+		r.day = dateTime.tm_mday;
+		r.dayWeek = dateTime.tm_wday;
 		printf("*VALIDATED= %X\n",validated);
-		regist.validation = validated;
+		r.validation = validated;
 
 		/* Update nRegist in EEPROM */
 		entryAddr= getFormatedAddress(NREGIST_ADDR);
 		EEPROM_Write(&entryAddr,&entry,sizeof(uint32_t));
 
+
+		//VerifyAdminCode(0);
 		/* Write new Entry */
-		printf("addr: %u\n",(entry-1)*sizeof(regist)+sizeof(Settings));
-		uint16_t entry_addr= getFormatedAddress((entry-1)*sizeof(regist)+sizeof(Settings));
-		EEPROM_Write(&entry_addr,&regist,sizeof(Regist));
+		printf("sizeof: %u\n",sizeof(Regist));
+		printf("addr: %u\n",(entry-1)*sizeof(Regist)+sizeof(Settings));
+		entryAddr= getFormatedAddress((entry-1)*sizeof(Regist)+sizeof(Settings));
+		EEPROM_Write(&entryAddr,&r,sizeof(Regist));
+
+//		entry_Addr=0;
+//		uint8_t test[100];
+//		EEPROM_Read(&entryAddr,&test,100);
+//		int i;
+//		for(i=0; i<100; ++i)
+//			printf("Mem[%u]=0x%X\n", i, test[i]);
+		//uint32_t test=0x03030303;
+		//EEPROM_Write(&entry_addr,&test,4);
+		VerifyAdminCode(0);
 	}
 }
 
@@ -466,6 +481,8 @@ uint8_t printHistoric(){
 	/* Get nRegist value from EEPROM */
 	AdminFieldAddr= getFormatedAddress(NREGIST_ADDR);
 	EEPROM_Read(&AdminFieldAddr, &nRegMaxValue, sizeof(int));
+	if(nRegMaxValue==0)
+		return 0;
 	currEntry= nRegMaxValue;
 	/* Get absReg */
 	AdminFieldAddr= getFormatedAddress(ABSREGIST_ADDR);

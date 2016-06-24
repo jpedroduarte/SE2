@@ -60,7 +60,8 @@ typedef struct{
   uint8_t day;
   uint8_t dayWeek;
   uint8_t validation;
-} Regist;	//9 Bytes
+  uint8_t bla;
+} Regist;	//10 Bytes
 
 
 

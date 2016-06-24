@@ -32,14 +32,15 @@ void mainTaskFunc(){
 					xTaskNotifyGive(AdminModeTask);
 					break;
 				}
-
 				vTaskDelay(400);
 				continue;
 			}else{
-				/* Normal key */
-				puts("-NORMAL_KEY-");
-				xTaskNotifyGive(UserModeTask);
-				break;
+				if(mainTaskExit>0){
+					/* Normal key */
+					puts("-NORMAL_KEY-");
+					xTaskNotifyGive(UserModeTask);
+					break;
+				}
 			}
 		}
 
@@ -109,9 +110,8 @@ void UserModeTaskFunc(){
 			vTaskDelay(2000);
 			puts("Entry Invalid! \n");
 		}
-
+		VerifyAdminCode(0);
 		saveEntry(validate);
-
 
 		puts("WakeUp MainTask.\n");
 		/* Try Wake up Main Task */
@@ -135,7 +135,6 @@ void AdminModeTaskFunc(){
 			if(xQueueReceive(KBD_queue, &aux, 500) == pdFALSE)
 				break;
 			else if(aux!=DOUBLE_KEY){
-				xQueueReset(KBD_queue);
 				break;
 			}
 		}
