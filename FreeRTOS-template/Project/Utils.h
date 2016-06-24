@@ -29,11 +29,12 @@
 
 #define time_len 6
 #define date_len 11
+#define entry_string_len 5
 
 #define ASTERISK 10
 #define CARDINAL 11
 
-#define MAX_ENTRY_VALUE 3350
+#define MAX_ENTRY_VALUE 3000
 
 typedef struct{
   unsigned int  adminCode;
@@ -67,13 +68,15 @@ typedef struct{
 
 uint16_t getFormatedAddress(uint16_t src);
 
+void itos(char* dst, uint32_t dd);
+
 void itod(char* dst, uint8_t dd, uint8_t mm, uint16_t yyyy);
 
 void itot(char* dst, uint8_t hh, uint8_t mm);
 
-void turnOnLcdAndWriteTime(int count);
+void turnOnLcdAndWriteTime();
 
-void turnOnLcdAndWriteTimeAdmin(int count);
+void turnOnLcdAndWriteTimeAdmin();
 
 void printLCDMaintenanceMenu();
 

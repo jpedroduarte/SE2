@@ -13,10 +13,11 @@ int main(){
 	//
 	//Init
 	//
+	printf("Start");
 	I2C_config(1, 100);
 	KBD_init(layout);
 	LED_init(2, 12, 0);
-	SPI_Init(128,9);
+	SPI_Init(8,9);
 	LCD_Init();
 	//char time[time_len], date[date_len];
 	//itot(time, 13, 50);
@@ -35,18 +36,22 @@ int main(){
 	LCD_BL_State(0); //Apagar LCD light
 
 	LCD_TurnOffDisplay();
-
+	//todo
+	//resetBootLoad();
+	//printf("Reset EEPROM!");
+	//resetBootLoad();
 	if(!verifyBootLoad()){
 		resetBootLoad();
+		printf("Reset EEPROM!");
 	}
-
+	//VerifyAdminCode(0);
 	//
 	//Create tasks
 	//
 
 	xTaskCreate(mainTaskFunc, "mainTask", configMINIMAL_STACK_SIZE, NULL, 0 , &mainTask );
-	xTaskCreate(UserModeTaskFunc, "UserModeTask", configMINIMAL_STACK_SIZE, NULL, 0 , &UserModeTask );
-	xTaskCreate(AdminModeTaskFunc, "AdminModeTask", configMINIMAL_STACK_SIZE, NULL, 0 , &AdminModeTask );
+	xTaskCreate(UserModeTaskFunc, "UserModeTask", configMINIMAL_STACK_SIZE*2, NULL, 0 , &UserModeTask );
+	xTaskCreate(AdminModeTaskFunc, "AdminModeTask", configMINIMAL_STACK_SIZE*2, NULL, 0 , &AdminModeTask );
 
 	/* Utility tasks */
 	xTaskCreate(LED_OpenDoorFunc,"Led_OpenDoorTask",configMINIMAL_STACK_SIZE, NULL, 2 , &LED_OpenDoor);
@@ -55,7 +60,7 @@ int main(){
 	KBD_queue= xQueueCreate(KBD_queue_size,sizeof(uint32_t)*KBD_queue_size);
 /*
 #define LCD_queue_size 16
-	xTaskCreate(LCD_DisplayFunc, "LCD_Task", configMINIMAL_STACK_SIZE, NULL, 0 , LCD_Display );
+	xTaskCreate(LCD_DisplayFunc, "LCD_Task", configMINIMAL_STACK_SIZE, NULL, 2 , LCD_Display );
 	LCD_queue= xQueueCreate(LCD_queue_size,sizeof(char)*LCD_queue_size);
 */
 

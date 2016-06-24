@@ -76,5 +76,6 @@ void getKeyCode();
 
 void getSettings();
 
+void cleanEEPROM();
 
 #endif /* TEST_TESTS_H_ */

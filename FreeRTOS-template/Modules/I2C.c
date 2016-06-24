@@ -32,14 +32,14 @@ void I2C_config(uint32_t controller, uint32_t freq){
 	I2C->I2CONSET=I2EN; //master mode
 }
 
-uint32_t I2C_Transfer(uint32_t controller,uint8_t control_byte, char *data_src, uint32_t size, uint8_t direction, uint8_t repeat){
+uint32_t I2C_Transfer(uint32_t controller,uint8_t control_byte, uint8_t *data_src, uint32_t size, uint8_t direction, uint8_t repeat){
 	//direction = 0 Write , direction = 1 Read
 	LPC_I2C_TypeDef* I2C= I2C_Get_Controller(controller);
-	char *initialAddr= data_src;
-	char *currAddr = data_src;
-	char *finalAddr = ((char*)data_src + size * sizeof(char));
-	I2C->I2CONCLR= 1<<2 | 1<<3 | 1<<5 | 1<<6;
-	I2C->I2CONSET = STA | I2EN;
+	uint8_t *initialAddr= data_src;
+	uint8_t *currAddr = data_src;
+	uint8_t *finalAddr = ((uint8_t*)data_src + size * sizeof(uint8_t));
+	I2C->I2CONCLR= 1<<2 | 1<<3 | 1<<5;// | 1<<6;
+	I2C->I2CONSET = STA;
 	//I2C->I2CONCLR = SIC;
 	while(1){
 		if(I2C->I2CONSET & SI){
@@ -118,14 +118,19 @@ uint32_t I2C_Transfer(uint32_t controller,uint8_t control_byte, char *data_src, 
 	}
 }
 
-static void I2C_WriteByte(LPC_I2C_TypeDef* I2C, char* data){
+static void I2C_WriteByte(LPC_I2C_TypeDef* I2C, uint8_t* data){
 	I2C->I2DAT=*data;
 	//memcpy(data, (void*)&I2C->I2DAT, sizeof(char));
 }
 
-static void I2C_ReadByte(LPC_I2C_TypeDef* I2C, char* data){
+static void I2C_ReadByte(LPC_I2C_TypeDef* I2C, uint8_t* data){
 	*data=I2C->I2DAT;
 	//memcpy((void*)&I2C->I2DAT, data, sizeof(char));
+}
+
+I2C_Disable(uint8_t controller){
+	LPC_I2C_TypeDef* I2C= I2C_Get_Controller(controller);
+	I2C->I2CONSET = I2EN;
 }
 
 static LPC_I2C_TypeDef* I2C_Get_Controller(uint8_t controller){

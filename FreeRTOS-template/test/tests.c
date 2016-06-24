@@ -323,9 +323,11 @@ void projTest(){
 		puts("Not correct.");
 		resetBootLoad();
 	}else puts("Correct.");
-	uint16_t addr= 0;
+	uint8_t addr[2]={0,0};
+	uint8_t aux[4]={5,5,5,5};
+	EEPROM_Write(addr, aux, 4);
 	uint8_t read[48];
-	EEPROM_Read(&addr,read,48);
+	EEPROM_Read(addr,read,48);
 	int i;
 	uint8_t* bla=(uint8_t*)read;
 	for(i=0; i<48; ++i){
@@ -395,6 +397,34 @@ void getSettings(){
 	int i=0;
 	for(i=0; i<48; ++i){
 		printf("Mem[%u]= %X\n",i,*(bla+i));
+	}
+}
+
+uint8_t address[2]={0,0};
+uint8_t read_buffer[10];
+	uint8_t buffer[10];
+void cleanEEPROM(){
+	I2C_config(1,100);
+	int ab;
+
+	for(ab=0; ab<5; ++ab){
+		puts("\n");
+		int add=0;
+		for(; add<10; ++add)
+			buffer[add]=ab;
+		add=0;
+		EEPROM_Write(address, buffer, 10);
+
+		/* Read */
+		for(add=0; add<10; ++add)
+				read_buffer[add]=3;
+
+		EEPROM_Read(address, read_buffer, 10);
+		uint8_t * bla= (uint8_t*)read_buffer;
+		int i=0;
+		for(i=0; i<10; ++i){
+			printf("Mem[%u]= %X\n",i,*(bla+i));
+		}
 	}
 }
 

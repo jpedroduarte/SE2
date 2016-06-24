@@ -5,11 +5,13 @@
 
 void I2C_config(uint32_t controller, uint32_t freq);
 
-uint32_t I2C_Transfer(uint32_t controller, uint8_t control_byte, char *data, uint32_t size, uint8_t WriteNotRead, uint8_t repeat);
+uint32_t I2C_Transfer(uint32_t controller, uint8_t control_byte, uint8_t *data, uint32_t size, uint8_t WriteNotRead, uint8_t repeat);
 
-static void I2C_WriteByte(LPC_I2C_TypeDef* I2C, char *data);
+static void I2C_WriteByte(LPC_I2C_TypeDef* I2C, uint8_t *data);
 
-static void I2C_ReadByte(LPC_I2C_TypeDef* I2C, char* data);
+static void I2C_ReadByte(LPC_I2C_TypeDef* I2C, uint8_t* data);
+
+I2C_Disable(uint8_t controller);
 
 static LPC_I2C_TypeDef* I2C_Get_Controller(uint8_t controller);
 

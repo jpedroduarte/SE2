@@ -121,7 +121,7 @@ int pmain(void)
 	//auxEEPROMTest();
 	//getBootLoadCode();
 	//test;
-
+	cleanEEPROM();
 	//getSettings();
 	//getKeyCode();
 	puts("End test");

@@ -11,33 +11,50 @@
 	todo-usar software timer para controlar o estado do LCD (ligado/desligado)
 */
 
-/* Main Task*/
+/*-------------------------------------------------------------------------------*/
 
+/* Main Task*/
+int firstKey;
+uint8_t mainTaskExit;
 void mainTaskFunc(){
 	int key;
 	int keyAux;
+
 	while(1){
 		//Get a key
 		puts("Main Task- GetKey\n");
-		if(xQueueReceive(KBD_queue, &key, portMAX_DELAY) == pdTRUE){
-			printf("Main Task key: %X\n",key);
-			if(key== DOUBLE_KEY){
-				/* Double Key */
-				printf("-DOUBLE_KEY-\n");
-				xTaskNotifyGive(AdminModeTask);
+		LCD_Off();
+		for(mainTaskExit=0; xQueueReceive(KBD_queue, &key, portMAX_DELAY) == pdTRUE; ++mainTaskExit){
+			if(key == DOUBLE_KEY){
+				if(mainTaskExit>=5){
+					/* Double Key */
+					printf("-DOUBLE_KEY- exitCounter: %u\n",mainTaskExit);
+					xTaskNotifyGive(AdminModeTask);
+					break;
+				}
+
+				vTaskDelay(400);
+				continue;
 			}else{
 				/* Normal key */
 				puts("-NORMAL_KEY-");
 				xTaskNotifyGive(UserModeTask);
+				break;
 			}
 		}
+
+		/* Save the first key pressed */
+		firstKey=key;
+
 		//block main task until notified
 		puts("Block Main Task\n");
 		int aux= ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
 		printf("main Task is back : 0x%X\n", aux);
-		puts("main Task is back");
+		//VerifyAdminCode(0);
 	}
 }
+
+/*-------------------------------------------------------------------------------*/
 
 uint32_t keyNum, keyCode;
 int aux;
@@ -49,28 +66,34 @@ void UserModeTaskFunc(){
 		puts("------Block User Mode.\n");
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		puts("------User Mode. \n");
-
+		//VerifyAdminCode(0);
+		turnOnLcdAndWriteTime();
 		keyCode=0;
 		leave_function=0;
 		puts("\nUser Mode Task key:");
-		for(keyNum=0; keyNum<4;++keyNum){
+		keyNum=0;
+		/* Get the key from Main Task */
+		keyCode |= firstKey<<(keyNum*8);
+		++keyNum;
+		LCD_WriteChar('*');
+
+		for(;keyNum<4;++keyNum){
 			//Get a key
 			if(xQueueReceive(KBD_queue, &aux, 5000) == pdFALSE){
 				//timeout occured
 				puts("User Mode Key Timeout");
 				leave_function=1;
-				//todo LCD_Off();
 				break;
 			}else{
 				/* Get valid key */
 				printf("count:%u | %X \n",keyNum,aux);
 				keyCode |= aux<<(keyNum*8);
-				//todo turnOnLcdAndWriteTime(keyNum);
+				LCD_WriteChar('*');
 			}
 		}
 
 		if(leave_function){
-			//todo xTaskNotifyGive(mainTask);
+			xTaskNotifyGive(mainTask);
 			continue;
 		}
 
@@ -79,14 +102,15 @@ void UserModeTaskFunc(){
 		if(validate){
 			/*Wake up OpenDoor Task */
 			puts("Entry valid!\n");
-			//todo xTaskNotifyGive(LED_OpenDoor);
+			xTaskNotifyGive(LED_OpenDoor);
 
 		}else{
+			LCD_Goto(2,5); LCD_WriteString("INVALID CODE!");
+			vTaskDelay(2000);
 			puts("Entry Invalid! \n");
-			//todo LCD_Off();
 		}
-		//todo
-		//saveEntry(validate);
+
+		saveEntry(validate);
 
 
 		puts("WakeUp MainTask.\n");
@@ -95,6 +119,8 @@ void UserModeTaskFunc(){
 	}
 }
 
+/*-------------------------------------------------------------------------------*/
+
 void AdminModeTaskFunc(){
 
 	while(1){
@@ -102,21 +128,34 @@ void AdminModeTaskFunc(){
 		puts("Block Admin Mode. \n");
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		puts("---------Admin Mode\n");
+		//VerifyAdminCode(0);
+		turnOnLcdAndWriteTimeAdmin();
+		/* Polling for a key which is not DOUBLE_KEY */
+		while(1){
+			if(xQueueReceive(KBD_queue, &aux, 500) == pdFALSE)
+				break;
+			else if(aux!=DOUBLE_KEY){
+				xQueueReset(KBD_queue);
+				break;
+			}
+		}
+		/* Reset Queue because it is full with DOUBLE_KEY */
+		xQueueReset(KBD_queue);
+
 		keyCode=0;
 		leave_function=0;
 		for(keyNum=0; keyNum<4;++keyNum){
 			//Get a key
 			if(xQueueReceive(KBD_queue, &aux, 5000) == pdFALSE){
 				//timeout occured
-				puts("User Mode Key Timeout");
+				puts("Admin Mode Key Timeout");
 				leave_function=1;
-				LCD_Off();
 				break;
 			}else{
 				/* Get valid key */
 				printf("count:%u | %X \n",keyNum,aux);
 				keyCode |= aux<<(keyNum*8);
-				turnOnLcdAndWriteTimeAdmin(keyNum);
+				LCD_WriteChar('*');
 			}
 		}
 
@@ -128,8 +167,9 @@ void AdminModeTaskFunc(){
 		printf("Key Code: %X\n",keyCode);
 		uint8_t validate= VerifyAdminCode(keyCode);
 		if(!validate){
+			LCD_Goto(2,6); LCD_WriteString("INVALID CODE!");
+			vTaskDelay(2000);
 			puts("Entry Invalid! \n");
-			LCD_Off();
 		}else{
 			/* Enter Admin Mode */
 			puts("Entry valid!\n");
@@ -138,56 +178,34 @@ void AdminModeTaskFunc(){
 			while(1){
 				if(gotoAdminOption()) //Returns 1 in case of exit key
 					break;
+				printLCDMaintenanceMenu();
 			}
 		}
-		LCD_Off();
 		puts("WakeUp MainTask.\n");
 		/* Try Wake up Main Task */
 		xTaskNotifyGive(mainTask);
 	}
 }
 
+/*-------------------------------------------------------------------------------*/
 
 /* Keyboard Set task*/
+
+int key;
 void KBD_SetKeyFunc(){
-	int key;
-	uint32_t count;
+
 	while(1){
 
-		if((key = KBD_read_nonBlocking()) == INVALID_KEY){
-			vTaskDelay(200);
-			continue;
-		}
-		//puts("\ncount:");
-		for(count=0; count<10; ++count){
-			if((key = KBD_read_nonBlocking()) != INVALID_KEY){
-				if(key == DOUBLE_KEY){
-					//printf("%u ",count);
-					vTaskDelay(200);
-					continue;
-				}else{
-					/* Normal Key */
-					xQueueSend(KBD_queue, &key,300);
-					break;
-				}
-			}else{
-				//puts("KBD Task- No key\n");
-				break;
-			}
-			//puts("\n");
-		}
+		if((key = KBD_read_nonBlocking()) != INVALID_KEY){
+			xQueueSend(KBD_queue, &key,200);
 
-		if(key == DOUBLE_KEY){
-			/* Double Key */
-			xQueueSend(KBD_queue, &key,300);
-			printf("DOUBLE_KEY! -- %u ",key);
 		}
+		//printf("*");
 		vTaskDelay(200);
-		puts("*");
 	}
 }
 
-
+/*-------------------------------------------------------------------------------*/
 
 /* LCD task*/
 
@@ -201,6 +219,8 @@ void LCD_DisplayFunc(){
 	}
 }
 
+/*-------------------------------------------------------------------------------*/
+
 /* LED task */
 
 void LED_OpenDoorFunc(){
@@ -208,10 +228,10 @@ void LED_OpenDoorFunc(){
 		//block task until it is notified
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		puts("DOOR OPEN\n");
+		LCD_Goto(3,5); LCD_WriteString("DOOR OPEN!");
 		LED_SetState(1);
 		vTaskDelay(5000);
-		LED_SetState(0);
-		LCD_Off();
 		puts("DOOR CLOSED\n");
+		LED_SetState(0);
 	}
 }
