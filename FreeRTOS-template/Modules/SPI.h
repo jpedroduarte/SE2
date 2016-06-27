@@ -1,6 +1,6 @@
 /** @file SPI.h
  *  @brief Drivers for SPI on LPC2106
- *  @author G6
+ *  @author João Duarte
  */
 
 #ifndef __SPI_H__
@@ -28,25 +28,32 @@
 
  /** @brief Faz a iniciação do controlador, configurando os pinos, o ritmo de envio e o
  *	numero de bits de dados.Sets the current date and time values
+ *	@param	int frequency
+ *	@param	int bitData
  *  @return none
  */
 void SPI_Init(int frequency, int bitData);
 
  /** @brief Coloca ativo o chip select do dispositivo slave
+  * @param	int csBitId
  *  @return none
  */
 void SPI_BeginTransfer(int csBitId);
 
  /** @brief Coloca desativo o chip select do dispositivo slave
+  * @param int csBitId
  *  @return none
  */
 void SPI_EndTransfer(int csBitId);
 
 
  /** @brief Realiza uma transferencia.
+  * @param	unsigned short* txBuffer
+  * @param	unsigned short* rxBuffer
+  * @param	int lenght
  *  @return none
  */
-void SPI_Transfer(unsigned short *txBuffer, unsigned short* arxBuffer, int lenght);
+void SPI_Transfer(unsigned short *txBuffer, unsigned short* rxBuffer, int lenght);
 
 
 /**

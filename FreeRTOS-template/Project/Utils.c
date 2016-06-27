@@ -1,8 +1,8 @@
-/*
- * Utils.c
+/** @file Utils.c
+ *  @brief Module with all Utilitary functions for the app.
  *
- *  Created on: 08/06/2016
- *      Author: Red
+ *  @author João Duarte
+ *
  */
 
 

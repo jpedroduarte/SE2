@@ -1,7 +1,7 @@
 /** @file LCD_Font.c
  *  @brief Character definitions to use on LCD.c
  *
- *  @author G6
+ *  @author João Duarte
  *
  */
 

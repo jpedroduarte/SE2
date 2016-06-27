@@ -1,9 +1,16 @@
+/** @file GPIO.c
+ *  @brief Drivers for GPIO.
+ *
+ *
+ *
+ *
+ *  @author João Duarte
+ *
+ */
 #include "GPIO.h"
 
 //args: dir-> 0 input / 1 output
 // Port0 reserved for GPIO
-
-
 
 
 void GPIO_configDigital(uint32_t dir, uint32_t mask, uint32_t initValue){

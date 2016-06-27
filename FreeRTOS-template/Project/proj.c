@@ -34,11 +34,8 @@ int main(){
 	dateTime.tm_yday 	= yday;
 	RTC_Init(&dateTime);
 	LCD_BL_State(0); //Apagar LCD light
-
 	LCD_TurnOffDisplay();
-	//todo
-	//resetBootLoad();
-	//printf("Reset EEPROM!");
+
 	//resetBootLoad();
 	if(!verifyBootLoad()){
 		resetBootLoad();
@@ -64,23 +61,7 @@ int main(){
 	LCD_queue= xQueueCreate(LCD_queue_size,sizeof(char)*LCD_queue_size);
 */
 
-	/* Create Timers */
-	/*
-	Timer_waitDoubleKey= xTimerCreate(
-		 "Timer",
-		 200,
-		 pdTRUE,
-		 ( void * ) 0,
-		 TimerCallback
-	 );
-
-	if(Timer_waitDoubleKey == NULL)
-	{
-		puts("Failed to create FREERTOS Timer");
-		return 0;
-	}
-	*/
-	puts("Init completed.");
+	//puts("Init completed.");
 	/* Start Scheduler */
 	vTaskStartScheduler();
 

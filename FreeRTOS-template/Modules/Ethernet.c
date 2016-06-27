@@ -1,5 +1,20 @@
+/** @file Ethernet.c
+ *  @brief Drivers for Ethernet.
+ *
+ *  Function Ethernet_init must be called before anything else.
+ *
+ *
+ *  @author João Duarte
+ *
+ */
+
 #include "Ethernet.h"
 #include <stdio.h>
+
+/// todo Teste do professor
+#include "tapdev.h"
+
+/*-------------------------------------------------------------------------------------*/
 
 void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapath){
 
@@ -72,7 +87,7 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	}
 
 	if (timeout >= 0x100000){
-		puts("Link status off. Shutting down Ethernet_init.");
+		//puts("Link status off. Shutting down Ethernet_init.");
 		return;
 	}
 
@@ -119,15 +134,8 @@ void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapa
 	LPC_EMAC->MAC1 |= RECEIVE_ENABLE;
 }
 
-/*Notas:
+/*-------------------------------------------------------------------------------------*/
 
-
-*/
-
-#define PHY_DEF_ADR 0b00001
-#define MII_WR_TOUT -1
-#define MIND_BUSY 0x1
-#define MCMD_WRITE 0
 
 void Ethernet_WriteToPHY (int reg, int writeval){
 	unsigned int loop;
@@ -138,8 +146,7 @@ void Ethernet_WriteToPHY (int reg, int writeval){
 			break;
 }
 
-#define MCMD_READ 0x1
-#define MII_RD_TOUT -1
+/*-------------------------------------------------------------------------------------*/
 
 unsigned short Ethernet_ReadFromPHY (unsigned char reg){
 	unsigned int loop;
@@ -153,5 +160,44 @@ unsigned short Ethernet_ReadFromPHY (unsigned char reg){
 	return (LPC_EMAC->MRDD);
 }
 
+/*-------------------------------------------------------------------------------------*/
+
+void tapdev_init(void){
+	/* MAC ADDRESS */
+	uint8_t mac_addr[6]={6,5,4,3,2,1};
+	Ethernet_init(EMAC_NO_READ_NO_SCAN_MODE, mac_addr, EMAC_RX_ENABLE | EMAC_TX_ENABLE);
+}
+
+/*-------------------------------------------------------------------------------------*/
+
+unsigned int tapdev_read(void){
+	//todo
+}
+
+/*-------------------------------------------------------------------------------------*/
+
+
+/*Transmite um pacote Ethernet para o controlador.
+A variavel global uip_buf contem os dados, uip_len a dimensão.*/
+
+
+uint32_t * Txpointer;
+
+void tapdev_send(void){
+
+	/* TX array is full? */
+	//If the RxProduceIndex equals
+	//RxConsumeIndex - 1, the array is full and any
+
+	/* Set up the descriptor */
+	uint32_t pi= LPC_EMAC->TxProduceIndex;
+	//Txpointer=
+
+	/* Update TxProduceIndex */
+
+
+}
+
+/*-------------------------------------------------------------------------------------*/
 
 

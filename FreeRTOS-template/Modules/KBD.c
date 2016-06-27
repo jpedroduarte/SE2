@@ -1,3 +1,13 @@
+/** @file KBD.c
+ *  @brief Drivers for KBD.
+ *
+ *  Function KBD_init must be called before anything else.
+ *	This module provides functionality to use a matrix 4x4 keyboard.
+ *
+ *
+ *  @author João Duarte
+ *
+ */
 #include "KBD.h"
 
 //

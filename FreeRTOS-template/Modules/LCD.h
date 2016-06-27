@@ -1,7 +1,7 @@
 /**
 * @file		LCD.h
 * @brief	Contains the LCD API.
-* @author	G6
+* @author	João Duarte
 */
 
 #ifndef __LCD_H__

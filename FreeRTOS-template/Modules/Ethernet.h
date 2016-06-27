@@ -1,12 +1,21 @@
-/*
- * Ethernet.h
- *
- *  Created on: 24/05/2016
- *      Author: Red
- */
+/**
+* @file		Ethernet.h
+* @brief	Drivers for Ethernet.
+* @author	João Duarte
+*/
 
 #ifndef ETHERNET_H_
 #define ETHERNET_H_
+
+/** @defgroup Ethernet Ethernet
+ * @ingroup Ethernet
+ * This module provides functionality to manage the Ethernet controller from LPC1769 and the likes.
+ * Ethernet_init must be called before any Ethernet use.
+ * @{
+
+ * @defgroup Ethernet_Public_Functions Ethernet Public Functions
+ * @{
+ */
 
 #include "GPIO.h"
 
@@ -44,12 +53,60 @@
 #define EMAC_TX_ENABLE 2
 #define EMAC_RX_ENABLE 1
 
+/* Read/Write PHY macros */
+
+#define PHY_DEF_ADR 0b00001
+#define MII_WR_TOUT 0xFFFFFFFF
+#define MIND_BUSY 0x1
+#define MCMD_WRITE 0
+
+#define MCMD_READ 0x1
+#define MII_RD_TOUT 0xFFFFFFFF
+
 /* Functions */
 
+/**
+ * @brief	Configures Ethernet controller and the LAN chip
+ * @param	uint8_t readCycleMode
+ * @param	uint8_t mac_address[6]
+ * @param	uint8_t datapath
+ * @return	void
+ */
 void Ethernet_init(uint8_t readCycleMode, uint8_t mac_address[6], uint8_t datapath);
 
+/**
+ * @brief	Writes to LAN chip
+ * @param	int reg
+ * @param	int writeval
+ * @return	void
+ */
 void Ethernet_WriteToPHY (int reg, int writeval);
 
+/**
+ * @brief	Reads from LAN chip
+ * @param	int reg
+ * @return	value of the register.
+ */
 unsigned short Ethernet_ReadFromPHY (unsigned char reg);
+
+/**
+ * @brief	Transmits an Ethernet packet.
+ * @return	void
+ */
+void tapdev_send(void);
+
+/**
+ * @brief	Receives an Ethernet packet.
+ * @return	unsigned int - the length of the packet.
+ */
+unsigned int tapdev_read(void);
+
+/**
+ * @}
+  */
+
+/**
+ * @}
+ */
 
 #endif /* ETHERNET_H_ */

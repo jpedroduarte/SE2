@@ -9,7 +9,7 @@
  *	BackLight -> P0.1
  *	RESET -> P0.3
  *	LCD_CS -> P0.5
- *  @author G6
+ *  @author João Duarte
  *
  */
 

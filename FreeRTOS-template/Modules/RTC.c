@@ -1,8 +1,12 @@
-/*
- * RTC.c
+/** @file RTC.c
+ *  @brief Drivers for RTC.
  *
- *  Created on: 07/06/2016
- *      Author: Red
+ *  Function RTC_Init must be called before anything else.
+ *	This module provides functionality to control the RTC.
+ *
+ *
+ *  @author João Duarte
+ *
  */
 
 #include "RTC.h"

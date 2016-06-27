@@ -1,27 +1,55 @@
-/*
- * RTC.h
- *
- *  Created on: 07/06/2016
- *      Author: Red
- */
+/**
+* @file		RTC.h
+* @brief	Drivers for RTC.
+* @author	João Duarte
+*/
 
 #ifndef RTC_H_
 #define RTC_H_
 
+/** @defgroup RTC RTC
+ * @ingroup RTC
+ * This module provides functionality to manage RTC controller from LPC1769 and the likes.
+ * RTC_Init must be called before any RTC use.
+ * @{
+
+ * @defgroup RTC_Public_Functions RTC Public Functions
+ * @{
+ */
+
 #include "LPC17xx.h"
 #include <time.h>
 
+
+/**
+ * @brief	Initializes the system to allow acess to RTC. It is initialized with the dateTime values.
+ * @param	struct tm *dateTime - struct with init values for the RTC.
+ * @return	void
+ */
 void RTC_Init(struct tm *dateTime);
-/* Faz a iniciação do sistema para permitir o acesso ao periférico RTC. O RTC é
-iniciado com os valores do parâmetro. */
+
+/**
+ * @brief	Gets the dateTime values.
+ * @param	struct tm *dateTime - struct with dateTime values.
+ * @return	void
+ */
 void RTC_GetValue(struct tm *dateTime);
-/* Devolve em dateTime o valor corrente do RTC. */
+
+/**
+ * @brief	Sets the dateTime values.
+ * @param	struct tm *dateTime - struct with dateTime values.
+ * @return	void
+ */
 void RTC_SetValue(struct tm *dateTime);
 /* Realiza a atualização do RTC com os valores do parâmetro dateTime. */
-void RTC_GetAlarmValue(struct tm *dateTime);
-/* Devolve em dateTime o valor corrente do alarme do RTC. */
-void RTC_SetAlarmValue(struct tm *dateTime);
-/* Realiza a atualização do alarme do RTC com os valores do parâmetro dateTime.
-*/
+
+
+/**
+ * @}
+  */
+
+/**
+ * @}
+ */
 
 #endif /* RTC_H_ */

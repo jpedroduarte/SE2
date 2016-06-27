@@ -1,5 +1,16 @@
+/** @file I2C.c
+ *  @brief Drivers for I2C.
+ *
+ *  Function I2C_config must be called before anything else.
+ *	This module provides functionality to write operations such as byte/page write
+ *	and also random/sequencial read.
+ *
+ *
+ *  @author João Duarte
+ *
+ */
+
 #include "I2C.h"
-#include "string.h"
 
 static LPC_I2C_TypeDef* I2C_Controller_table[]={
 	LPC_I2C0,
@@ -120,15 +131,13 @@ uint32_t I2C_Transfer(uint32_t controller,uint8_t control_byte, uint8_t *data_sr
 
 static void I2C_WriteByte(LPC_I2C_TypeDef* I2C, uint8_t* data){
 	I2C->I2DAT=*data;
-	//memcpy(data, (void*)&I2C->I2DAT, sizeof(char));
 }
 
 static void I2C_ReadByte(LPC_I2C_TypeDef* I2C, uint8_t* data){
 	*data=I2C->I2DAT;
-	//memcpy((void*)&I2C->I2DAT, data, sizeof(char));
 }
 
-I2C_Disable(uint8_t controller){
+void I2C_Disable(uint8_t controller){
 	LPC_I2C_TypeDef* I2C= I2C_Get_Controller(controller);
 	I2C->I2CONSET = I2EN;
 }

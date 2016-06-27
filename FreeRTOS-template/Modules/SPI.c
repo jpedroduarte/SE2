@@ -1,5 +1,5 @@
 /** @file SPI.c
- *  @brief Drivers for SPI on LPC2106
+ *  @brief Drivers for SPI
  *
  *  Function SPI_Init must be called before anything else.
  *	
@@ -10,6 +10,7 @@
  *	P0.6 MOSI
  *	P0.7 SSEL
  *	For communication with LCD Nokia 6610.
+ *	@author João Duarte
  */
 
 #include "SPI.h"

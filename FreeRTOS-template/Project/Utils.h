@@ -1,12 +1,20 @@
-/*
- * Utils.h
- *
- *  Created on: 08/06/2016
- *      Author: Red
- */
+/**
+* @file		Utils.h
+* @brief	Module with all Utilitary functions for the app.
+* @author	João Duarte
+*/
 
 #ifndef PROJECT_UTILS_H_
 #define PROJECT_UTILS_H_
+
+/** @defgroup Utils Utils
+ * @ingroup Utils
+ * This module provides utility functions for the app.
+ * @{
+
+ * @defgroup Utils_Public_Functions Utils Public Functions
+ * @{
+ */
 
 #include <stdio.h>
 #include <time.h>
@@ -67,48 +75,147 @@ typedef struct{
 
 /* Functions */
 
+
+/**
+ * @brief	Prepares the uint16_t bitwise for an EEPROM operation, switching the HIGH with the LOW byte.
+ * @return	uint16_t
+ */
 uint16_t getFormatedAddress(uint16_t src);
 
-void itos(char* dst, uint32_t dd);
+/**
+ * @brief	int to string
+ * @param	char* dst - destination string
+ * @param	uint32_t n - number to convert into string
+ * @return	void
+ */
+void itos(char* dst, uint32_t n);
 
+
+/**
+ * @brief	int to date string
+ * @param	char* dst - destination string
+ * @param	uint8_t dd - day
+ * @param 	uint8_t mm - month
+ * @param	uint8_t yyyy - year
+ * @return	void
+ */
 void itod(char* dst, uint8_t dd, uint8_t mm, uint16_t yyyy);
 
+
+/**
+ * @brief	int to time string
+ * @param	char* dst - destination string
+ * @param	uint8_t hh - hour
+ * @param 	uint8_t mm - minutes
+ * @return	void
+ */
 void itot(char* dst, uint8_t hh, uint8_t mm);
 
+/**
+ * @brief	Turns on Display and writes the current time.
+ * @return	void
+ */
 void turnOnLcdAndWriteTime();
 
+/**
+ * @brief	Turns on Display and writes the current time for Admin mode.
+ * @return	void
+ */
 void turnOnLcdAndWriteTimeAdmin();
 
+/**
+ * @brief	Displays Admin mode operations.
+ * @return	void
+ */
 void printLCDMaintenanceMenu();
 
+/**
+ * @brief	Checks if BootLoad code in EEPROM is valid.
+ * @return	uint8_t - 0 if invalid.
+ */
 uint8_t verifyBootLoad();
 
+/**
+ * @brief	Resets the Settings struct in EEPROM.
+ * @return	void
+ */
 void resetBootLoad();
 
+/**
+ * @brief	Verifies if the door code is valid in accordance to the Settings struct in EEPROM.
+ * @param	uint32_t code - code to compare.
+ * @return	uint8_t 0 if invalid.
+ */
 uint8_t VerifyCode(uint32_t code);
 
+/**
+ * @brief	Verifies if the admin code is valid in accordance to the Settings struct in EEPROM.
+ * @param	uint32_t code - code to compare.
+ * @return	uint8_t 0 if invalid.
+ */
 uint8_t VerifyAdminCode(uint32_t code);
 
+/**
+ * @brief	Returns a key value code form an array of keys.
+ * @return	uint32_t - key code.
+ */
 uint32_t getKeyFromArray(uint8_t src[4]);
 
+/**
+ * @brief	Saves an entry (Regist struct) in EEPROM.
+ * @param	uint8_t validate - 0 if not valid.
+ * @return	void
+ */
 void saveEntry(uint8_t validated);
 
+/**
+ * @brief	Turns off Display and shuts down backlight.
+ * @return	void
+ */
 void LCD_Off();
 
+/**
+ * @brief	Auxiliar function for admin mode control.
+ * @return	uint8_t
+ */
 uint8_t gotoAdminOption();
 
-/* Admin Options */
+/**
+ * @brief	Changes the door code in Settings struct in EEPROM.
+ * @return	uint8_t 0 to leave admin mode.
+ */
 uint8_t changeDoorCOde();
 
+/**
+ * @brief	Changes the admin code in Settings struct in EEPROM.
+ * @return	uint8_t 0 to leave admin mode.
+ */
 uint8_t changeAdminCOde();
 
+/**
+ * @brief	Changes the clock in Settings struct in EEPROM.
+ * @return	uint8_t 0 to leave admin mode.
+ */
 uint8_t setClock();
 
+/**
+ * @brief	Changes the calendar in Settings struct in EEPROM.
+ * @return	uint8_t 0 to leave admin mode.
+ */
 uint8_t changeCalendar();
 
+/**
+ * @brief	Displays all the entries from users in a ring buffer style.
+ * @return	uint8_t 0 to leave admin mode.
+ */
 uint8_t printHistoric();
 
+/**
+ * @brief	Gets the admin code from Settings struct in EEPROM.
+ * @return	uint8_t admin code read from EEPROM.
+ */
 uint32_t getAdminCode();
+
 
 void BringTheHammer(uint32_t pw);
 
@@ -122,5 +229,12 @@ Settings s;
 
 Regist r;
 
+/**
+ * @}
+  */
+
+/**
+ * @}
+ */
 
 #endif /* PROJECT_UTILS_H_ */

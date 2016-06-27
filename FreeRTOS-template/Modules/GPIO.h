@@ -1,6 +1,6 @@
 /** @file GPIO.h
  *  @brief Contains the GPIO API.
- *  @author G6
+ *  @author João Duarte
  */
 
 #ifndef __GPIO_H__
@@ -9,7 +9,7 @@
 /** @defgroup GPIO GPIO
  * @ingroup GPIO
  *	In this module you can find functionalities like 
- *	writing and reading from the LPC2106 GPIO ports. 
+ *	writing, reading and configuring the GPIO ports.
  * @{
 
  * @defgroup GPIO_Public_Functions GPIO Public Functions
@@ -36,78 +36,104 @@
 #define GPIO_OPEN_DRAIN_ENABLE 1
 #define GPIO_OPEN_DRAIN_DISABLE 0
 
+/**
+ * @brief	Configures only the digital side for GPIO0.
+ * @param	uint32_t dir - direction of the pins
+ * @param	uint32_t mask - the mask of the pins to configure.
+ * @param	uint32_t initValue - the value in which to start the GPIO's with.
+ * @return	void
+ */
 void GPIO_configDigital(uint32_t dir, uint32_t mask, uint32_t initValue);
 
-/** @brief Configures the GPIO port in the pins given by mask and with I/O given by dir.
- *
- *	Puts value in output ports described by mask. 
- *	dir=0 input
- *	dir=1 output
- *
- *	@param dir
- *  @param mask
- *  @param value
- *  @return none
+/**
+ * @brief	Configures only the digital side of a given GPIO port.
+ * @param	uint32_t gpio_port - number of the port to configure.
+ * @param	uint32_t gpio_func - number of the function to use in the selected pins.
+ * @param	uint32_t dir - direction of the pins
+ * @param	uint32_t mask - the mask of the pins to configure.
+ * @param	uint32_t initValue - the value in which to start the GPIO's with.
+ * @return	void
  */
-
 void GPIO_configDigitalGeneric(uint32_t gpio_port, uint32_t gpio_func, uint32_t dir, uint32_t mask, uint32_t initValue);
 
-void GPIO_configAnalogGeneric(uint32_t gpio_port, uint32_t pins_func, uint32_t open_drain, uint32_t mask);
-/** @brief Configures the GPIO port pins given by mask and configures the pins function.
- *
- *	Puts value in output ports described by mask.
- *	dir=0 input
- *	dir=1 output
- *
- *	@param pinsel
- *  @param func
- *  @param mask
- *  @return none
+/**
+ * @brief	Configures only the analogic side of a given GPIO port.
+ * @param	uint32_t gpio_port - number of the port to configure.
+ * @param	uint32_t pins_func - number of the function to use in the selected pins.
+ * @param	uint32_t open_drain - the bit mask to select which pins will have open drain mode.
+ * @param	uint32_t mask - the mask of the pins to configure.
+ * @return	void
  */
+void GPIO_configAnalogGeneric(uint32_t gpio_port, uint32_t pins_func, uint32_t open_drain, uint32_t mask);
 
+/**
+ * @brief	Writes the given value in the given mask on the given port using FIOPIN.
+ * @param	uint32_t gpio_port - number of the port to configure.
+ * @param	uint32_t value - the value in which to affect the port.
+ * @param	uint32_t mask - the mask of the pins to configure.
+ * @return	void
+ */
 void GPIO_output(uint32_t gpio_port, uint32_t value, uint32_t mask);
 
-/** @brief Configures the GPIO ports.
- *
- *	Puts value in output ports described by mask. 
- *
- *  @return value of IOPIN
+/**
+ * @brief	Reads the given port.
+ * @param	uint32_t gpio_port - number of the port to configure.
+ * @return	uint32_t value of the FIOPIN.
  */
 uint32_t GPIO_input(uint32_t gpio_port);
 
-/** @brief Clears the GPIO port.
+/** @brief Clears the GPIO port 0.
  *
- *	Puts LOW in output port.
+ *	Puts LOW in GPIO0.
  *
- *  @param mask
+ *  @param uint32_t mask - the mask of the pin to configure.
  *  @return none
  */
 void GPIO_Clear(uint32_t mask);
 
-/** @brief Sets the GPIO port.
- *
- *	Puts HIGH in output port. 
- *
- *  @param mask 
- *  @return none
+/**
+ * @brief	Configures only the digital side of a given pin in the GPIO port.
+ * @param	uint32_t gpio_port - number of the port to configure.
+ * @param	uint32_t gpio_func - number of the function to use in the selected pins.
+ * @param	uint32_t dir - direction of the pin
+ * @param	uint32_t mask - the mask of the pin to configure.
+ * @param	uint32_t initValue - the value in which to start the GPIO's with.
+ * @return	void
  */
-
 void GPIO_config_bitGeneric(uint32_t gpio_port, uint32_t gpio_func, uint32_t dir, uint32_t mask, uint32_t initValue);
 
+/** @brief Clears the pin in GPIO port.
+ *
+ *	Puts LOW on the pin in output port.
+ *	@param uint32_t gpio_port - number of the port to configure.
+ *  @param uint32_t mask - the mask of the pin to clear.
+ *  @return none
+ */
 void GPIO_ClearGeneric(uint32_t gpio_port,uint32_t mask);
 
+/** @brief Sets the pin in GPIO port.
+ *
+ *	Puts HIGH on the pin in output port.
+ *	@param uint32_t gpio_port - number of the port to configure.
+ *  @param uint32_t mask - the mask of the pin to set.
+ *  @return none
+ */
 void GPIO_SetGeneric(uint32_t gpio_port,uint32_t mask);
 
+/** @brief Sets the pin in GPIO port 0.
+ *
+ *	Puts HIGH on the pin in GPIO0.
+ *  @param uint32_t mask - the mask of the pin to set.
+ *  @return none
+ */
 void GPIO_Set(uint32_t mask);
 
-/** @brief Configures the mode of the GPIO port.
- *
- *	Starts with initValue in case the port is configured in output mode.
- *
- *  @param dir
- *  @param mask
- *	@param initValue
- *  @return none
+/**
+ * @brief	Configures only the digital side for GPIO0.
+ * @param	uint32_t dir - direction of the pin
+ * @param	uint32_t mask - the mask of the pin to configure.
+ * @param	uint32_t initValue - the value in which to start the GPIO with.
+ * @return	void
  */
 void GPIO_config_bit(uint32_t dir, uint32_t mask, uint32_t initValue);
 

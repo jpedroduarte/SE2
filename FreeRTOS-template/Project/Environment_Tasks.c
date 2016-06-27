@@ -1,8 +1,9 @@
-/*
- * Environment_Tasks.c
+
+/** @file Environment_Tasks.c
+ *  @brief Module with all Task implementations
  *
- *  Created on: 07/06/2016
- *      Author: Red
+ *  @author João Duarte
+ *
  */
 
 #include "Environment_Tasks.h"
@@ -22,13 +23,13 @@ void mainTaskFunc(){
 
 	while(1){
 		//Get a key
-		puts("Main Task- GetKey\n");
+		//puts("Main Task- GetKey\n");
 		LCD_Off();
 		for(mainTaskExit=0; xQueueReceive(KBD_queue, &key, portMAX_DELAY) == pdTRUE; ++mainTaskExit){
 			if(key == DOUBLE_KEY){
 				if(mainTaskExit>=5){
 					/* Double Key */
-					printf("-DOUBLE_KEY- exitCounter: %u\n",mainTaskExit);
+					//printf("-DOUBLE_KEY- exitCounter: %u\n",mainTaskExit);
 					xTaskNotifyGive(AdminModeTask);
 					break;
 				}
@@ -37,7 +38,7 @@ void mainTaskFunc(){
 			}else{
 				if(mainTaskExit>0){
 					/* Normal key */
-					puts("-NORMAL_KEY-");
+					//puts("-NORMAL_KEY-");
 					xTaskNotifyGive(UserModeTask);
 					break;
 				}
@@ -48,9 +49,9 @@ void mainTaskFunc(){
 		firstKey=key;
 
 		//block main task until notified
-		puts("Block Main Task\n");
+		//puts("Block Main Task\n");
 		int aux= ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-		printf("main Task is back : 0x%X\n", aux);
+		//printf("main Task is back : 0x%X\n", aux);
 		//VerifyAdminCode(0);
 	}
 }
@@ -64,14 +65,14 @@ void UserModeTaskFunc(){
 
 	while(1){
 		//block Thread until there is a notification
-		puts("------Block User Mode.\n");
+		//puts("------Block User Mode.\n");
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		puts("------User Mode. \n");
+		//puts("------User Mode. \n");
 		//VerifyAdminCode(0);
 		turnOnLcdAndWriteTime();
 		keyCode=0;
 		leave_function=0;
-		puts("\nUser Mode Task key:");
+		//puts("\nUser Mode Task key:");
 		keyNum=0;
 		/* Get the key from Main Task */
 		keyCode |= firstKey<<(keyNum*8);
@@ -82,12 +83,12 @@ void UserModeTaskFunc(){
 			//Get a key
 			if(xQueueReceive(KBD_queue, &aux, 5000) == pdFALSE){
 				//timeout occured
-				puts("User Mode Key Timeout");
+				//puts("User Mode Key Timeout");
 				leave_function=1;
 				break;
 			}else{
 				/* Get valid key */
-				printf("count:%u | %X \n",keyNum,aux);
+				//printf("count:%u | %X \n",keyNum,aux);
 				keyCode |= aux<<(keyNum*8);
 				LCD_WriteChar('*');
 			}
@@ -98,22 +99,22 @@ void UserModeTaskFunc(){
 			continue;
 		}
 
-		printf("Key Code: %X\n",keyCode);
+		//printf("Key Code: %X\n",keyCode);
 		uint8_t validate= VerifyCode(keyCode);
 		if(validate){
 			/*Wake up OpenDoor Task */
-			puts("Entry valid!\n");
+			//puts("Entry valid!\n");
 			xTaskNotifyGive(LED_OpenDoor);
 
 		}else{
 			LCD_Goto(2,5); LCD_WriteString("INVALID CODE!");
 			vTaskDelay(2000);
-			puts("Entry Invalid! \n");
+			//puts("Entry Invalid! \n");
 		}
 		VerifyAdminCode(0);
 		saveEntry(validate);
 
-		puts("WakeUp MainTask.\n");
+		//puts("WakeUp MainTask.\n");
 		/* Try Wake up Main Task */
 		xTaskNotifyGive(mainTask);
 	}
@@ -125,9 +126,9 @@ void AdminModeTaskFunc(){
 
 	while(1){
 		//block Thread until there is a notification
-		puts("Block Admin Mode. \n");
+		//puts("Block Admin Mode. \n");
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		puts("---------Admin Mode\n");
+		//puts("---------Admin Mode\n");
 		//VerifyAdminCode(0);
 		turnOnLcdAndWriteTimeAdmin();
 		/* Polling for a key which is not DOUBLE_KEY */
@@ -147,12 +148,12 @@ void AdminModeTaskFunc(){
 			//Get a key
 			if(xQueueReceive(KBD_queue, &aux, 5000) == pdFALSE){
 				//timeout occured
-				puts("Admin Mode Key Timeout");
+				//puts("Admin Mode Key Timeout");
 				leave_function=1;
 				break;
 			}else{
 				/* Get valid key */
-				printf("count:%u | %X \n",keyNum,aux);
+				//printf("count:%u | %X \n",keyNum,aux);
 				keyCode |= aux<<(keyNum*8);
 				LCD_WriteChar('*');
 			}
@@ -163,15 +164,15 @@ void AdminModeTaskFunc(){
 			continue;
 		}
 
-		printf("Key Code: %X\n",keyCode);
+		//printf("Key Code: %X\n",keyCode);
 		uint8_t validate= VerifyAdminCode(keyCode);
 		if(!validate){
 			LCD_Goto(2,6); LCD_WriteString("INVALID CODE!");
 			vTaskDelay(2000);
-			puts("Entry Invalid! \n");
+			//puts("Entry Invalid! \n");
 		}else{
 			/* Enter Admin Mode */
-			puts("Entry valid!\n");
+			//puts("Entry valid!\n");
 			printLCDMaintenanceMenu();
 			/* Stay in Maintenance Mode until # is pressed */
 			while(1){
@@ -180,7 +181,7 @@ void AdminModeTaskFunc(){
 				printLCDMaintenanceMenu();
 			}
 		}
-		puts("WakeUp MainTask.\n");
+		//puts("WakeUp MainTask.\n");
 		/* Try Wake up Main Task */
 		xTaskNotifyGive(mainTask);
 	}
@@ -226,11 +227,11 @@ void LED_OpenDoorFunc(){
 	while(1){
 		//block task until it is notified
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		puts("DOOR OPEN\n");
+		//puts("DOOR OPEN\n");
 		LCD_Goto(3,5); LCD_WriteString("DOOR OPEN!");
 		LED_SetState(1);
 		vTaskDelay(5000);
-		puts("DOOR CLOSED\n");
+		//puts("DOOR CLOSED\n");
 		LED_SetState(0);
 	}
 }

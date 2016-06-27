@@ -1,7 +1,7 @@
 /** @file LED.h
  *  @brief Contains the LED API.
  *
- *  @author Red
+ *  @author João Duarte
  */
 
 #ifndef __LED_H__

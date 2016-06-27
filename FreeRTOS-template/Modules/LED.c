@@ -7,7 +7,7 @@
  *
  *	LED must be with a pull-down resistor of 60 to 80 Ohms preferably.
  *
- *  @author Red
+ *  @author João Duarte
  *
  */
 

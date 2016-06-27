@@ -1,6 +1,6 @@
 /** @file KBD.h
  *  @brief Contains the KBD API.
- *  @author G6
+ *  @author João Duarte
  */
 
 #ifndef __KBD_H__
@@ -21,22 +21,6 @@
 #include "queue.h"
 
 
-
-/** @brief Configures
- *
- *	Configures the GPIO ports like so:
- *	Keyboard output pins (preferably with pull-up resistor 10k Homs)
- *	C0		C1		C2		C3
- *	P0.12	P0.11	P0.10	P0.9
- *	
- * 	Keyboard input pins
- * 	R0		R1		R2		R3
- * 	P0.16	P0.15	P0.13	X
- *	
- *  @param layout array that contains the key codes in sequence. Last position reserved for additional functionality.
- *  @return none.
- */
-
 /* KEY VALUES */
 
 #define ASTERISK_KEY 10
@@ -44,6 +28,20 @@
 #define DOUBLE_KEY 12
 #define INVALID_KEY -1
 
+/** @brief Configures
+ *
+ *	Configures the GPIO ports like so:
+ *	Keyboard output pins (preferably with pull-up resistor 10k Homs)
+ *	C0		C1		C2		C3
+ *	P2.5	P2.6	P2.7	P2.8
+ *	
+ * 	Keyboard input pins
+ * 	R0		R1		R2		R3
+ * 	P2.1	P2.2	P2.3	P2.4
+ *	
+ *  @param layout array that contains the key codes in sequence. Last position reserved for additional functionality.
+ *  @return none.
+ */
 uint32_t kbd_layout[16];
 const static unsigned columnMask  = 0x1E0;
 const static unsigned lineMask = 0x1E;

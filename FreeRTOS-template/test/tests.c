@@ -1,8 +1,8 @@
-/*
- * tests.c
+/** @file tests.c
+ *  @brief Module with all sorts of tests.
  *
- *  Created on: 07/06/2016
- *      Author: Red
+ *  @author João Duarte
+ *
  */
 
 
